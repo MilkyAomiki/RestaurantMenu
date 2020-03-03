@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Restaurant_menu.Models
 {
-    public partial class Dish
+    public class Dish
     {
         [Key]
         [Column("ID")]
