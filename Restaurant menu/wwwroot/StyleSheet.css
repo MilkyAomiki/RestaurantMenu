@@ -1,0 +1,120 @@
+﻿body {
+	font-family: "Roboto";
+}
+
+#itemsCount {
+	margin-top: 100px;
+	margin-left: 34px;
+}
+
+table thead {
+
+	border-bottom: 4px solid #919FFF;
+	height: 123px;
+	/* color: aliceblue;*/
+}
+
+td {
+	padding: 52px;
+}
+
+button {
+	/*#FB91FF*/
+
+	
+	transition-duration: 0.4s;
+	margin-bottom: 42px;
+	margin-top: 42px;
+	background-color: white;
+	font-size: 12px;
+	width: 79px;
+	height: 27px;
+	border: 2px solid #919FFF;
+	border-radius: 6px;
+}
+#dishes tr {
+	transition-duration: 0.4s;
+}
+#dishes #action a {
+	text-decoration: none;
+}
+#dishes #action a:visited {
+	color: black;
+}
+#dishes #action {
+	transition-duration: 0.4s;
+	text-underline: none;
+	padding: 15px;
+}
+#dishes #action a{
+	transition-duration: 0s;
+	opacity: 0;
+}
+#dishes {
+	border-collapse: collapse;
+	border-bottom: 2px solid #919FFF;
+}
+	#dishes tr:hover #action {
+
+		background-color: white;
+		opacity: 1;
+	}
+
+#dishes tr:hover #action a{
+	background-color: white;
+	opacity: 1;
+}
+
+
+#dishes thead tr:hover {
+	background-color: white;
+
+}
+	#dishes tr:hover {
+		visibility: visible;
+		background-color: lavender;
+	}
+
+
+.pagination {
+	display:inline-block;
+}
+
+.pagination a {
+	padding: 8px 16px;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	float: left;
+}
+
+.pagination li {
+	display: inline;
+}
+
+.pagination li:active {
+	background-color: blueviolet;
+}
+
+.pagination a:active { 
+	background-color: blueviolet;
+	color: #dddddd;
+
+}
+
+.pagination li:active {
+	background-color: blueviolet;
+}
+
+.pagination a:hover:not(.active) {
+	background-color: #ddd;
+}
+
+.button {
+	 transition-duration: 0.4s;
+}
+	.button:hover {
+		background-color: #919FFF;
+		color: azure;
+	}
+

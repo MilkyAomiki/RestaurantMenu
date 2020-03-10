@@ -1,0 +1,57 @@
+﻿html {
+	font-family: "Roboto";
+}
+
+#mainh {
+	margin-left: 12px;
+	margin-bottom: 54px;
+}
+
+a {
+	text-decoration: none;
+}
+
+.input-group {
+	margin-left: 41px;
+}
+	.input-group input {
+
+		height: 26px;
+		width: 223px;
+		border: 1px solid #000000;
+		border-radius: 5px;
+
+	}
+.input-group input:hover {
+	background-color: whitesmoke;
+}
+
+#Create {
+	margin-top: 23px;
+	margin-left: 273px;
+
+	font-weight: bold;
+	font-size: 12px;
+
+	width: 76px;
+	height: 24px;
+
+	background-color: whitesmoke;
+	transition-duration: 0.4s;
+
+	border: 2px solid #595959;
+	border-radius: 5px
+}
+
+	#Create:hover {
+		background-color: #595959;
+		color: whitesmoke;
+	}
+
+.input-group input:focus {
+	background-color: whitesmoke;
+}
+.input-group p {
+	font-weight: bold;
+	font-size: 15px;
+}

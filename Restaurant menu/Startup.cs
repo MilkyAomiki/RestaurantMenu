@@ -27,6 +27,7 @@ namespace Restaurant_menu
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddRazorPages();
+			services.AddMvc(options => options.EnableEndpointRouting = false);
 			string connection = Configuration.GetConnectionString("DefaultConnection");
 			services.AddDbContext<DishesContext>(options => options.UseSqlServer(connection));
 		}
@@ -51,8 +52,11 @@ namespace Restaurant_menu
 			app.UseRouting();
 
 			app.UseAuthorization();
-
-			app.UseEndpoints(configure => configure.MapRazorPages());
+			app.UseMvc(route =>
+			{
+				route.MapRoute("default", "{controller=MainController}/{action=Index}/{id?}");
+				route.MapRoute("create", "{controller=MainController}/{action=Create}/{id?}");
+			});
 		}
 	}
 }
