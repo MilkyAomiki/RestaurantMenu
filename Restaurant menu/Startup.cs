@@ -55,7 +55,7 @@ namespace Restaurant_menu
 			app.UseMvc(route =>
 			{
 				route.MapRoute("default", "{controller=MainController}/{action=Index}/{id?}");
-				route.MapRoute("create", "{controller=MainController}/{action=Create}/{id?}");
+				route.MapRoute("create", "{controller=MainController}/{action=CreatePage}/{id?}");
 			});
 		}
 	}

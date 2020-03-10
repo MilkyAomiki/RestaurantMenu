@@ -17,27 +17,31 @@
 </a>
 <h2 id="mainh">Создание блюда</h2>
 	
-<div class="input-group">
+<form class="input-group" method="post" action="~/MainController/Create">
 	<p>Название:</p>
-	<input type="text" class="form-control" id="usr">
+	<input type="text" class="form-control" name="name">
 
 	<p>Состав:</p>
-	<input type="text" class="form-control" id="pwd">
+	<input type="text" class="form-control" name="consist">
+
+	<p>Описание:</p>
+	<input type="text" class="form-control" name="description">
 
 	<p>Цена:</p>
-	<input type="text" class="form-control" id="pwd">
+	<input type="text" class="form-control" name="price">
 
 	<p>Граммовка:</p>
-	<input type="text" class="form-control" id="pwd">
+	<input type="text" class="form-control" name="gram">
 
 	<p>Калорийность блюда:</p>
-	<input type="text" class="form-control" id="pwd">
+	<input type="text" class="form-control" name="calorie">
 
 	<p>Время Приготовления:</p>
-	<input type="text" class="form-control" id="pwd">
-</div>
+	<input type="text" class="form-control" name="cookTime">
 
-<button id="Create" >Создать</button>
+	<button type="submit" id="Create">Создать</button>
+</form>
+
 </body>
 </html>
 

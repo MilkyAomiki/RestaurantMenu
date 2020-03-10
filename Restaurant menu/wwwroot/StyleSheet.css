@@ -43,7 +43,6 @@ button {
 }
 #dishes #action {
 	transition-duration: 0.4s;
-	text-underline: none;
 	padding: 15px;
 }
 #dishes #action a{
