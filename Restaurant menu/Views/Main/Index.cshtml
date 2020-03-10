@@ -6,49 +6,61 @@
 <html>
 <head>
 
-	<link rel="stylesheet" href="StyleSheet.css" />
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-	<title>Restaurant Menu</title>
+    <link rel="stylesheet" href="StyleSheet.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <title>Restaurant Menu</title>
 </head>
 <body>
-<h2 style="text-align: center">Меню ресторана</h2>
-<form action="/Create"><button class="button create" type="submit">Создать</button></form>
+    <h2 style="text-align: center">Меню ресторана</h2>
+    <form action="/Create"><button class="button create" type="submit">Создать</button></form>
 
-<table id="dishes">
-	<thead>
-	<tr>
-		<th>Название</th>
-		<th>Дата создания</th>
-		<th>Состав</th>
-		<th>Цена</th>
-		<th>Калорийность</th>
-		<th>Время <br/>Приготовления</th>
-	</tr>
-	</thead>
-	@foreach (var dish in Model.Dish)
-	{
-<tr>
-	<td>@dish.Name</td>
-	<td>@dish.CreateDate</td>
-	<td>@dish.Consist</td>
-	<td>@dish.Price</td>
-	<td>@dish.Calorific</td>
-	<td>@dish.CookTime</td>
-	<td id="action"><a href="" class="material-icons">remove_red_eye</a></td>
-	<td id="action"><a href="" class="material-icons">create</a></td>
-	<td id="action"><a href="" class="material-icons">clear</a></td>
-</tr>
-	}
-</table>
-<p id="itemsCount">20 записей из 123</p>
 
-<ul class="pagination">
-	@for (int i = 1; i <= (int)(Model.Dish.Count() / 20); i++)
-	{
-		<li><a href="">@i</a></li>
-	}
-</ul>
+
+    <table id="dishes">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Состав</th>
+                <th>Цена</th>
+                <th>Калорийность</th>
+                <th>Время <br />Приготовления</th>
+            </tr>
+        </thead>
+        @{ 
+            int filtred = 0;
+        }
+        @foreach (var dish in Model.Dish)
+        {
+            filtred++;
+
+            <tr>
+                <td>@dish.Name</td>
+                <td>@dish.CreateDate</td>
+                <td>@dish.Consist</td>
+                <td>@dish.Price</td>
+                <td>@dish.Calorific</td>
+                <td>@dish.CookTime</td>
+
+                <td id="action"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
+                <td id="action"><a href="" class="material-icons">create</a></td>
+                <td id="action"><a href="@Url.Action("Delete")?id=@dish.Id" class="material-icons">clear</a></td>
+
+            </tr>
+
+        }
+    </table>
+
+
+    <p id="itemsCount">@filtred записей из @Model.Dish.Count()</p>
+
+    <ul class="pagination">
+        @for (int i = 1; i <= (int)(Model.Dish.Count() / 20); i++)
+        {
+            <li><a href="">@i</a></li>
+        }
+    </ul>
 </body>
 </html>
 

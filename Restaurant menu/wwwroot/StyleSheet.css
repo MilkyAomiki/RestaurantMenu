@@ -41,6 +41,9 @@ button {
 #dishes #action a:visited {
 	color: black;
 }
+#dishes #action a:not(:visited){
+	color: black;
+}
 #dishes #action {
 	transition-duration: 0.4s;
 	padding: 15px;

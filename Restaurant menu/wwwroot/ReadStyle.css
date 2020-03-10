@@ -1,0 +1,37 @@
+﻿html{
+    font-family:'Roboto';
+}
+
+a{
+    text-decoration: none;
+}
+#Name{
+    margin-top: 42px;
+    
+}
+
+#dateh{
+    font-weight: 600;
+}
+#date {
+    font-size: 13px;
+    font-weight: 500;
+}
+.fields{
+    margin-top: 26px;
+    margin-left: 38px;
+}
+.info {
+    margin-left: 9px;
+    margin-bottom:19px;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+.field{
+  font-weight:600;
+
+}
+.information{
+    margin-left: 37px;
+}

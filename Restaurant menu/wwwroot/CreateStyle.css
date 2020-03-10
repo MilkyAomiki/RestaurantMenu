@@ -27,18 +27,14 @@ a {
 }
 
 #Create {
-	margin-top: 23px;
-	margin-left: 273px;
-
+	margin-top: 47px;
+	margin-left: 223px;
 	font-weight: bold;
 	font-size: 12px;
-
 	width: 76px;
 	height: 24px;
-
 	background-color: whitesmoke;
 	transition-duration: 0.4s;
-
 	border: 2px solid #595959;
 	border-radius: 5px
 }

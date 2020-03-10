@@ -28,13 +28,27 @@ namespace Restaurant_menu.Controllers
 			return View("/Views/Main/Create.cshtml", Model);
 		}
 
+		[HttpGet]
+		public IActionResult Read(short id)
+		{
+			var dish = Model.Dish.Find(id);
+
+			return View(dish);
+		}
+		[HttpGet("/Edit")]
+		public IActionResult Edit(short id)
+		{
+			var dish = Model.Dish.Find(id);
+			return View("/Views/Main/Create.cshtml", dish);
+		}
+
 		[HttpPost]
-		public void Create(string name, string consist, string description, decimal price, int gram, double calorific, int cookTime)
+		public void Create(string name, string consist, string description, decimal price, int gram, double calorie, int cookTime) 
 		{
 			var dish = new Dish
 			{
 				Consist = consist,
-				Calorific = calorific,
+				Calorific = calorie,
 				CookTime = cookTime,
 				CreateDate = DateTime.Now,
 				Description = description,
@@ -45,9 +59,22 @@ namespace Restaurant_menu.Controllers
 
 			Model.Dish.Add(dish);
 			Model.SaveChanges();
-		}
 
+			Response.Redirect("/");
+		}
+	
+		public void Delete(short id)
+		{
+			var dish = Model.Dish.Find(id);
+			Model.Dish.Remove(dish);
+
+			Model.SaveChanges();
+			Response.Redirect("/");
+		}
+		
 	}
 
-
 }
+
+
+

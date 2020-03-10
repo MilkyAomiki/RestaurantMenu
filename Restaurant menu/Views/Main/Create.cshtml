@@ -1,46 +1,80 @@
-﻿
-@{
+﻿@{
+    
+    bool isEdit = Model == null ? false : true;
+    isEdit = false;
+    var uri = isEdit ? Url.Action("Edit") : Url.Action("Create");
     ViewData["Title"] = "Create";
+
 }
 <!DOCTYPE html>
 <html>
 <head>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-		  rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-	<link href="CreateStyle.css" rel="stylesheet" />
-	<title>Создание</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="CreateStyle.css" rel="stylesheet" />
+    <title>Создание</title>
 </head>
 <body>
-<a href="/" class="material-icons">
-	keyboard_arrow_left
-</a>
-<h2 id="mainh">Создание блюда</h2>
-	
-<form class="input-group" method="post" action="~/MainController/Create">
-	<p>Название:</p>
-	<input type="text" class="form-control" name="name">
+    <a href="/" class="material-icons">
+        keyboard_arrow_left
+    </a>
+    <h2 id="mainh">Создание блюда</h2>
 
-	<p>Состав:</p>
-	<input type="text" class="form-control" name="consist">
+    <form method="post" class="input-group" action="@uri ">
 
-	<p>Описание:</p>
-	<input type="text" class="form-control" name="description">
+        @if (isEdit)
+        {
+            <p>Название:</p>
+            <input type="text" class="form-control" name="name" value="@Model.Name">
 
-	<p>Цена:</p>
-	<input type="text" class="form-control" name="price">
+            <p>Состав:</p>
+            <input type="text" class="form-control" name="consist" value="@Model.Consist">
 
-	<p>Граммовка:</p>
-	<input type="text" class="form-control" name="gram">
+            <p>Описание:</p>
+            <input type="text" class="form-control" name="description" value="@Model.Description">
 
-	<p>Калорийность блюда:</p>
-	<input type="text" class="form-control" name="calorie">
+            <p>Цена:</p>
+            <input type="text" class="form-control" name="price" value="@Model.Price">
 
-	<p>Время Приготовления:</p>
-	<input type="text" class="form-control" name="cookTime">
+            <p>Граммовка:</p>
+            <input type="text" class="form-control" name="gram" value="@Model.Gram">
 
-	<button type="submit" id="Create">Создать</button>
-</form>
+            <p>Калорийность блюда:</p>
+            <input type="text" class="form-control" name="calorie" value="@Model.Calorific">
+
+            <p>Время Приготовления:</p>
+            <input type="text" class="form-control" name="cookTime" value="@Model.CookTime">
+            <br />
+            <button type="submit" id="Create">Создать</button>
+        }
+        else
+        {
+            <p>Название:</p>
+            <input type="text" class="form-control" name="name">
+
+            <p>Состав:</p>
+            <input type="text" class="form-control" name="consist">
+
+            <p>Описание:</p>
+            <input type="text" class="form-control" name="description">
+
+            <p>Цена:</p>
+            <input type="text" class="form-control" name="price">
+
+            <p>Граммовка:</p>
+            <input type="text" class="form-control" name="gram">
+
+            <p>Калорийность блюда:</p>
+            <input type="text" class="form-control" name="calorie">
+
+            <p>Время Приготовления:</p>
+            <input type="text" class="form-control" name="cookTime">
+            <br />
+            <button type="submit" id="Create">Создать</button>
+        }
+
+
+    </form>
 
 </body>
 </html>
