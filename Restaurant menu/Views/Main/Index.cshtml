@@ -56,7 +56,7 @@
     <p id="itemsCount">@filtred записей из @Model.Dish.Count()</p>
 
     <ul class="pagination">
-        @for (int i = 1; i <= (int)(Model.Dish.Count() / 20); i++)
+        @for (int i = 1; i <= Math.Round((double)Model.Dish.Count() / 20, MidpointRounding.ToPositiveInfinity); i++)
         {
             <li><a href="">@i</a></li>
         }
