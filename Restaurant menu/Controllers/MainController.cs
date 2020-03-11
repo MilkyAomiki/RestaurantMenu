@@ -25,7 +25,7 @@ namespace Restaurant_menu.Controllers
 		[HttpGet("/Create")]
 		public IActionResult CreatePage()
 		{
-			return View("/Views/Main/Create.cshtml", Model);
+			return View("/Views/Main/Create.cshtml", new Dish {Id = -1});
 		}
 
 		[HttpGet]
@@ -35,11 +35,27 @@ namespace Restaurant_menu.Controllers
 
 			return View(dish);
 		}
-		[HttpGet("/Edit")]
-		public IActionResult Edit(short id)
+
+		[HttpGet]
+		public IActionResult EditPage(short id)
 		{
 			var dish = Model.Dish.Find(id);
 			return View("/Views/Main/Create.cshtml", dish);
+		}
+
+
+		[HttpPost]
+		public void Edit(short id, string name, string consist, string description, decimal price, int gram, double calorie, int cookTime)
+		{
+			Model.Dish.Find(id).Name = name;
+			Model.Dish.Find(id).Consist = consist;
+			Model.Dish.Find(id).Description = description;
+			Model.Dish.Find(id).Price = price;
+			Model.Dish.Find(id).Gram = gram;
+			Model.Dish.Find(id).Calorific = calorie;
+			Model.Dish.Find(id).CookTime = cookTime;
+			Model.SaveChanges();
+			Response.Redirect("/");
 		}
 
 		[HttpPost]

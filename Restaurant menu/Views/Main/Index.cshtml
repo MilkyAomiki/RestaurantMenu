@@ -44,7 +44,7 @@
                 <td>@dish.CookTime</td>
 
                 <td id="action"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
-                <td id="action"><a href="" class="material-icons">create</a></td>
+                <td id="action"><a href="@Url.Action("EditPage")?id=@dish.Id" class="material-icons">create</a></td>
                 <td id="action"><a href="@Url.Action("Delete")?id=@dish.Id" class="material-icons">clear</a></td>
 
             </tr>
