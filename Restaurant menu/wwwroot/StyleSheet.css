@@ -1,6 +1,26 @@
 ﻿body {
 	font-family: "Roboto";
 }
+header {
+	background-color: #24292e;
+	width: 100%;
+	padding: 10px 0.5% 0px 0.5%;
+	background: transparent;
+}
+.mainData {
+	margin-top: 100px;
+}
+header h2 {
+		margin-top: 0px;
+		margin-left: 0px;
+		margin-right: 0px;
+		padding: 0px;
+		border: none;
+}
+header #btnCreate {
+ 
+	float: left;
+}
 
 #itemsCount {
 	margin-top: 100px;
@@ -19,12 +39,9 @@ td {
 }
 
 button {
-	/*#FB91FF*/
-
-	
 	transition-duration: 0.4s;
-	margin-bottom: 42px;
-	margin-top: 42px;
+	/*margin-bottom: 42px;
+	margin-top: 42px;*/
 	background-color: white;
 	font-size: 12px;
 	width: 79px;
@@ -53,6 +70,7 @@ button {
 	opacity: 0;
 }
 #dishes {
+	margin-left:110px;
 	border-collapse: collapse;
 	border-bottom: 2px solid #919FFF;
 }
@@ -80,16 +98,25 @@ button {
 
 .pagination {
 	display:inline-block;
+	padding-left:0px;
+	margin:40px;
+
 }
 
-.pagination a {
-	padding: 8px 16px;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	float: left;
-}
-
+	.pagination a {
+		transition-duration: 0.4s;
+		padding: 8px 16px;
+		text-align: center;
+		text-decoration: none;
+		color: black;
+		float: left;
+		border-bottom: 2px solid #919FFF;
+		border-top: 2px solid #919FFF;
+	}
+		.pagination a:hover {
+			background-color: #919FFF;
+			color: white;
+		}		
 .pagination li {
 	display: inline;
 }
@@ -108,9 +135,7 @@ button {
 	background-color: blueviolet;
 }
 
-.pagination a:hover:not(.active) {
-	background-color: #ddd;
-}
+
 
 .button {
 	 transition-duration: 0.4s;
