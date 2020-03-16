@@ -1,4 +1,5 @@
-﻿@model Restaurant_menu.Models.DishesContext
+﻿@using RestaurantMenu.BLL.DTO
+@model IEnumerable<Dish>
 @{
     ViewData["Title"] = "Index";
 }
@@ -35,7 +36,7 @@
             @{
                 int filtred = 0;
             }
-            @foreach (var dish in Model.Dish)
+            @foreach (var dish in Model)
             {
                 filtred++;
 
@@ -48,8 +49,8 @@
                     <td>@dish.CookTime</td>
 
                     <td id="action"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
-                    <td id="action"><a href="@Url.Action("EditPage")?id=@dish.Id" class="material-icons">create</a></td>
-                    <td id="action"><a href="@Url.Action("Delete")?id=@dish.Id" class="material-icons">clear</a></td>
+                    <td id="action"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
+                    <td id="action"><a href="@Url.Action("Delete", "Logic")?id=@dish.Id" class="material-icons">clear</a></td>
 
                 </tr>
 
@@ -57,7 +58,7 @@
         </table>
 
 
-        <p id="itemsCount">@filtred записей из @Model.Dish.Count()</p>
+        <p id="itemsCount">@filtred записей из @Model.Count()</p>
 
         <ul class="pagination">
             @for (int i = 1; i <= Math.Round((double)23 / 20, MidpointRounding.ToPositiveInfinity); i++)

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Restaurant_menu.Models;
+using RestaurantMenu.BLL.DI;
+using RestaurantMenu.BLL.DTO;
+using RestaurantMenu.BLL.Interfaces;
 
 namespace Restaurant_menu
 {
@@ -23,16 +18,20 @@ namespace Restaurant_menu
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddRazorPages();
-			services.AddMvc(options => options.EnableEndpointRouting = false);
 			string connection = Configuration.GetConnectionString("DefaultConnection");
-			services.AddDbContext<DishesContext>(options => options.UseSqlServer(connection));
+			var diModule = new DependencyModule(connection);
+			services.AddScoped<IMenu<Dish>>(options => { return diModule.ConfigureMenuService(); });
+			services.AddMvc(options => options.EnableEndpointRouting = false);
+
+
+
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -55,7 +54,7 @@ namespace Restaurant_menu
 			app.UseMvc(route =>
 			{
 				route.MapRoute("default", "{controller=MainController}/{action=Index}/{id?}");
-				route.MapRoute("create", "{controller=MainController}/{action=CreatePage}/{id?}");
+				route.MapRoute("create", "{controller=MainController}/{action=Create}/{id?}");
 			});
 		}
 	}

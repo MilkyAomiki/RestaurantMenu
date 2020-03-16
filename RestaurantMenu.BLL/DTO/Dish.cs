@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Restaurant_menu.Models
+namespace RestaurantMenu.BLL.DTO
 {
     public class Dish
     {
+
         [Key]
         [Column("ID")]
         public short Id { get; set; }

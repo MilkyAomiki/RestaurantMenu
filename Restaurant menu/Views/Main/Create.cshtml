@@ -1,9 +1,9 @@
-﻿@using Restaurant_menu.Models
+﻿@using RestaurantMenu.BLL.DTO
 @model Dish
 @{
 
     bool isEdit = Model.Id == -1 ? false : true;
-    var uri = isEdit ? Url.Action("Edit") : Url.Action("Create");
+    var uri = isEdit ? Url.Action("Edit", "Logic") : Url.Action("Create", "Logic");
     ViewData["Title"] = "Create";
 
 }
