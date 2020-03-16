@@ -1,6 +1,29 @@
 ﻿body {
 	font-family: "Roboto";
 }
+
+#SearchFields {
+	display:none;
+}
+
+#SearchFields input{
+	border-style:solid;
+	border-width:1px;
+	border-radius: 5px;
+	width: 108px;
+}
+
+table{
+}
+
+#search{
+	border:none;
+	background-color:transparent;
+	outline: none;
+}
+	#search:hover {
+		cursor: pointer;
+	}
 header {
 	background-color: #24292e;
 	width: 100%;
@@ -36,6 +59,9 @@ table thead {
 
 td {
 	padding: 52px;
+}
+thead tr th {
+	border: initial, 100px, initial, 100px;
 }
 
 button {

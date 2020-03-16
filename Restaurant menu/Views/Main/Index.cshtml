@@ -6,11 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <link rel="stylesheet" href="StyleSheet.css" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <title>Restaurant Menu</title>
+
+    <!--Main Style-->
+    <link rel="stylesheet" href="StyleSheet.css" />
+
+    <!--Material Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Roboto Font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+
+    <!--Main JS-->
+
 </head>
 <body>
     <header>
@@ -21,7 +29,6 @@
 
     <div class="mainData">
 
-
         <table id="dishes">
             <thead>
                 <tr>
@@ -31,8 +38,18 @@
                     <th>Цена</th>
                     <th>Калорийность</th>
                     <th>Время <br />Приготовления</th>
+                    <th ><button class="material-icons" id="search">search</button></th>
                 </tr>
             </thead>
+            <tr id="SearchFields">
+                <th><input type="search" /></th>
+                <th><input type="search" /></th>
+                <th><input type="search" /></th>
+                <th><input type="search" /></th>
+                <th><input type="search" /></th>
+                <th><input type="search" /></th>
+            </tr>
+
             @{
                 int filtred = 0;
             }
@@ -57,6 +74,7 @@
             }
         </table>
 
+        <script src="/js/site.js"></script>
 
         <p id="itemsCount">@filtred записей из @Model.Count()</p>
 
