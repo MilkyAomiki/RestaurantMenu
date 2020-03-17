@@ -3,17 +3,29 @@
 }
 
 #SearchFields {
-	display:none;
+	transition-duration:0s;
+	display: none;
+	background-color: #919FFF;
 }
-
-#SearchFields input{
-	border-style:solid;
-	border-width:1px;
-	border-radius: 5px;
-	width: 108px;
+	#SearchFields th {
+		padding-bottom: 3px;
+	}
+#SearchFields:hover th
+{
+	background-color: #919FFF;
 }
+	#SearchFields input {
+		background-color: #FBFBFF;
+		outline: none;
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 11px;
+		border-color: transparent;
+		width: 128px;
+	}
 
 table{
+	width:1000px;
 }
 
 #search{
@@ -31,7 +43,12 @@ header {
 	background: transparent;
 }
 .mainData {
+	display: flex;
+	flex-flow: row;
+	justify-content:center;
+	align-items: center;
 	margin-top: 100px;
+	
 }
 header h2 {
 		margin-top: 0px;
@@ -54,20 +71,16 @@ table thead {
 
 	border-bottom: 4px solid #919FFF;
 	height: 123px;
-	/* color: aliceblue;*/
 }
 
 td {
-	padding: 52px;
-}
-thead tr th {
-	border: initial, 100px, initial, 100px;
+	padding: 53px;
+	max-width: 100px;
+	overflow-wrap:break-word;
 }
 
 button {
 	transition-duration: 0.4s;
-	/*margin-bottom: 42px;
-	margin-top: 42px;*/
 	background-color: white;
 	font-size: 12px;
 	width: 79px;
@@ -75,7 +88,7 @@ button {
 	border: 2px solid #919FFF;
 	border-radius: 6px;
 }
-#dishes tr {
+#dishes tbody tr {
 	transition-duration: 0.4s;
 }
 #dishes #action a {
@@ -96,7 +109,6 @@ button {
 	opacity: 0;
 }
 #dishes {
-	margin-left:110px;
 	border-collapse: collapse;
 	border-bottom: 2px solid #919FFF;
 }
@@ -116,7 +128,7 @@ button {
 	background-color: white;
 
 }
-	#dishes tr:hover {
+	#dishes tbody tr:hover {
 		visibility: visible;
 		background-color: lavender;
 	}

@@ -32,49 +32,66 @@
         <table id="dishes">
             <thead>
                 <tr>
-                    <th>Название</th>
+                    <th style="width: 23px">Название</th>
                     <th>Дата создания</th>
                     <th>Состав</th>
+                    <th>Описание</th>
                     <th>Цена</th>
+                    <th>Граммовка</th>
                     <th>Калорийность</th>
                     <th>Время <br />Приготовления</th>
-                    <th ><button class="material-icons" id="search">search</button></th>
+
+                    <th colspan="3"><button class="material-icons" id="search">search</button></th>
                 </tr>
             </thead>
             <tr id="SearchFields">
+                <th style="width: 23px"><input type="search" /></th>
                 <th><input type="search" /></th>
                 <th><input type="search" /></th>
                 <th><input type="search" /></th>
-                <th><input type="search" /></th>
-                <th><input type="search" /></th>
-                <th><input type="search" /></th>
+                <th><input type="search" style="width: 56px" /></th>
+                <th><input type="search" style="width: 56px" /></th>
+                <th><input type="search" style="width: 56px" /></th>
+                <th><input type="search" style="width: 56px" /></th>
+                <th colspan="3"></th>
             </tr>
+            <tbody>
+                @{
+                    int filtred = 0;
+                }
+                @foreach (var dish in Model)
+                {
+                    filtred++;
 
-            @{
-                int filtred = 0;
-            }
-            @foreach (var dish in Model)
-            {
-                filtred++;
+                    <tr>
+                        <td style="width: 23px">@dish.Name</td>
+                        <td>@dish.CreateDate</td>
+                        <td>@dish.Consist</td>
+                        <td>@dish.Description</td>
+                        <td>@dish.Price</td>
+                        <td>@dish.Gram</td>
+                        <td>@dish.Calorific</td>
+                        <td>@dish.CookTime</td>
 
-                <tr>
-                    <td>@dish.Name</td>
-                    <td>@dish.CreateDate</td>
-                    <td>@dish.Consist</td>
-                    <td>@dish.Price</td>
-                    <td>@dish.Calorific</td>
-                    <td>@dish.CookTime</td>
+                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
+                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
+                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Delete", "Logic")?id=@dish.Id" class="material-icons">clear</a></td>
 
-                    <td id="action"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
-                    <td id="action"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
-                    <td id="action"><a href="@Url.Action("Delete", "Logic")?id=@dish.Id" class="material-icons">clear</a></td>
+                    </tr>
+                }
 
-                </tr>
-
-            }
+            </tbody>
         </table>
 
+        <script>
+            function Filtration(inputType) {
+                var input, items, filter;
+                input = document.getElementById('inputType');
+                filter = input.value;
+
+        </script>
         <script src="/js/site.js"></script>
+    </div>
 
         <p id="itemsCount">@filtred записей из @Model.Count()</p>
 
@@ -84,7 +101,7 @@
                 <li><a href="">@i</a></li>
             }
         </ul>
-    </div>
+
 </body>
 </html>
 
