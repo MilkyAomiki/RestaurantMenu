@@ -1,30 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Restaurant_menu.Models;
-using RestaurantMenu.BLL.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using RestaurantMenu.BLL.DTO;
+using RestaurantMenu.BLL.Interfaces;
 
 namespace Restaurant_menu.Controllers
 {
-   
-    public class Filter: Controller
+    public class FilterController : Controller
     {
         private IMenu<Dish> _menu;
-        public Filter()
+        public FilterController(IMenu<Dish> menu)
         {
+            _menu = menu;
         }
-        public IEnumerable<Dish> Filtration(string name, string filter)
+
+        [HttpPost]
+        public IEnumerable<short> Filtration(string name, string filter)
         {
             dynamic result;
             switch (name)
             {
                 case "name":
-                    result = _menu.GetAll().Where(f => String.CompareOrdinal(f.Name, filter) > 0).OrderBy(f => String.CompareOrdinal(f.Name, filter));
+                    result = _menu.GetAll().Where(f => f.Name.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
                     return result;
                 case "createdate":
-                    result = _menu.GetAll().Where(f => String.CompareOrdinal(f.CreateDate.ToString(), filter) > 0).OrderBy(f => String.CompareOrdinal(f.CreateDate.ToString(), filter));
+                    result = _menu.GetAll().Where(f => String.CompareOrdinal(f.CreateDate.ToString(), filter) > 0).OrderBy(f => String.CompareOrdinal(f.CreateDate.ToString(), filter)).Select(x => x);
                     return result;
                 case "consistence":
                     break;

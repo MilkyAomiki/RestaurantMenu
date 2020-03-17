@@ -10,11 +10,11 @@ namespace Restaurant_menu.Controllers
 {
     public class LogicController : Controller
     {
-        public IMenu<Dish> Menu { get; set; }
+        private IMenu<Dish> _menu;
 
         public LogicController(IMenu<Dish> menu)
         {
-            Menu = menu;
+            _menu = menu;
         }
 
 
@@ -33,7 +33,7 @@ namespace Restaurant_menu.Controllers
                 CookTime = cookTime,
                 CreateDate = DateTime.Now
             };
-            Menu.Update(entity);
+            _menu.Update(entity);
 
             Response.Redirect("/");
         }
@@ -53,15 +53,16 @@ namespace Restaurant_menu.Controllers
                 Price = price
             };
 
-            Menu.Create(entity);
+            _menu.Create(entity);
 
             Response.Redirect("/");
         }
 
         [HttpPost]
-        public void Delete(int id)
+        public int Delete(int id)
         {
-            Menu.Delete(id);
+            _menu.Delete(id);
+            return _menu.GetAll().Count();
         }
 
 
