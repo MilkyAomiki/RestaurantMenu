@@ -91,44 +91,61 @@ button {
 #dishes tbody tr {
 	transition-duration: 0.4s;
 }
-#dishes #action a {
+#dishes .action a {
 	text-decoration: none;
 }
-#dishes #action a:visited {
-	color: black;
+	#dishes .action a:visited {
+		color: black;
+	}
+	#dishes .action a:not(:visited) {
+		color: black;
+	}
+#dishes tr .del a{
+	transition-duration: 0s;
 }
-#dishes #action a:not(:visited){
-	color: black;
-}
-#dishes #action {
+#dishes tr .del {
 	transition-duration: 0.4s;
-	padding: 15px;
-}
-#dishes #action a{
 	transition-duration: 0s;
 	opacity: 0;
 }
+#dishes .action {
+	transition-duration: 0.4s;
+	padding: 15px;
+}
+	#dishes .action a {
+		transition-duration: 0s;
+		opacity: 0;
+	}
 #dishes {
 	border-collapse: collapse;
 	border-bottom: 2px solid #919FFF;
 }
-	#dishes tr:hover #action {
-
+	#dishes tr:hover .action {
 		background-color: white;
 		opacity: 1;
 	}
-
-#dishes tr:hover #action a{
-	background-color: white;
-	opacity: 1;
-}
+	#dishes tr:hover .del {
+		background-color: white;
+		opacity: 1;
+	}
+	#dishes tr .del:hover {
+		cursor:pointer;
+	}
+	
+		#dishes tr:hover .action a {
+			background-color: white;
+			opacity: 1;
+		}
 
 
 #dishes thead tr:hover {
 	background-color: white;
 
 }
-	#dishes tbody tr:hover {
+	#dishes tbody tr .dishesItem {
+		transition-duration: 0.4s;
+	}
+	#dishes tbody tr:hover .dishesItem{
 		visibility: visible;
 		background-color: lavender;
 	}

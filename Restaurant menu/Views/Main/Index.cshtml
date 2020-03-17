@@ -1,4 +1,5 @@
 ﻿@using RestaurantMenu.BLL.DTO
+@using Restaurant_menu.Controllers
 @model IEnumerable<Dish>
 @{
     ViewData["Title"] = "Index";
@@ -17,7 +18,8 @@
     <!--Roboto Font-->
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-    <!--Main JS-->
+    <!--Jquery-->
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
 
 </head>
 <body>
@@ -25,82 +27,104 @@
         <h2 style="text-align: center">Меню ресторана</h2>
         <form id="btnCreate" action="/Create"><button class="button create" type="submit">Создать</button></form>
     </header>
-  
+
+
+
 
     <div class="mainData">
-
-        <table id="dishes">
-            <thead>
-                <tr>
-                    <th style="width: 23px">Название</th>
-                    <th>Дата создания</th>
-                    <th>Состав</th>
-                    <th>Описание</th>
-                    <th>Цена</th>
-                    <th>Граммовка</th>
-                    <th>Калорийность</th>
-                    <th>Время <br />Приготовления</th>
-
-                    <th colspan="3"><button class="material-icons" id="search">search</button></th>
-                </tr>
-            </thead>
-            <tr id="SearchFields">
-                <th style="width: 23px"><input type="search" /></th>
-                <th><input type="search" /></th>
-                <th><input type="search" /></th>
-                <th><input type="search" /></th>
-                <th><input type="search" style="width: 56px" /></th>
-                <th><input type="search" style="width: 56px" /></th>
-                <th><input type="search" style="width: 56px" /></th>
-                <th><input type="search" style="width: 56px" /></th>
-                <th colspan="3"></th>
-            </tr>
-            <tbody>
-                @{
-                    int filtred = 0;
-                }
-                @foreach (var dish in Model)
-                {
-                    filtred++;
-
+        @{
+            int filtred = 0;
+        }
+        @using (Html.BeginForm("Filtration", "Filter"))
+        {
+            <table id="dishes">
+                <thead>
                     <tr>
-                        <td style="width: 23px">@dish.Name</td>
-                        <td>@dish.CreateDate</td>
-                        <td>@dish.Consist</td>
-                        <td>@dish.Description</td>
-                        <td>@dish.Price</td>
-                        <td>@dish.Gram</td>
-                        <td>@dish.Calorific</td>
-                        <td>@dish.CookTime</td>
+                        <th style="width: 23px">Название</th>
+                        <th>Дата создания</th>
+                        <th>Состав</th>
+                        <th>Описание</th>
+                        <th>Цена</th>
+                        <th>Граммовка</th>
+                        <th>Калорийность</th>
+                        <th>Время <br />Приготовления</th>
 
-                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
-                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
-                        <td id="action" style="padding: 7px;"><a href="@Url.Action("Delete", "Logic")?id=@dish.Id" class="material-icons">clear</a></td>
-
+                        <th colspan="3"><button class="material-icons" id="search">search</button></th>
                     </tr>
-                }
+                </thead>
 
-            </tbody>
-        </table>
+                <tr id="SearchFields">
+
+                    <th><input type="search" name="name" /></th>
+                    <th><input type="search" name="createDate" /></th>
+                    <th><input type="search" name="consistence" /></th>
+                    <th><input type="search" name="description" style="width: 56px" /></th>
+                    <th><input type="search" name="price" style="width: 56px" /></th>
+                    <th><input type="search" name="gram" style="width: 56px" /></th>
+                    <th><input type="search" name="calorific" /></th>
+                    <th><input type="search" name="cookTime" /></th>
+                    <th colspan="3"></th>
+                </tr>
+
+                <tbody>
+
+                    @foreach (var dish in Model)
+                    {
+                        filtred++;
+
+                        <tr>
+                            
+                            <td class="dishesItem" style="width: 23px">@dish.Name</td>
+                            <td class="dishesItem"> @dish.CreateDate</td>
+                            <td class="dishesItem"> @dish.Consist</td>
+                            <td class="dishesItem"> @dish.Description</td>
+                            <td class="dishesItem"> @dish.Price</td>
+                            <td class="dishesItem"> @dish.Gram</td>
+                            <td class="dishesItem"> @dish.Calorific</td>
+                            <td class="dishesItem"> @dish.CookTime</td>
+
+                            <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
+                            <td class="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
+                            <td class="del" style="padding: 7px;"><a name="@dish.Id" class="material-icons">clear</a></td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
 
         <script>
-            function Filtration(inputType) {
-                var input, items, filter;
-                input = document.getElementById('inputType');
-                filter = input.value;
 
+            $('.del').each(function () {
+                var id = $(this).children('a').attr('name');
+
+                 $(this).children('a').click(
+                    function () {
+                        $(this).parent('.del').parent('tr').hide();
+                        $.post("@Url.Action("Delete", "Logic")?id=" + id);
+                    });
+            });
+
+            $('#SearchFields').children('input').keypress(function (e) {
+                if (e.which == 13) {
+
+
+                    return false;
+                }
+            });
         </script>
         <script src="/js/site.js"></script>
     </div>
 
-        <p id="itemsCount">@filtred записей из @Model.Count()</p>
+    <p id="itemsCount">@filtred из @Model.Count()</p>
 
-        <ul class="pagination">
-            @for (int i = 1; i <= Math.Round((double)23 / 20, MidpointRounding.ToPositiveInfinity); i++)
-            {
-                <li><a href="">@i</a></li>
-            }
-        </ul>
+    <ul class="pagination">
+        @for (int i = 1; i <= Math.Round((double)23 / 20, MidpointRounding.ToPositiveInfinity); i++)
+        {
+            <li><a href="">@i</a></li>
+        }
+    </ul>
 
 </body>
 </html>

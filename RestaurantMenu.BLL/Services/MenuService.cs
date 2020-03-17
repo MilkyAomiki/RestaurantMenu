@@ -2,7 +2,9 @@
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
 using RestaurantMenu.BLL.Mapper;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RestaurantMenu.BLL.Services
 {
@@ -35,6 +37,11 @@ namespace RestaurantMenu.BLL.Services
         {
             var items = _context.Dish;
             return DishMap.GetDishes(items);
+        }
+
+        public IEnumerable<Restaurant_menu.Models.Dish> Find(Func<Restaurant_menu.Models.Dish, Boolean> predicate)
+        {
+            return _context.Dish.Where(predicate).ToList();
         }
         #endregion
 
