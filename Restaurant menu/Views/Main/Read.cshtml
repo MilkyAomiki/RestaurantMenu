@@ -22,7 +22,12 @@
     <a href="/" class="material-icons"> keyboard_arrow_left</a>
 
     <div class="information">
+        @{
+            var ts = TimeSpan.FromMinutes(Model.CookTime);
 
+            var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
+            cookTime = cookTime + " мин.";
+        }
         <p id="dateh">Дата создания:</p>
         <p id="date">@Model.CreateDate</p>
 
@@ -45,7 +50,7 @@
             <p class="info"> @Model.Calorific</p>
 
             <p class="field">Время Приготовления:</p>
-            <p class="info"> @Model.CookTime</p>
+            <p class="info"> @cookTime</p>
 
         </div>
     </div>

@@ -1,4 +1,5 @@
 ﻿@using RestaurantMenu.BLL.DTO
+@using Restaurant_menu.Controllers;
 @model IEnumerable<Dish>
 @{
     ViewData["Title"] = "Index";
@@ -39,14 +40,14 @@
             <table id="dishes">
                 <thead>
                     <tr>
-                        <th style="width: 23px">Название</th>
-                        <th>Дата создания</th>
-                        <th>Состав</th>
-                        <th>Описание</th>
-                        <th>Цена</th>
-                        <th>Граммовка</th>
-                        <th>Калорийность</th>
-                        <th>Время <br />Приготовления</th>
+                        <th id="hName"        class="tableHeader"style="width: 23px">Название</th>
+                        <th id="hCreateDate"  class="tableHeader">Дата создания</th>
+                        <th id="hConsistence" class="tableHeader">Состав</th>
+                        <th id="hDescription" class="tableHeader">Описание</th>
+                        <th id="hPrice"       class="tableHeader">Цена</th>
+                        <th id="hGram"        class="tableHeader">Граммовка</th>
+                        <th id="hCalorific"   class="tableHeader">Калорийность</th>
+                        <th id="hCookTime"    class="tableHeader">Время Приготовления</th>
 
                         <th colspan="3"><button class="material-icons" id="search">search</button></th>
                     </tr>
@@ -55,13 +56,13 @@
                 <tr id="SearchFields">
 
                     <th><input type="text" class="searchField" name="name" /></th>
-                    <th><input type="text" class="searchField" name="createDate" /></th>
+                    <th><input type="text" class="searchField" name="createdate" /></th>
                     <th><input type="text" class="searchField" name="consistence" /></th>
                     <th><input type="text" class="searchField" name="description" style="width: 56px" /></th>
                     <th><input type="text" class="searchField" name="price" style="width: 56px" /></th>
                     <th><input type="text" class="searchField" name="gram" style="width: 56px" /></th>
                     <th><input type="text" class="searchField" name="calorific" /></th>
-                    <th><input type="text" class="searchField" name="cookTime" /></th>
+                    <th><input type="text" class="searchField" name="cooktime" /></th>
                     <th colspan="3"></th>
                 </tr>
 
@@ -69,6 +70,11 @@
 
                     @foreach (var dish in Model)
                     {
+                        var ts = TimeSpan.FromMinutes(dish.CookTime);
+                        
+                        var cookTime = ts.Hours == 0? ts.ToString("%m"): ts.ToString("h' ч. 'mm");
+                        cookTime = cookTime + " мин.";
+                       
 
                         <tr id="@dish.Id" >
                             
@@ -79,7 +85,7 @@
                             <td class="dishesItem"> @dish.Price</td>
                             <td class="dishesItem"> @dish.Gram</td>
                             <td class="dishesItem"> @dish.Calorific</td>
-                            <td class="dishesItem"> @dish.CookTime</td>
+                            <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
                             <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
                             <td class="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
@@ -92,9 +98,9 @@
             </table>
         }
 
-        <!--Function for delete items-->
-        <script>
 
+        <script>
+            /*Delete items*/
             $('.del').each(function () {
                 var id = $(this).children('a').attr('name');
 
@@ -105,20 +111,19 @@
                     });
             });
 
+            /*Filtration*/
             $('#SearchFields').children('th').children('input').each(function () {
                 $(this).keyup(function (e) {
                     console.log($(this).attr('name') + ': ' + $(this).val());
                     var name = $(this).attr('name');
                     var value = $(this).val();
-                    var resultlist;
-                    $.post("@Url.Action("Filtration", "Filter")?name=" + name + "&filter=" + value, null,Sort)
-                    function Sort(result) {
-                        resultlist = result.slice(0);
+                    $.post("@Url.Action("Filtration", "Filter")?name=" + name + "&filter=" + value, null, Filter)
+                    function Filter(result) {
                         console.log(result);
-                        console.log(resultlist);
-
+                        $('#Filtred').text(result.length);
                         $('tbody').children('tr').each(function () {
                             var matched = false;
+
                             for (var i = 0; i < result.length; i++) {
                                 if ($(this).attr('id') == result[i]){
                                     matched = true;
@@ -127,16 +132,37 @@
                             }
                             if (matched == false) {
                                 $(this).hide();
+                                $('#SearchFields').css('display', 'table-row');
+
                             } else {
 
                                 $(this).show();
+                                $('#SearchFields').css('display', 'table-row');
                             }
-
-                            
                         })
                     }
                 });
             });
+
+            /*Sorting*/
+            $('.tableHeader').each(function () {
+                $(this).css('cursor', 'pointer');
+                $(this).click(function () {
+                    var name = $(this).attr('id');
+                    console.log("SORT\n " + name);
+                        $.post("@Url.Action("Sorting", "Filter")?name=" + name, null, Sort) 
+                })
+            })
+            function Sort(result) {
+                var list = $('tbody > tr').get();
+                for (var i = 0; i < result.length; i++) {
+                    var item = list.find(x => x.getAttribute('id') == result[i]);
+                    if (item != undefined) {
+                        list.find(x => x.getAttribute('id') == result[i]).parentNode.appendChild(list.find(x => x.getAttribute('id') == result[i]));
+                        console.log(item);
+                    }
+                }
+            }
         </script>
         <script src="/js/site.js"></script>
     </div>

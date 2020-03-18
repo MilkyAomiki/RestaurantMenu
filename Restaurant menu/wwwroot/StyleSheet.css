@@ -2,6 +2,8 @@
 	font-family: "Roboto";
 }
 
+
+
 #SearchFields {
 	transition-duration:0s;
 	display: none;
@@ -76,7 +78,7 @@ table thead {
 td {
 	padding: 53px;
 	max-width: 100px;
-	overflow-wrap:break-word;
+	overflow-wrap:normal;
 }
 
 button {

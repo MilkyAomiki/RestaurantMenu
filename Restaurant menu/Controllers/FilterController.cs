@@ -8,12 +8,59 @@ using RestaurantMenu.BLL.Interfaces;
 
 namespace Restaurant_menu.Controllers
 {
+    public enum FiledTypes
+    {
+        Name = 111,
+        CreateDate = 222,
+        Consistence = 333,
+        Description = 444,
+        Price = 555,
+        Gram = 666,
+        Calorific = 777,
+        CookTime = 888,
+    }
     public class FilterController : Controller
     {
         private IMenu<Dish> _menu;
         public FilterController(IMenu<Dish> menu)
         {
             _menu = menu;
+        }
+
+        [HttpPost]
+        public IEnumerable<short> Sorting(string name)
+        {
+            dynamic result;
+            switch (name)
+            {
+
+                case "hName":
+                     result = _menu.GetAll().OrderBy(n => n.Name).Select(i => i.Id);
+                    return result;
+                case "hCreateDate":
+                     result = _menu.GetAll().OrderBy(n => n.CreateDate).Select(i => i.Id);
+                    return result;
+                case "hConsistence":
+                     result = _menu.GetAll().OrderBy(n => n.Consist).Select(i => i.Id);
+                    return result;
+                case "hDescription":
+                     result = _menu.GetAll().OrderBy(n => n.Description).Select(i => i.Id);
+                    return result;
+                case "hPrice":
+                     result = _menu.GetAll().OrderBy(n => n.Price).Select(i => i.Id);
+                    return result;
+                case "hGram":
+                    result = _menu.GetAll().OrderBy(n => n.Gram).Select(i => i.Id);
+                    return result;
+                case "hCalorific":
+                    result = _menu.GetAll().OrderBy(n => n.Calorific).Select(i => i.Id);
+                    return result;
+                case "hCookTime":
+                    result = _menu.GetAll().OrderBy(n => n.CookTime).Select(i => i.Id);
+                    return result;
+                default:
+                    return null;
+            }
         }
 
         [HttpPost]
@@ -29,24 +76,49 @@ namespace Restaurant_menu.Controllers
 
                     return result;
                 case "createdate":
-                    result = _menu.GetAll().Where(f => String.CompareOrdinal(f.CreateDate.ToString(), filter) > 0).OrderBy(f => String.CompareOrdinal(f.CreateDate.ToString(), filter)).Select(x => x);
+                    result = filter == null
+                        ? _menu.GetAll().Select(x => x.Id)
+                        : _menu.GetAll().Where(f => f.CreateDate.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
                     return result;
                 case "consistence":
-                    break;
+                    result = filter == null
+                        ? _menu.GetAll().Select(x => x.Id)
+                        : _menu.GetAll().Where(f => f.Consist.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 case "description":
-                    break;
+                    result = filter == null
+                        ? _menu.GetAll().Select(x => x.Id)
+                        : _menu.GetAll().Where(f => f.Description.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 case "price":
-                    break;
+                    result = filter == null
+                       ? _menu.GetAll().Select(x => x.Id)
+                       : _menu.GetAll().Where(f => f.Price.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 case "gram":
-                    break;
+                    result = filter == null
+                      ? _menu.GetAll().Select(x => x.Id)
+                      : _menu.GetAll().Where(f => f.Gram.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 case "calorific":
-                    break;
+                    result = filter == null
+                     ? _menu.GetAll().Select(x => x.Id)
+                     : _menu.GetAll().Where(f => f.Calorific.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 case "cooktime":
-                    break;
+                    result = filter == null
+                     ? _menu.GetAll().Select(x => x.Id)
+                     : _menu.GetAll().Where(f => f.CookTime.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
+                    return result;
                 default:
                     return null;
             }
-            return null;
 
         }
     }

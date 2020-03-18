@@ -21,6 +21,9 @@
     <!--Material Icons-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    <!--Jquery Valdation-->
+    <script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+
 </head>
 <body>
     <a href="/" class="material-icons">
@@ -38,7 +41,7 @@
         } 
     </h2>
 
-    <form method="post" class="input-group" action="@uri ">
+    <form id="mainform" method="post" class="input-group" action="@uri ">
 
 
         <input type="hidden" class="form-control" name="id" @if (isEdit) { @: value="@Model.Id"
@@ -52,7 +55,7 @@
 
         <p>Название:</p>
         <input type="text" class="form-control" name="name" @if (isEdit) { @: value="@Model.Name"
-               }>
+               } required>
 
         <p>Состав:</p>
         <input type="text" class="form-control" name="consist" @if (isEdit) { @: value="@Model.Consist"
@@ -63,20 +66,20 @@
                }>
 
         <p>Цена:</p>
-        <input type="text" class="form-control" name="price" @if (isEdit) { @: value="@Model.Price"
+        <input type="number" class="form-control" name="price" @if (isEdit) { @: value="@Model.Price"
                }>
 
         <p>Граммовка:</p>
-        <input type="text" class="form-control" name="gram" @if (isEdit) { @: value="@Model.Gram" }
+        <input type="number" class="form-control" name="gram" @if (isEdit) { @: value="@Model.Gram" }
                }>
 
         <p>Калорийность блюда:</p>
-        <input type="text" class="form-control" name="calorie" @if (isEdit) { @: value="@Model.Calorific"
+        <input type="number" class="form-control" name="calorie" @if (isEdit) { @: value="@Model.Calorific"
                }>
 
         <p>Время Приготовления:</p>
 
-        <input type="text" class="form-control" name="cookTime" @if (isEdit) { @: value="@Model.CookTime"
+        <input type="number" class="form-control" name="cookTime" @if (isEdit) { @: value="@Model.CookTime"
                }>
 
         <br />
@@ -92,7 +95,9 @@
             }
         </button>
     </form>
-
+    <script>
+        $('#mainform').validate();
+    </script>
 </body>
 </html>
 
