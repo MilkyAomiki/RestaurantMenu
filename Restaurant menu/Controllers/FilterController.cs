@@ -8,7 +8,11 @@ using RestaurantMenu.BLL.Interfaces;
 
 namespace Restaurant_menu.Controllers
 {
-    public enum FiledTypes
+    /// <summary>
+    ///  Не сочетаются поля в сортировке.
+    /// Сочетаются сортировка и фильтрация.
+    /// </summary>
+    public enum FieldTypes
     {
         Name = 111,
         CreateDate = 222,
@@ -28,34 +32,34 @@ namespace Restaurant_menu.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<short> Sorting(string name)
+        public IEnumerable<short> Sorting(FieldTypes name)
         {
             dynamic result;
             switch (name)
             {
 
-                case "hName":
+                case FieldTypes.Name:
                      result = _menu.GetAll().OrderBy(n => n.Name).Select(i => i.Id);
                     return result;
-                case "hCreateDate":
+                case FieldTypes.CreateDate:
                      result = _menu.GetAll().OrderBy(n => n.CreateDate).Select(i => i.Id);
                     return result;
-                case "hConsistence":
+                case FieldTypes.Consistence:
                      result = _menu.GetAll().OrderBy(n => n.Consist).Select(i => i.Id);
                     return result;
-                case "hDescription":
+                case FieldTypes.Description:
                      result = _menu.GetAll().OrderBy(n => n.Description).Select(i => i.Id);
                     return result;
-                case "hPrice":
+                case FieldTypes.Price:
                      result = _menu.GetAll().OrderBy(n => n.Price).Select(i => i.Id);
                     return result;
-                case "hGram":
+                case FieldTypes.Gram:
                     result = _menu.GetAll().OrderBy(n => n.Gram).Select(i => i.Id);
                     return result;
-                case "hCalorific":
+                case FieldTypes.Calorific:
                     result = _menu.GetAll().OrderBy(n => n.Calorific).Select(i => i.Id);
                     return result;
-                case "hCookTime":
+                case FieldTypes.CookTime:
                     result = _menu.GetAll().OrderBy(n => n.CookTime).Select(i => i.Id);
                     return result;
                 default:
@@ -64,53 +68,53 @@ namespace Restaurant_menu.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<short> Filtration(string name, string filter)
+        public IEnumerable<short> Filtration(FieldTypes name, string filter)
         {
             dynamic result;
             switch (name)
             {
-                case "name":
+                case FieldTypes.Name:
                     result = filter == null
                         ? _menu.GetAll().Select(x => x.Id)
                         : _menu.GetAll().Where(f => f.Name.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "createdate":
+                case FieldTypes.CreateDate:
                     result = filter == null
                         ? _menu.GetAll().Select(x => x.Id)
                         : _menu.GetAll().Where(f => f.CreateDate.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
                     return result;
-                case "consistence":
+                case FieldTypes.Consistence:
                     result = filter == null
                         ? _menu.GetAll().Select(x => x.Id)
                         : _menu.GetAll().Where(f => f.Consist.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "description":
+                case FieldTypes.Description:
                     result = filter == null
                         ? _menu.GetAll().Select(x => x.Id)
                         : _menu.GetAll().Where(f => f.Description.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "price":
+                case FieldTypes.Price:
                     result = filter == null
                        ? _menu.GetAll().Select(x => x.Id)
                        : _menu.GetAll().Where(f => f.Price.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "gram":
+                case FieldTypes.Gram:
                     result = filter == null
                       ? _menu.GetAll().Select(x => x.Id)
                       : _menu.GetAll().Where(f => f.Gram.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "calorific":
+                case FieldTypes.Calorific:
                     result = filter == null
                      ? _menu.GetAll().Select(x => x.Id)
                      : _menu.GetAll().Where(f => f.Calorific.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
-                case "cooktime":
+                case FieldTypes.CookTime:
                     result = filter == null
                      ? _menu.GetAll().Select(x => x.Id)
                      : _menu.GetAll().Where(f => f.CookTime.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
