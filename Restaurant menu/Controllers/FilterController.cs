@@ -23,7 +23,10 @@ namespace Restaurant_menu.Controllers
             switch (name)
             {
                 case "name":
-                    result = _menu.GetAll().Where(f => f.Name.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+                    result = filter == null
+                        ? _menu.GetAll().Select(x => x.Id)
+                        : _menu.GetAll().Where(f => f.Name.ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+
                     return result;
                 case "createdate":
                     result = _menu.GetAll().Where(f => String.CompareOrdinal(f.CreateDate.ToString(), filter) > 0).OrderBy(f => String.CompareOrdinal(f.CreateDate.ToString(), filter)).Select(x => x);
