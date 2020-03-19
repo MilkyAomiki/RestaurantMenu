@@ -4,6 +4,7 @@ using RestaurantMenu.BLL.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Restaurant_menu.Controllers
@@ -19,43 +20,66 @@ namespace Restaurant_menu.Controllers
 
 
         [HttpPost]
-        public void Edit(short id, string name, string consist, string description, decimal price, int gram, double calorie, int cookTime)
+        public IActionResult Edit(Dish entity)
         {
-            Dish entity = new Dish
+            //if (_menu.Get(entity.Id).Name == entity.Name )
+            //{
+            //    ModelState.AddModelError("Name", "Name is already exist");
+            //    return View("/Views/Main/Create.cshtml", entity);
+            //}
+            try
             {
-                Id = id,
-                Name = name,
-                Consist = consist,
-                Description = description,
-                Price = price,
-                Gram = gram,
-                Calorific = calorie,
-                CookTime = cookTime,
-                CreateDate = DateTime.Now
-            };
-            _menu.Update(entity);
+                entity.CreateDate = _menu.Get(entity.Id).CreateDate;
+                _menu.Update(entity);
 
-            Response.Redirect("/");
+                Response.Redirect("/");
+            }
+
+            catch (ValidationException e)
+            {
+                if (e.ValidationResult.MemberNames.Contains("name"))
+                {
+                    ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
+                    return View("/Views/Main/Create.cshtml", entity);
+                }
+                else if (e.ValidationResult.MemberNames.Contains("createDate"))
+                {
+                    ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
+                    return View("/Views/Main/Create.cshtml", entity);
+                }
+
+            };
+            return Redirect("/");
         }
+        
+           
 
         [HttpPost]
-        public void Create(string name, string consist, string description, decimal price, int gram, double calorie, int cookTime)
+        public IActionResult Create(Dish entity)
         {
-            var entity = new Dish
+            try
             {
-                Consist = consist,
-                Calorific = calorie,
-                CookTime = cookTime,
-                CreateDate = DateTime.Now,
-                Description = description,
-                Gram = gram,
-                Name = name,
-                Price = price
+                entity.CreateDate = DateTime.Now;
+                _menu.Create(entity);
+
+                Response.Redirect("/");
+            }
+
+            catch (ValidationException e)
+            {
+                if (e.ValidationResult.MemberNames.Contains("name"))
+                {
+                    ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
+                    return View("/Views/Main/Create.cshtml", entity);
+                }
+                else if (e.ValidationResult.MemberNames.Contains("createDate"))
+                {
+                    ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
+                    return View("/Views/Main/Create.cshtml", entity);
+                }
+
             };
-
-            _menu.Create(entity);
-
-            Response.Redirect("/");
+            return Content(" ");
         }
 
         [HttpPost]

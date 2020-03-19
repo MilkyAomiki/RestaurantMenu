@@ -4,7 +4,10 @@ using RestaurantMenu.BLL.Interfaces;
 using RestaurantMenu.BLL.Mapper;
 using System;
 using System.Collections.Generic;
+using RestaurantMenu.BLL.Validation;
 using System.Linq;
+using System.Globalization;
+using System.Threading;
 
 namespace RestaurantMenu.BLL.Services
 {
@@ -13,12 +16,20 @@ namespace RestaurantMenu.BLL.Services
         private readonly DishesContext _context;
         public MenuService(DishesContext context)
         {
+            var cultureInfo = new CultureInfo("en-US");
+            cultureInfo.NumberFormat.NumberGroupSeparator = ".";
+            Thread.CurrentThread.CurrentCulture = cultureInfo;
+            Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
             _context = context;
         }
 
         #region Create
         public void Create(Dish item)
         {
+            Validator validator = new Validator();
+            validator.ValidateName(item, _context);
+
             var entity = DishMap.GetDish(item);
             _context.Dish.Add(entity);
             _context.SaveChanges();
@@ -48,8 +59,18 @@ namespace RestaurantMenu.BLL.Services
         #region Update
         public void Update(Dish item)
         {
+            Validator validator = new Validator();
+            validator.IsExist(item, _context);
+            validator.ValidateCreationDate(item, _context);
+            validator.ValidateName(item, _context);
+
             var entity = DishMap.GetDish(item);
-            _context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Dish.Find(item.Id).Calorific = item.Calorific;
+            _context.Dish.Find(item.Id).Consist = item.Consist;
+            _context.Dish.Find(item.Id).Name = item.Name;
+            _context.Dish.Find(item.Id).Price = item.Price;
+            _context.Dish.Find(item.Id).Gram = item.Gram;
+            _context.Dish.Find(item.Id).Description = item.Description;
             _context.SaveChanges();
         }
         #endregion

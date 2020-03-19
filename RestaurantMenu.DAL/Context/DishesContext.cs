@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
 using Restaurant_menu.Models;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Threading;
 
 namespace Restaurant_menu.Context
 {
@@ -12,6 +14,11 @@ namespace Restaurant_menu.Context
 
 		public DishesContext(string connection)
 		{
+			var cultureInfo = new CultureInfo("en-US");
+			cultureInfo.NumberFormat.NumberGroupSeparator = ".";
+			Thread.CurrentThread.CurrentCulture = cultureInfo;
+			Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
 			this.connection = connection;
 		}
 

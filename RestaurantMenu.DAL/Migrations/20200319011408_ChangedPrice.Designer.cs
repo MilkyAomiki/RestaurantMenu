@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant_menu.Context;
 
 namespace RestaurantMenu.DAL.Migrations
 {
     [DbContext(typeof(DishesContext))]
-    partial class DishesContextModelSnapshot : ModelSnapshot
+    [Migration("20200319011408_ChangedPrice")]
+    partial class ChangedPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,10 +29,11 @@ namespace RestaurantMenu.DAL.Migrations
                         .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Calorific")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Calorific")
+                        .HasColumnType("float");
 
                     b.Property<string>("Consist")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CookTime")
@@ -52,8 +55,8 @@ namespace RestaurantMenu.DAL.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

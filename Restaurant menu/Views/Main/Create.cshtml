@@ -21,8 +21,11 @@
     <!--Material Icons-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--Jquery Valdation-->
-    <script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <!--Jquery-->
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 
 </head>
 <body>
@@ -49,55 +52,55 @@
         @if (isEdit)
         {
             <p>Дата создания:</p>
-            <label class="form-control">@Model.CreateDate</label>
+            @Html.DisplayFor(x => x.CreateDate) <br />
+            @Html.ValidationMessageFor(x => x.CreateDate)
         }
 
-
+        @Html.ValidationSummary(true)
         <p>Название:</p>
-        <input type="text" class="form-control" name="name" @if (isEdit) { @: value="@Model.Name"
-               } required>
+        @Html.EditorFor(x => x.Name) <br />
+        @Html.ValidationMessageFor(x => x.Name)
 
         <p>Состав:</p>
-        <input type="text" class="form-control" name="consist" @if (isEdit) { @: value="@Model.Consist"
-               }>
+        @Html.EditorFor(x => x.Consist) <br />
+        @Html.ValidationMessageFor(x => x.Consist)
 
         <p>Описание:</p>
-        <input type="text" class="form-control" name="description" @if (isEdit) { @: value="@Model.Description"
-               }>
+        @Html.EditorFor(x => x.Description) <br />
+        @Html.ValidationMessageFor(x => x.Description)
 
         <p>Цена:</p>
-        <input type="number" class="form-control" name="price" @if (isEdit) { @: value="@Model.Price"
-               }>
+        @Html.EditorFor(x => x.Price) <br />
+        @Html.ValidationMessageFor(x => x.Price)
 
         <p>Граммовка:</p>
-        <input type="number" class="form-control" name="gram" @if (isEdit) { @: value="@Model.Gram" }
-               }>
+        @Html.EditorFor(x => x.Gram) <br />
+        @Html.ValidationMessageFor(x => x.Gram)
 
         <p>Калорийность блюда:</p>
-        <input type="number" class="form-control" name="calorie" @if (isEdit) { @: value="@Model.Calorific"
-               }>
+        @Html.TextBoxFor(x => x.Calorific) <br />
+        @Html.ValidationMessageFor(x => x.Calorific)
 
         <p>Время Приготовления:</p>
-
-        <input type="number" class="form-control" name="cookTime" @if (isEdit) { @: value="@Model.CookTime"
-               }>
+        @Html.EditorFor(x => x.CookTime) <br />
+        @Html.ValidationMessageFor(x => x.CookTime)
 
         <br />
 
         <button type="submit" id="Create">
-            @if (isEdit){
+            @if (isEdit)
+            {
 
                 @:Изменить
 
-            } else{
+            }
+            else
+            {
 
                 @:Создать
             }
         </button>
     </form>
-    <script>
-        $('#mainform').validate();
-    </script>
 </body>
 </html>
 

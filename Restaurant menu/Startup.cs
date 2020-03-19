@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using RestaurantMenu.BLL.DI;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
+using System.Globalization;
+using System.Threading;
 
 namespace Restaurant_menu
 {
@@ -25,7 +27,7 @@ namespace Restaurant_menu
 			string connection = Configuration.GetConnectionString("DefaultConnection");
 			var diModule = new DependencyModule(connection);
 			services.AddScoped<IMenu<Dish>>(options => { return diModule.ConfigureMenuService(); });
-			services.AddMvc(options => options.EnableEndpointRouting = false);
+			services.AddMvc(options => { options.EnableEndpointRouting = false;});
 
 
 
@@ -34,6 +36,11 @@ namespace Restaurant_menu
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
+			var cultureInfo = new CultureInfo("en-US");
+			cultureInfo.NumberFormat.NumberGroupSeparator = ".";
+			Thread.CurrentThread.CurrentCulture = cultureInfo;
+			Thread.CurrentThread.CurrentUICulture = cultureInfo;
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -44,7 +51,7 @@ namespace Restaurant_menu
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
-
+			
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 

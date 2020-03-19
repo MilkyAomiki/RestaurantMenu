@@ -12,18 +12,23 @@ namespace RestaurantMenu.BLL.DTO
         public short Id { get; set; }
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
+
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
-        [Required]
+
         public string Consist { get; set; }
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
-        [Column(TypeName = "smallmoney")]
+        
+        [Range(0, double.MaxValue)]
         public decimal Price { get; set; }
+        [Range(0, int.MaxValue)]
         public int Gram { get; set; }
-        public double Calorific { get; set; }
+        [Range(0, double.MaxValue)]
+        public decimal Calorific { get; set; }
+        [Range(0, int.MaxValue)]
         public int CookTime { get; set; }
     }
 }
