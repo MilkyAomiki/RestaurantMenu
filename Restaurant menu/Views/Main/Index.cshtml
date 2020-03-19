@@ -1,25 +1,25 @@
-﻿@using RestaurantMenu.BLL.DTO
-@using Restaurant_menu.Controllers;
-@model IEnumerable<Dish>
+﻿@using Restaurant_menu.Controllers;
+@using Restaurant_menu.Pagination;
+@model IndexViewModel
 @{
     ViewData["Title"] = "Index";
 }
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Restaurant Menu</title>
+    <title>Restaurant Menu</title>  
 
     <!--Main Style-->
     <link rel="stylesheet" href="StyleSheet.css" />
 
     <!--Material Icons-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
     <!--Roboto Font-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>
 
     <!--Jquery-->
-    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
@@ -31,25 +31,20 @@
     </header>
 
 
-
-
     <div class="mainData">
-        @{
-            int filtred = 0;
-        }
         @using (Html.BeginForm("Filtration", "Filter"))
         {
             <table id="dishes">
                 <thead>
                     <tr>
-                        <th id="@FieldTypes.Name"        class="tableHeader"style="width: 23px">Название</th>
-                        <th id="@FieldTypes.CreateDate"  class="tableHeader">Дата создания</th>
+                        <th id="@FieldTypes.Name" class="tableHeader" style="width: 23px">Название</th>
+                        <th id="@FieldTypes.CreateDate" class="tableHeader">Дата создания</th>
                         <th id="@FieldTypes.Consistence" class="tableHeader">Состав</th>
                         <th id="@FieldTypes.Description" class="tableHeader">Описание</th>
-                        <th id="@FieldTypes.Price"       class="tableHeader">Цена</th>
-                        <th id="@FieldTypes.Gram"        class="tableHeader">Граммовка</th>
-                        <th id="@FieldTypes.Calorific"   class="tableHeader">Калорийность</th>
-                        <th id="@FieldTypes.CookTime"    class="tableHeader">Время Приготовления</th>
+                        <th id="@FieldTypes.Price" class="tableHeader">Цена</th>
+                        <th id="@FieldTypes.Gram" class="tableHeader">Граммовка</th>
+                        <th id="@FieldTypes.Calorific" class="tableHeader">Калорийность</th>
+                        <th id="@FieldTypes.CookTime" class="tableHeader">Время Приготовления</th>
 
                         <th colspan="3"><button class="material-icons" id="search">search</button></th>
                     </tr>
@@ -70,16 +65,16 @@
 
                 <tbody>
 
-                    @foreach (var dish in Model)
+                    @foreach (var dish in Model.Dishes)
                     {
                         var ts = TimeSpan.FromMinutes(dish.CookTime);
-                        
-                        var cookTime = ts.Hours == 0? ts.ToString("%m"): ts.ToString("h' ч. 'mm");
-                        cookTime = cookTime + " мин.";
-                       
 
-                        <tr id="@dish.Id" >
-                            
+                        var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
+                        cookTime = cookTime + " мин.";
+
+
+                        <tr id="@dish.Id">
+
                             <td class="dishesItem" style="width: 23px">@dish.Name</td>
                             <td class="dishesItem"> @dish.CreateDate</td>
                             <td class="dishesItem"> @dish.Consist</td>
@@ -152,7 +147,7 @@
                 $(this).click(function () {
                     var name = $(this).attr('id');
                     console.log("SORT\n " + name);
-                        $.post("@Url.Action("Sorting", "Filter")?name=" + name, null, Sort) 
+                        $.post("@Url.Action("Sorting", "Filter")?name=" + name, null, Sort)
                 })
             })
             function Sort(result) {
@@ -169,12 +164,19 @@
         <script src="/js/site.js"></script>
     </div>
 
-    <p id="itemsCount"><label id="Filtred">@Model.Count()</label> из <label id="AllItemsCount">@Model.Count()</label></p>
+    <p id="itemsCount"><label id="Filtred">@Model.Dishes.Count()</label> из <label id="AllItemsCount">@Model.Dishes.Count()</label></p>
 
     <ul class="pagination">
-        @for (int i = 1; i <= Math.Round((double)23 / 20, MidpointRounding.ToPositiveInfinity); i++)
+
+        @if (Model.PageViewModel.HasPreviousPage)
         {
-            <li><a href="">@i</a></li>
+            int value = Model.PageViewModel.PageNumber - 1;
+            <li><a class="material-icons" href="@Url.Action("Index", "Main")?page=@value">arrow_back_ios</a></li>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+             int value = Model.PageViewModel.PageNumber + 1;
+            <li><a class="material-icons" href="@Url.Action("Index", "Main")?page=@value">arrow_forward_ios</a></li>
         }
     </ul>
 

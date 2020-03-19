@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant_menu.Pagination;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
+using System.Linq;
 
 namespace Restaurant_menu.Controllers
 {
@@ -14,9 +16,20 @@ namespace Restaurant_menu.Controllers
 		}
 
 		[HttpGet("/")]
-		public IActionResult Index()
+		public IActionResult Index(int page =1)
 		{
-			return View(Menu.GetAll());
+			int pageSize = 20;
+
+			var source = Menu.GetAll();
+			var count = source.Count();
+			var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+			IndexViewModel indexViewModel = new IndexViewModel
+			{
+				PageViewModel =pageViewModel,
+				Dishes = items
+			};
+			return View(indexViewModel);
 		}
 
 		[HttpGet("/Create")]
