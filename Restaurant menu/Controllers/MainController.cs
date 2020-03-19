@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant_menu.Model;
 using Restaurant_menu.Pagination;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
@@ -35,7 +36,7 @@ namespace Restaurant_menu.Controllers
 		[HttpGet("/Create")]
 		public IActionResult Create()
 		{
-			return View("/Views/Main/Create.cshtml", new Dish {Id = -1});
+			return View("/Views/Main/Create.cshtml", new CreateModelView{ IsEdit = false, Dish = null});
 		}
 
 		[HttpGet]
@@ -50,7 +51,7 @@ namespace Restaurant_menu.Controllers
 		public IActionResult Edit(int id)
 		{
 			var dish = Menu.Get(id);
-			return View("/Views/Main/Create.cshtml", dish);
+			return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = dish});
 		}
 	}
 

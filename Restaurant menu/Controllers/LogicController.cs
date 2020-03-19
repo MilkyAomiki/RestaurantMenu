@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant_menu.Model;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
 using System;
@@ -40,12 +41,12 @@ namespace Restaurant_menu.Controllers
                 if (e.ValidationResult.MemberNames.Contains("name"))
                 {
                     ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", entity);
+                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = entity});
                 }
                 else if (e.ValidationResult.MemberNames.Contains("createDate"))
                 {
                     ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", entity);
+                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = entity});
                 }
 
             };
@@ -70,12 +71,12 @@ namespace Restaurant_menu.Controllers
                 if (e.ValidationResult.MemberNames.Contains("name"))
                 {
                     ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", entity);
+                    return View("/Views/Main/Create.cshtml", new CreateModelView{IsEdit = false, Dish = entity});
                 }
                 else if (e.ValidationResult.MemberNames.Contains("createDate"))
                 {
                     ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", entity);
+                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = false, Dish = entity});
                 }
 
             };

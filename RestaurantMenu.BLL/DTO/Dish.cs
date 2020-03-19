@@ -11,10 +11,12 @@ namespace RestaurantMenu.BLL.DTO
         [Column("ID")]
         public short Id { get; set; }
         [Column(TypeName = "smalldatetime")]
+        [Display(Name = "CreateDate")]
         public DateTime CreateDate { get; set; }
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "Name")]
         public string Name { get; set; }
 
         public string Consist { get; set; }

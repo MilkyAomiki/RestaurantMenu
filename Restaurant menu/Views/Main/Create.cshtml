@@ -1,8 +1,9 @@
 ﻿@using RestaurantMenu.BLL.DTO
-@model Dish
+@using Restaurant_menu.Model;
+@model CreateModelView
 @{
 
-    bool isEdit = Model.Id == -1 ? false : true;
+    bool isEdit = Model.IsEdit;
     var uri = isEdit ? Url.Action("Edit", "Logic") : Url.Action("Create", "Logic");
     ViewData["Title"] = "Create";
 
@@ -62,43 +63,47 @@
     <form id="mainform" method="post" class="input-group" action="@uri ">
 
 
-        <input type="hidden" class="form-control" name="id" @if (isEdit) { @: value="@Model.Id"
+        <input type="hidden" class="form-control" name="Id" @if (isEdit) { @: value="@Model.Dish.Id"
                }>
         @if (isEdit)
         {
             <p>Дата создания:</p>
-            @Html.DisplayFor(x => x.CreateDate) <br />
-            @Html.ValidationMessageFor(x => x.CreateDate)
+            @Html.DisplayFor(x => x.Dish.CreateDate) <br />
+            @Html.ValidationMessageFor(x => x.Dish.CreateDate)
+        }
+        else
+        {
+            <input type="hidden" name="CreateDate" value=""/>
         }
 
         @Html.ValidationSummary(true)
         <p>Название:</p>
-        @Html.EditorFor(x => x.Name) <br />
-        @Html.ValidationMessageFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Dish.Name, new {Name="Jack", name ="Jack", id ="test"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Name)
 
         <p>Состав:</p>
-        @Html.EditorFor(x => x.Consist) <br />
-        @Html.ValidationMessageFor(x => x.Consist)
+        @Html.TextBoxFor(x => x.Dish.Consist, new {name="Consist"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Consist)
 
         <p>Описание:</p>
-        @Html.EditorFor(x => x.Description) <br />
-        @Html.ValidationMessageFor(x => x.Description)
+        @Html.TextBoxFor(x => x.Dish.Description, new {name="Description"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Description)
 
         <p>Цена:</p>
-        @Html.EditorFor(x => x.Price) <br />
-        @Html.ValidationMessageFor(x => x.Price)
+        @Html.TextBoxFor(x => x.Dish.Price, new {name="Price"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Price)
 
         <p>Граммовка:</p>
-        @Html.EditorFor(x => x.Gram) <br />
-        @Html.ValidationMessageFor(x => x.Gram)
+        @Html.TextBoxFor(x => x.Dish.Gram, new {name="Gram"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Gram)
 
         <p>Калорийность блюда:</p>
-        @Html.TextBoxFor(x => x.Calorific) <br />
-        @Html.ValidationMessageFor(x => x.Calorific)
+        @Html.TextBoxFor(x => x.Dish.Calorific, new {name="Calorific"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.Calorific)
 
         <p>Время Приготовления:</p>
-        @Html.EditorFor(x => x.CookTime) <br />
-        @Html.ValidationMessageFor(x => x.CookTime)
+        @Html.TextBoxFor(x => x.Dish.CookTime, new {name="CookTime"}) <br />
+        @Html.ValidationMessageFor(x => x.Dish.CookTime)
 
         <br />
 
