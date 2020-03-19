@@ -23,11 +23,19 @@ namespace Restaurant_menu.Controllers
         [HttpPost]
         public IActionResult Edit(Dish entity)
         {
-            //if (_menu.Get(entity.Id).Name == entity.Name )
-            //{
-            //    ModelState.AddModelError("Name", "Name is already exist");
-            //    return View("/Views/Main/Create.cshtml", entity);
-            //}
+            if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0)
+            {
+                var form = Request.Form;
+
+                entity.Name = form.FirstOrDefault(p => p.Key == "Dish.Name").Value;
+                entity.Description = form.FirstOrDefault(p => p.Key == "Dish.Description").Value;
+                entity.Consist = form.FirstOrDefault(p => p.Key == "Dish.Consist").Value;
+                entity.Price = Convert.ToDecimal(form.FirstOrDefault(p => p.Key == "Dish.Price").Value);
+                entity.Gram = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.Gram").Value);
+                entity.Calorific = Convert.ToDecimal(form.FirstOrDefault(p => p.Key == "Dish.Calorific").Value);
+                entity.CookTime = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.CookTime").Value);
+                
+            }
             try
             {
                 entity.CreateDate = _menu.Get(entity.Id).CreateDate;
@@ -58,11 +66,23 @@ namespace Restaurant_menu.Controllers
         [HttpPost]
         public IActionResult Create(Dish entity)
         {
+            if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0 && entity.Id == 0)
+            {
+                var form = Request.Form;
+
+                entity.Name = form.FirstOrDefault(p => p.Key == "Dish.Name").Value;
+                entity.Description = form.FirstOrDefault(p => p.Key == "Dish.Description").Value;
+                entity.Consist = form.FirstOrDefault(p => p.Key == "Dish.Consist").Value;
+                entity.Price = Convert.ToDecimal(form.FirstOrDefault(p => p.Key == "Dish.Price").Value);
+                entity.Gram = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.Gram").Value);
+                entity.Calorific = Convert.ToDecimal(form.FirstOrDefault(p => p.Key == "Dish.Calorific").Value);
+                entity.CookTime = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.CookTime").Value);
+                entity.CreateDate = DateTime.Now;
+            }
             try
             {
-                entity.CreateDate = DateTime.Now;
-                _menu.Create(entity);
 
+                _menu.Create(entity);
                 Response.Redirect("/");
             }
 

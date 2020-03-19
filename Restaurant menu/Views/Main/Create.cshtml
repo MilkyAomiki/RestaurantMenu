@@ -78,31 +78,31 @@
 
         @Html.ValidationSummary(true)
         <p>Название:</p>
-        @Html.TextBoxFor(x => x.Dish.Name, new {Name="Jack", name ="Jack", id ="test"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Name) <br />
         @Html.ValidationMessageFor(x => x.Dish.Name)
 
         <p>Состав:</p>
-        @Html.TextBoxFor(x => x.Dish.Consist, new {name="Consist"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Consist) <br />
         @Html.ValidationMessageFor(x => x.Dish.Consist)
 
         <p>Описание:</p>
-        @Html.TextBoxFor(x => x.Dish.Description, new {name="Description"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Description) <br />
         @Html.ValidationMessageFor(x => x.Dish.Description)
 
         <p>Цена:</p>
-        @Html.TextBoxFor(x => x.Dish.Price, new {name="Price"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Price) <br />
         @Html.ValidationMessageFor(x => x.Dish.Price)
 
         <p>Граммовка:</p>
-        @Html.TextBoxFor(x => x.Dish.Gram, new {name="Gram"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Gram) <br />
         @Html.ValidationMessageFor(x => x.Dish.Gram)
 
         <p>Калорийность блюда:</p>
-        @Html.TextBoxFor(x => x.Dish.Calorific, new {name="Calorific"}) <br />
+        @Html.TextBoxFor(x => x.Dish.Calorific) <br />
         @Html.ValidationMessageFor(x => x.Dish.Calorific)
 
         <p>Время Приготовления:</p>
-        @Html.TextBoxFor(x => x.Dish.CookTime, new {name="CookTime"}) <br />
+        @Html.TextBoxFor(x => x.Dish.CookTime) <br />
         @Html.ValidationMessageFor(x => x.Dish.CookTime)
 
         <br />
