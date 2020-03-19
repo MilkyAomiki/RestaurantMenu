@@ -57,7 +57,7 @@ namespace Restaurant_menu.Controllers
                     result = _menu.GetAll().OrderBy(n => n.Gram).Select(i => i.Id);
                     return result;
                 case FieldTypes.Calorific:
-                    result = _menu.GetAll().OrderBy(n => n.Calorific).Select(i => i.Id);
+                    result = _menu.GetAll().OrderBy(n =>  Decimal.Multiply(n.Calorific, Decimal.Divide(Convert.ToDecimal(n.Gram), Convert.ToDecimal(100)))).Select(i => i.Id);
                     return result;
                 case FieldTypes.CookTime:
                     result = _menu.GetAll().OrderBy(n => n.CookTime).Select(i => i.Id);

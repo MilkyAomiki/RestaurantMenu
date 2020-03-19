@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <title>Restaurant Menu</title>  
 
     <!--Main Style-->
@@ -30,6 +31,16 @@
         <form id="btnCreate" action="/Create"><button class="button create" type="submit">Создать</button></form>
     </header>
 
+    <!--Load Animation-->
+    <div class="dvProgress" style="display:flex; justify-content:center; align-items:center">
+        <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif"  />
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".dvProgress").hide();
+        })
+    </script>
+    <!------------------->
 
     <div class="mainData">
         @using (Html.BeginForm("Filtration", "Filter"))
@@ -72,7 +83,8 @@
                         var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
                         cookTime = cookTime + " мин.";
 
-
+                        var calorific = Decimal.Multiply(dish.Calorific, Decimal.Divide(Convert.ToDecimal(dish.Gram), Convert.ToDecimal(100)));
+                        var calrParsed = decimal.Parse(calorific.ToString()).ToString("G29");
                         <tr id="@dish.Id">
 
                             <td class="dishesItem" style="width: 23px">@dish.Name</td>
@@ -81,7 +93,7 @@
                             <td class="dishesItem"> @dish.Description</td>
                             <td class="dishesItem"> @dish.Price</td>
                             <td class="dishesItem"> @dish.Gram</td>
-                            <td class="dishesItem"> @dish.Calorific</td>
+                            <td class="dishesItem"> @calrParsed</td>
                             <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
                             <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
@@ -111,33 +123,41 @@
             /*Filtration*/
             $('#SearchFields').children('th').children('input').each(function () {
                 $(this).keyup(function (e) {
-                    console.log($(this).attr('name') + ': ' + $(this).val());
-                    var name = $(this).attr('name');
-                    var value = $(this).val();
-                    $.post("@Url.Action("Filtration", "Filter")?name=" + name + "&filter=" + value, null, Filter)
-                    function Filter(result) {
-                        console.log(result);
-                        $('#Filtred').text(result.length);
-                        $('tbody').children('tr').each(function () {
-                            var matched = false;
+                   /* console.log($(this).attr('name') + ': ' + $(this).val());*/
+                    for (var i in $('#SearchFields').children('th').children('input')) {
 
-                            for (var i = 0; i < result.length; i++) {
-                                if ($(this).attr('id') == result[i]){
-                                    matched = true;
-                                    console.log(matched);
+                        var name = $(this).attr('name');
+                        console.log(name);
+                        var value = $(this).val();
+                        console.log(value);
+
+                        $.post("@Url.Action("Filtration", "Filter")?name=" + name + "&filter=" + value, null, Filter)
+                        function Filter(result) {
+                            console.log(result);
+                            $('#Filtred').text(result.length);
+                            $('tbody').children('tr').each(function () {
+                                var matched = false;
+
+                                for (var i = 0; i < result.length; i++) {
+                                    if ($(this).attr('id') == result[i]){
+                                        matched = true;
+                                        console.log(matched);
+                                    }
                                 }
-                            }
-                            if (matched == false) {
-                                $(this).hide();
-                                $('#SearchFields').css('display', 'table-row');
+                                if (matched == false) {
+                                    $(this).hide();
+                                    $('#SearchFields').css('display', 'table-row');
 
-                            } else {
+                                } else {
 
-                                $(this).show();
-                                $('#SearchFields').css('display', 'table-row');
-                            }
-                        })
+                                    $(this).show();
+                                    $('#SearchFields').css('display', 'table-row');
+                                }
+                            })
+                        }
+
                     }
+
                 });
             });
 
@@ -175,7 +195,7 @@
         }
         @if (Model.PageViewModel.HasNextPage)
         {
-             int value = Model.PageViewModel.PageNumber + 1;
+            int value = Model.PageViewModel.PageNumber + 1;
             <li><a class="material-icons" href="@Url.Action("Index", "Main")?page=@value">arrow_forward_ios</a></li>
         }
     </ul>

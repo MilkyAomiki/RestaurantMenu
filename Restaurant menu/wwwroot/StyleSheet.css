@@ -26,8 +26,7 @@
 		width: 128px;
 	}
 
-table{
-	width:1000px;
+table {
 }
 
 #search{
@@ -50,7 +49,6 @@ header {
 	justify-content:center;
 	align-items: center;
 	margin-top: 100px;
-	
 }
 header h2 {
 		margin-top: 0px;
@@ -76,7 +74,7 @@ table thead {
 }
 
 td {
-	padding: 53px;
+	padding: 40px;
 	max-width: 100px;
 	overflow-wrap:normal;
 }

@@ -29,19 +29,34 @@
 
 </head>
 <body>
+
+    <!--Load Animation-->
+    <div class="dvProgress" style="display:flex; justify-content:center; align-items:center">
+        <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" />
+    </div>
+    <script>
+        $(document).ready(function () {
+            $(".dvProgress").hide();
+        })
+    </script>
+    <!------------------->
+
     <a href="/" class="material-icons">
         keyboard_arrow_left
     </a>
     <h2 id="mainh">
-        @if (isEdit){
-            
+        @if (isEdit)
+        {
+
             @:Редактирование блюда
 
-        } else{
-            
+        }
+        else
+        {
+
             @:Создание блюда
 
-        } 
+        }
     </h2>
 
     <form id="mainform" method="post" class="input-group" action="@uri ">
