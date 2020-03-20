@@ -8,16 +8,16 @@
 <html>
 <head>
 
-    <title>Restaurant Menu</title>  
+    <title>Restaurant Menu</title>
 
     <!--Main Style-->
     <link rel="stylesheet" href="StyleSheet.css" />
 
     <!--Material Icons-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
     <!--Roboto Font-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
 
     <!--Jquery-->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -33,7 +33,7 @@
 
     <!--Load Animation-->
     <div class="dvProgress" style="display:flex; justify-content:center; align-items:center">
-        <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif"  />
+        <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" />
     </div>
     <script>
         $(document).ready(function () {
@@ -83,8 +83,7 @@
                         var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
                         cookTime = cookTime + " мин.";
 
-                        var calorific = Decimal.Multiply(dish.Calorific, Decimal.Divide(Convert.ToDecimal(dish.Gram), Convert.ToDecimal(100)));
-                        var calrParsed = decimal.Parse(calorific.ToString()).ToString("G29");
+                        var calorific = Tools.CalculateCalorific(dish.Calorific, dish.Gram);
                         <tr id="@dish.Id">
 
                             <td class="dishesItem" style="width: 23px">@dish.Name</td>
@@ -93,7 +92,7 @@
                             <td class="dishesItem"> @dish.Description</td>
                             <td class="dishesItem"> @dish.Price</td>
                             <td class="dishesItem"> @dish.Gram</td>
-                            <td class="dishesItem"> @calrParsed</td>
+                            <td class="dishesItem"> @calorific</td>
                             <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
                             <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
@@ -106,8 +105,6 @@
                 </tbody>
             </table>
         }
-
-
         <script>
             /*Delete items*/
             $('.del').each(function () {
@@ -119,47 +116,7 @@
                          $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function(result) { $('#Filtred').text(result);  $('#AllItemsCount').text(result);});
                     });
             });
-
-            /*Filtration*/
-            $('#SearchFields').children('th').children('input').each(function () {
-                $(this).keyup(function (e) {
-                   /* console.log($(this).attr('name') + ': ' + $(this).val());*/
-                    for (var i in $('#SearchFields').children('th').children('input')) {
-
-                        var name = $(this).attr('name');
-                        console.log(name);
-                        var value = $(this).val();
-                        console.log(value);
-
-                        $.post("@Url.Action("Filtration", "Filter")?name=" + name + "&filter=" + value, null, Filter)
-                        function Filter(result) {
-                            console.log(result);
-                            $('#Filtred').text(result.length);
-                            $('tbody').children('tr').each(function () {
-                                var matched = false;
-
-                                for (var i = 0; i < result.length; i++) {
-                                    if ($(this).attr('id') == result[i]){
-                                        matched = true;
-                                        console.log(matched);
-                                    }
-                                }
-                                if (matched == false) {
-                                    $(this).hide();
-                                    $('#SearchFields').css('display', 'table-row');
-
-                                } else {
-
-                                    $(this).show();
-                                    $('#SearchFields').css('display', 'table-row');
-                                }
-                            })
-                        }
-
-                    }
-
-                });
-            });
+          
 
             /*Sorting*/
             $('.tableHeader').each(function () {
@@ -184,7 +141,7 @@
         <script src="/js/site.js"></script>
     </div>
 
-    <p id="itemsCount"><label id="Filtred">@Model.Dishes.Count()</label> из <label id="AllItemsCount">@Model.Dishes.Count()</label></p>
+    <p id="itemsCount"><label id="Filtred">@Model.Dishes.Count()</label> из <label id="AllItemsCount">@Model.ItemsCount</label></p>
 
     <ul class="pagination">
 

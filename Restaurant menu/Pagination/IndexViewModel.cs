@@ -8,6 +8,7 @@ namespace Restaurant_menu.Pagination
 {
     public class IndexViewModel
     {
+        public int ItemsCount { get; set; }
         public IEnumerable<Dish> Dishes { get; set; }
         public PageViewModel PageViewModel { get; set; }
     }

@@ -27,6 +27,7 @@ namespace Restaurant_menu.Controllers
 			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
 			IndexViewModel indexViewModel = new IndexViewModel
 			{
+				ItemsCount = count,
 				PageViewModel =pageViewModel,
 				Dishes = items
 			};

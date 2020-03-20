@@ -9,8 +9,7 @@ using RestaurantMenu.BLL.Interfaces;
 namespace Restaurant_menu.Controllers
 {
     /// <summary>
-    ///  Не сочетаются поля в сортировке.
-    /// Сочетаются сортировка и фильтрация.
+    /// Types of field <i>(Dish parameters)</i> 
     /// </summary>
     public enum FieldTypes
     {
@@ -29,8 +28,14 @@ namespace Restaurant_menu.Controllers
         public FilterController(IMenu<Dish> menu)
         {
             _menu = menu;
+            var ff = Sorting(FieldTypes.Calorific);
         }
 
+        /// <summary>
+        /// Sort fields by ascending.
+        /// </summary>
+        /// <param name="name"> Type of field</param>
+        /// <returns>Sorted list of dishes</returns>
         [HttpPost]
         public IEnumerable<short> Sorting(FieldTypes name)
         {
@@ -57,7 +62,7 @@ namespace Restaurant_menu.Controllers
                     result = _menu.GetAll().OrderBy(n => n.Gram).Select(i => i.Id);
                     return result;
                 case FieldTypes.Calorific:
-                    result = _menu.GetAll().OrderBy(n =>  Decimal.Multiply(n.Calorific, Decimal.Divide(Convert.ToDecimal(n.Gram), Convert.ToDecimal(100)))).Select(i => i.Id);
+                    result = _menu.GetAll().OrderBy(n => Tools.CalculateCalorific(n.Calorific, n.Gram)).Select(i => i.Id);
                     return result;
                 case FieldTypes.CookTime:
                     result = _menu.GetAll().OrderBy(n => n.CookTime).Select(i => i.Id);
@@ -67,6 +72,12 @@ namespace Restaurant_menu.Controllers
             }
         }
 
+        /// <summary>
+        /// Filter list by one parameter
+        /// </summary>
+        /// <param name="name">Type of field</param>
+        /// <param name="filter">Filter template</param>
+        /// <returns></returns>
         [HttpPost]
         public IEnumerable<short> Filtration(FieldTypes name, string filter)
         {
@@ -111,7 +122,7 @@ namespace Restaurant_menu.Controllers
                 case FieldTypes.Calorific:
                     result = filter == null
                      ? _menu.GetAll().Select(x => x.Id)
-                     : _menu.GetAll().Where(f => f.Calorific.ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
+                     : _menu.GetAll().Where(f => Tools.CalculateCalorific(f.Calorific, f.Gram).ToString().ToLower().Contains(filter.ToLower())).Select(i => i.Id);
 
                     return result;
                 case FieldTypes.CookTime:
