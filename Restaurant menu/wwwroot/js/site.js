@@ -58,15 +58,22 @@ function Filter(fieldsList) {
             $.post("/Filter/Filtration?name=" + fieldsList[i].name + "&filter=" + fieldsList[i].value, null, function (result) {
                 console.log(result);
                 $('#Filtred').text(result.length);
+                var ItemsCount = result.length;
                 $('tbody').children('tr').each(function () {
                     var matched = false;
 
+                 
                     for (var i = 0; i < result.length; i++) {
                         if ($(this).attr('id') == result[i]) {
                             matched = true;
                             console.log("<b> "+$(this).attr('name') + " is matched " + "</b>");
                             break;
                     
+                        }
+                    } if (matched == true) {
+                        if ($(this).is(":hidden")) {
+                            ItemsCount--;
+                            $('#Filtred').text(ItemsCount);
                         }
                     }
                     if (matched == false) {
