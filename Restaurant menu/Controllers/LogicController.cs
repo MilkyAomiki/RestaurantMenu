@@ -3,8 +3,6 @@ using Restaurant_menu.Model;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 

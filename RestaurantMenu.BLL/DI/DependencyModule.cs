@@ -6,6 +6,10 @@ using System.Text;
 
 namespace RestaurantMenu.BLL.DI
 {
+    /// <summary>
+    /// Dependency injection module <br/>
+    /// <i> Calling from Startup.cs </i>
+    /// </summary>
     public class DependencyModule
     {
         string _connection;
@@ -13,6 +17,10 @@ namespace RestaurantMenu.BLL.DI
         {
             _connection = connection;
         }
+        /// <summary>
+        /// Provides parameters for MenuService
+        /// </summary>
+        /// <returns></returns>
         public MenuService ConfigureMenuService()
         {
             var context = new DishesContext(_connection);

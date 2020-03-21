@@ -7,6 +7,12 @@ using System.Threading;
 
 namespace Restaurant_menu.Context
 {
+	/// <summary>
+	/// Database context
+	/// <list type="bullet">
+	/// Dish
+	/// </list>
+	/// </summary>
 	public class DishesContext : DbContext
 	{
 		public virtual DbSet<Dish> Dish { get; set; }

@@ -1,14 +1,20 @@
 ﻿using RestaurantMenu.BLL.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Restaurant_menu.Model
 {
+    /// <summary>
+    /// Model for Create / Update  View
+    /// </summary>
     public class CreateModelView
     {
+        /// <summary>
+        /// Is it view for edit item?
+        /// </summary>
         public bool IsEdit { get; set; }
+
+        /// <summary>
+        /// Item for edit
+        /// </summary>
         public Dish Dish { get; set; }
     }
 }

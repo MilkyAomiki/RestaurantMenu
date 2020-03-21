@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestaurantMenu.BLL.DTO
 {
+    /// <summary>
+    /// DTO for main model
+    /// </summary>
     public class Dish
     {
 

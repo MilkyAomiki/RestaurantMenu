@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Restaurant_menu.Pagination
 {
+    /// <summary>
+    /// Index view's pages model
+    /// </summary>
     public class PageViewModel
     {
         public int PageNumber { get; private set; }

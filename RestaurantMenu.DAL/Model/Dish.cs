@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Restaurant_menu.Models
 {
+    /// <summary>
+    /// Main model
+    /// </summary>
     public class Dish
     {
         [Key]

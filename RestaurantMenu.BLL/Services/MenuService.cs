@@ -11,6 +11,9 @@ using System.Threading;
 
 namespace RestaurantMenu.BLL.Services
 {
+    /// <summary>
+    /// <inheritdoc cref="IMenu{T}"/>
+    /// </summary>
     public class MenuService : IMenu<Dish>
     {
         private readonly DishesContext _context;
