@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using RestaurantMenu.BLL.DI;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
+using RestaurantMenu.BLL.Services;
 using System.Globalization;
 using System.Threading;
 
@@ -28,6 +29,8 @@ namespace Restaurant_menu
 			var diModule = new DependencyModule(connection);
 			services.AddScoped<IMenu<Dish>>(options => { return diModule.ConfigureMenuService(); });
 			services.AddMvc(options => { options.EnableEndpointRouting = false;});
+			services.AddTransient<ITools, ToolsService>();
+			services.AddTransient<IFiltration, FiltrationService>();
 
 
 

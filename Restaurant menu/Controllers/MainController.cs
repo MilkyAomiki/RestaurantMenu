@@ -9,11 +9,11 @@ namespace Restaurant_menu.Controllers
 {
 	public class MainController : Controller
 	{
-		public IMenu<Dish> Menu { get; set; }
+		private readonly IMenu<Dish> _menu;
 
 		public MainController(IMenu<Dish> menu)
 		{
-			Menu = menu;
+			_menu = menu;
 		}
 
 		[HttpGet("/")]
@@ -21,7 +21,7 @@ namespace Restaurant_menu.Controllers
 		{
 			int pageSize = 20;
 
-			var source = Menu.GetAll();
+			var source = _menu.GetAll();
 			var count = source.Count();
 			var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
@@ -37,13 +37,13 @@ namespace Restaurant_menu.Controllers
 		[HttpGet("/Create")]
 		public IActionResult Create()
 		{
-			return View("/Views/Main/Create.cshtml", new CreateModelView{ IsEdit = false, Dish = null});
+			return View("/Views/Main/Create.cshtml", new CreateViewModel{ IsEdit = false, Dish = null});
 		}
 
 		[HttpGet]
 		public IActionResult Read(int id)
 		{
-			var dish = Menu.Get(id);
+			var dish = _menu.Get(id);
 
 			return View(dish);
 		}
@@ -51,8 +51,8 @@ namespace Restaurant_menu.Controllers
 		[HttpGet]
 		public IActionResult Edit(int id)
 		{
-			var dish = Menu.Get(id);
-			return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = dish});
+			var dish = _menu.Get(id);
+			return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = true, Dish = dish});
 		}
 	}
 

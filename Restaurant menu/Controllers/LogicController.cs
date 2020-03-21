@@ -8,15 +8,17 @@ using System.Linq;
 
 namespace Restaurant_menu.Controllers
 {
+    /// <summary>
+    /// CRUD
+    /// </summary>
     public class LogicController : Controller
     {
-        private IMenu<Dish> _menu;
+        private readonly IMenu<Dish> _menu;
 
         public LogicController(IMenu<Dish> menu)
         {
             _menu = menu;
         }
-
 
         [HttpPost]
         public IActionResult Edit(Dish entity)
@@ -47,12 +49,12 @@ namespace Restaurant_menu.Controllers
                 if (e.ValidationResult.MemberNames.Contains("name"))
                 {
                     ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = entity});
+                    return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = true, Dish = entity});
                 }
                 else if (e.ValidationResult.MemberNames.Contains("createDate"))
                 {
                     ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = true, Dish = entity});
+                    return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = true, Dish = entity});
                 }
 
             };
@@ -89,12 +91,12 @@ namespace Restaurant_menu.Controllers
                 if (e.ValidationResult.MemberNames.Contains("name"))
                 {
                     ModelState.AddModelError("Name", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", new CreateModelView{IsEdit = false, Dish = entity});
+                    return View("/Views/Main/Create.cshtml", new CreateViewModel{IsEdit = false, Dish = entity});
                 }
                 else if (e.ValidationResult.MemberNames.Contains("createDate"))
                 {
                     ModelState.AddModelError("CreateDate", e.ValidationResult.ErrorMessage);
-                    return View("/Views/Main/Create.cshtml", new CreateModelView { IsEdit = false, Dish = entity});
+                    return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = false, Dish = entity});
                 }
 
             };

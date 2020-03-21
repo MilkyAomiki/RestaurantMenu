@@ -1,5 +1,7 @@
 ﻿@using Restaurant_menu.Controllers;
 @using Restaurant_menu.Pagination;
+@using RestaurantMenu.BLL.Interfaces;
+@inject ITools tools
 @model IndexViewModel
 @{
     ViewData["Title"] = "Index";
@@ -83,7 +85,7 @@
                         var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
                         cookTime = cookTime + " мин.";
 
-                        var calorific = Tools.CalculateCalorific(dish.Calorific, dish.Gram);
+                        var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
                         <tr id="@dish.Id">
 
                             <td class="dishesItem" style="width: 23px">@dish.Name</td>

@@ -5,7 +5,7 @@ namespace Restaurant_menu.Model
     /// <summary>
     /// Model for Create / Update  View
     /// </summary>
-    public class CreateModelView
+    public class CreateViewModel
     {
         /// <summary>
         /// Is it view for edit item?
