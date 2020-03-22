@@ -143,8 +143,8 @@
                 var id = $(this).children('a').attr('name');
 
                  $(this).children('a').click(
-                    function () {
-                         $(this).parent('.del').parent('tr').hide();
+                     function () {
+                         $(this).parent('.del').parent('tr').remove();
                          $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function(result) { $('#Filtred').text(result);  $('#AllItemsCount').text(result);});
                     });
             });
