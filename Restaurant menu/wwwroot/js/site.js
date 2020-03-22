@@ -46,10 +46,12 @@ function Filter(fieldsList) {
 
     /* If list of fields is empty, show all dishes */
     if (fieldsList.length == 0) {
-        $('tbody').children('tr').each(function () { $(this).show(); $('#SearchFields').css('display', 'table-row'); })
+        var ItemsCount = -1;
+        $('tbody').children('tr').each(function () { $(this).show(); $('#SearchFields').css('display', 'table-row'); ItemsCount++;})
+        $('#Filtred').text(ItemsCount);
     } else {
 
-        /* For each element in list of fields hide elements */
+        /* Get the id of elements and show/hide him */
 
         $.post("/Filter/Filtration", JSON.stringify(fieldsList), function (result) {
             console.log(result);
@@ -70,6 +72,7 @@ function Filter(fieldsList) {
                 if (matched == true) {
                     if ($(this).is(":hidden")) {
                         $(this).show();
+
                         $('#SearchFields').css('display', 'table-row');
                     }
                 }
