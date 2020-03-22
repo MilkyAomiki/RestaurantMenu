@@ -27,9 +27,10 @@ namespace Restaurant_menu.Controllers
 			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
 			IndexViewModel indexViewModel = new IndexViewModel
 			{
+				VisibleItems = items.Select(p => p.Id).ToList(),
 				ItemsCount = count,
 				PageViewModel =pageViewModel,
-				Dishes = items
+				Dishes = source
 			};
 			return View(indexViewModel);
 		}

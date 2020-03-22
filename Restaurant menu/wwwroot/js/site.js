@@ -14,41 +14,39 @@ function ShowElement() {
     }
 }
 
-/*Bind filtration to every field*/
-/*Filtration: On (remove) input char to field, look at every field, find filled, and call "Filter()" */
-$('#SearchFields').children('th').children('input').each(function () {
-    $(this).keyup(function (e) {
 
-        var fieldsList = new Array();
-
-        for (var i in $('#SearchFields').children('th').children('input')) {
-
-
-            if (i == "length") {
-                Filter(fieldsList);
-                return false;
-            }
-            var fieldname = $('#SearchFields').children('th').children('input').eq(i).attr('name');
-            console.log(fieldname);
-            var fieldvalue = $('#SearchFields').children('th').children('input').eq(i).val();
-            console.log(fieldvalue);
-
-            if (fieldname != null && fieldvalue != "") {
-                var field = { name: fieldname, value: fieldvalue }
-                fieldsList.push(field);
-            }
-
-        }
-
-    });
-});
-function Filter(fieldsList) {
+function Filter(fieldsList, visibleitemsId) {
 
     /* If list of fields is empty, show all dishes */
     if (fieldsList.length == 0) {
-        var ItemsCount = -1;
-        $('tbody').children('tr').each(function () { $(this).show(); $('#SearchFields').css('display', 'table-row'); ItemsCount++;})
+        var ItemsCount = 0;
+
+        $('#DishesBody').children('tr').each(function () {
+            var matched = false;
+
+            for (var i = 0; i < visibleitemsId.length; i++) {
+                if ($(this).attr('id') == visibleitemsId[i]) {
+                    matched = true;
+                    ItemsCount++;
+                    break;
+
+                }
+            }
+            if (matched == true) {
+                if ($(this).is(":hidden")) {
+                    $(this).show();
+
+                    $('#SearchFields').css('display', 'table-row');
+                }
+            }
+            if (matched == false) {
+                $(this).hide();
+                $('#SearchFields').css('display', 'table-row');
+
+            }
+        })
         $('#Filtred').text(ItemsCount);
+
     } else {
 
         /* Get the id of elements and show/hide him */
@@ -86,4 +84,23 @@ function Filter(fieldsList) {
         }, "json")
 
     }
+}
+
+function LoadVisibleItems(visibleitemsId) {
+    var t = 0;
+    $('#DishesBody').children('tr').each(function () {
+        for (var i in visibleitemsId) {
+         
+            if ($(this).attr('id') == visibleitemsId[i]) {
+                /*Why this isn't working?*/
+                $(this).show();
+                /**/
+              //  $(this).css('visibility', 'visible');
+                t++;
+            }
+          
+        }
+    })
+    $('#Filtred').text(t);
+
 }

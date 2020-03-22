@@ -12,6 +12,7 @@ namespace Restaurant_menu.Pagination
         /// Total dishes count
         /// </summary>
         public int ItemsCount { get; set; }
+        public List<short> VisibleItems { get; set; }
         public IEnumerable<Dish> Dishes { get; set; }
         public PageViewModel PageViewModel { get; set; }
     }
