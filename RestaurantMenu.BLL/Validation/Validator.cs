@@ -9,7 +9,7 @@ namespace RestaurantMenu.BLL.Validation
 {
     internal class Validator
     {
-        internal void ValidateName(Dish item, DishesContext context)
+        internal void ValidateName(DishDTO item, DishesContext context)
         {
             foreach (var i in context.Dish)
             {
@@ -21,7 +21,7 @@ namespace RestaurantMenu.BLL.Validation
 
         }
 
-        internal void ValidateCreationDate(Dish changedItem, DishesContext context)
+        internal void ValidateCreationDate(DishDTO changedItem, DishesContext context)
         {
             var item = context.Dish.Find(changedItem.Id);
             if (item.CreateDate != changedItem.CreateDate)
@@ -31,7 +31,7 @@ namespace RestaurantMenu.BLL.Validation
             }
         }
 
-        internal void IsExist(Dish item, DishesContext context)
+        internal void IsExist(DishDTO item, DishesContext context)
         {
             if (context.Dish.Find(item.Id) == null)
             {

@@ -13,7 +13,7 @@ namespace Restaurant_menu.Pagination
         /// </summary>
         public int ItemsCount { get; set; }
         public List<short> VisibleItems { get; set; }
-        public IEnumerable<Dish> Dishes { get; set; }
+        public IEnumerable<DishDTO> Dishes { get; set; }
         public PageViewModel PageViewModel { get; set; }
     }
 }

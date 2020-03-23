@@ -3,31 +3,31 @@ using Restaurant_menu.Model;
 using Restaurant_menu.Pagination;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
+using RestaurantMenu.BLL.Services;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Restaurant_menu.Controllers
 {
 	public class MainController : Controller
 	{
-		private readonly IMenu<Dish> _menu;
+		private readonly IMenu<DishDTO> _menu;
 
-		public MainController(IMenu<Dish> menu)
+		public MainController(IMenu<DishDTO> menu)
 		{
 			_menu = menu;
 		}
 
 		[HttpGet("/")]
-		public IActionResult Index(int page =1)
+		public IActionResult Index(List<ItemConstraint> constraints, FieldTypes fieldTypeSort, int page =1)
 		{
 			int pageSize = 20;
 
-			var source = _menu.GetAll();
-			var count = source.Count();
-			var items = source.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+			var source = _menu.GetAll(constraints, fieldTypeSort, page);
+			var count = _menu.GetAll().Count();
 			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
 			IndexViewModel indexViewModel = new IndexViewModel
 			{
-				VisibleItems = items.Select(p => p.Id).ToList(),
 				ItemsCount = count,
 				PageViewModel =pageViewModel,
 				Dishes = source
@@ -56,6 +56,7 @@ namespace Restaurant_menu.Controllers
 			return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = true, Dish = dish});
 		}
 	}
+
 
 }
 

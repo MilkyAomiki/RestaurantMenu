@@ -13,10 +13,10 @@ namespace RestaurantMenu.BLL.Services
     public class FiltrationService : IFiltration
     {
 
-        private readonly IMenu<Dish> _menu;
+        private readonly IMenu<DishDTO> _menu;
         private readonly ITools _tools;
 
-        public FiltrationService(IMenu<Dish> menu, ITools tools)
+        public FiltrationService(IMenu<DishDTO> menu, ITools tools)
         {
             _menu = menu;
             _tools = tools;

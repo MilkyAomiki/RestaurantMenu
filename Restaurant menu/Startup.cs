@@ -27,7 +27,7 @@ namespace Restaurant_menu
 			services.AddRazorPages();
 			string connection = Configuration.GetConnectionString("DefaultConnection");
 			var diModule = new DependencyModule(connection);
-			services.AddScoped<IMenu<Dish>>(options => { return diModule.ConfigureMenuService(); });
+			services.AddScoped<IMenu<DishDTO>>(options => { return diModule.ConfigureMenuService(); });
 			services.AddMvc(options => { options.EnableEndpointRouting = false;});
 			services.AddTransient<ITools, ToolsService>();
 			services.AddTransient<IFiltration, FiltrationService>();

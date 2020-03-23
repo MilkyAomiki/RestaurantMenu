@@ -8,7 +8,7 @@ namespace RestaurantMenu.BLL.Mapper
 /// </summary>
     public static class DishMap
     {
-        public static Restaurant_menu.Models.Dish GetDish(Dish item)
+        public static Restaurant_menu.Models.Dish GetDish(DishDTO item)
         {
             var entity = new Restaurant_menu.Models.Dish
             {
@@ -25,9 +25,9 @@ namespace RestaurantMenu.BLL.Mapper
 
             return entity;
         }
-        public static Dish GetDto(Restaurant_menu.Models.Dish item)
+        public static DishDTO GetDto(Restaurant_menu.Models.Dish item)
         {
-            var entity = new Dish
+            var entity = new DishDTO
             {
                 Id = item.Id,
                 CreateDate = item.CreateDate,
@@ -43,13 +43,13 @@ namespace RestaurantMenu.BLL.Mapper
             return entity;
         }
 
-        public static IEnumerable<Dish> GetDishes(IEnumerable<Restaurant_menu.Models.Dish> items)
+        public static IEnumerable<DishDTO> GetDishes(IEnumerable<Restaurant_menu.Models.Dish> items)
         {
-            List<Dish> dishes = new List<Dish>();
+            List<DishDTO> dishes = new List<DishDTO>();
 
             foreach (var item in items)
             {
-                var entity = new Dish
+                var entity = new DishDTO
                 {
                     Id = item.Id,
                     CreateDate = item.CreateDate,

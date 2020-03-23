@@ -15,6 +15,6 @@ namespace Restaurant_menu.Model
         /// <summary>
         /// Item for edit
         /// </summary>
-        public Dish Dish { get; set; }
+        public DishDTO Dish { get; set; }
     }
 }

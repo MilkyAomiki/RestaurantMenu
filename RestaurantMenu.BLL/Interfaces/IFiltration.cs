@@ -17,6 +17,7 @@ namespace RestaurantMenu.BLL.Interfaces
         Gram = 666,
         Calorific = 777,
         CookTime = 888,
+        None = 000
     }
     public interface IFiltration
     {

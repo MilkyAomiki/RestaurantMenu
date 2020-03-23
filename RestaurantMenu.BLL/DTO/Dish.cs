@@ -7,7 +7,7 @@ namespace RestaurantMenu.BLL.DTO
     /// <summary>
     /// DTO for main model
     /// </summary>
-    public class Dish
+    public class DishDTO
     {
 
         [Key]

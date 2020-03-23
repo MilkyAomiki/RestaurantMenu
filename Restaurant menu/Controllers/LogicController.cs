@@ -13,15 +13,15 @@ namespace Restaurant_menu.Controllers
     /// </summary>
     public class LogicController : Controller
     {
-        private readonly IMenu<Dish> _menu;
+        private readonly IMenu<DishDTO> _menu;
 
-        public LogicController(IMenu<Dish> menu)
+        public LogicController(IMenu<DishDTO> menu)
         {
             _menu = menu;
         }
 
         [HttpPost]
-        public IActionResult Edit(Dish entity)
+        public IActionResult Edit(DishDTO entity)
         {
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0)
             {
@@ -64,7 +64,7 @@ namespace Restaurant_menu.Controllers
            
 
         [HttpPost]
-        public IActionResult Create(Dish entity)
+        public IActionResult Create(DishDTO entity)
         {
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0 && entity.Id == 0)
             {
