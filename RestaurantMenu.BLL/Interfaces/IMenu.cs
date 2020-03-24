@@ -1,4 +1,5 @@
-﻿using RestaurantMenu.BLL.Services;
+﻿using RestaurantMenu.BLL.Models;
+using RestaurantMenu.BLL.Services;
 using System.Collections.Generic;
 
 namespace RestaurantMenu.BLL.Interfaces
@@ -10,7 +11,7 @@ namespace RestaurantMenu.BLL.Interfaces
     {
         void Create(T item);
         T Get(int id);
-        IEnumerable<T> GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int page, int pageSize);
+        MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int page, int pageSize);
         IEnumerable<T> GetAll();
         void Update(T item);
         void Delete(int id);

@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Threading;
 using Restaurant_menu.Models;
 using Microsoft.EntityFrameworkCore;
+using RestaurantMenu.BLL.Models;
 
 namespace RestaurantMenu.BLL.Services
 {
@@ -41,20 +42,23 @@ namespace RestaurantMenu.BLL.Services
         }
         #endregion
 
-        #region Read
+        #region Read  
         public DishDTO Get(int id)
         {
             var entity = _context.Dish.Find((short)id);
             var entityDTO = DishMap.GetDto(entity);
             return entityDTO;
         }
+
         /// <summary>
         /// Filtred all dishes and return them
         /// </summary>
         /// <param name="constraints">Filters</param>
-        /// <param name="fieldForSort">Type of field to sort </param>
+        /// <param name="fieldForSort">Type of field to sort</param>
+        /// <param name="pageNum">Current Page</param>
+        /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<DishDTO> GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int pageNum, int pageSize)
+        public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int pageNum, int pageSize)
         {
             #region Sort
 
@@ -116,8 +120,12 @@ namespace RestaurantMenu.BLL.Services
             #region Paging
             var page  = approved.Skip((pageNum - 1 )* pageSize).Take(pageSize);
             #endregion
-
-            return DishMap.GetDishes(page);
+            var model = new MenuModel
+            {
+                Dishes = DishMap.GetDishes(page),
+                Count = approved.Count()
+            };
+            return model;
         }
 
     public IEnumerable<DishDTO> GetAll()
