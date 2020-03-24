@@ -26,7 +26,6 @@ namespace Restaurant_menu.Controllers
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0)
             {
                 var form = Request.Form;
-
                 entity.Name = form.FirstOrDefault(p => p.Key == "Dish.Name").Value;
                 entity.Description = form.FirstOrDefault(p => p.Key == "Dish.Description").Value;
                 entity.Consist = form.FirstOrDefault(p => p.Key == "Dish.Consist").Value;
@@ -41,7 +40,7 @@ namespace Restaurant_menu.Controllers
                 entity.CreateDate = _menu.Get(entity.Id).CreateDate;
                 _menu.Update(entity);
 
-                Response.Redirect("/");
+                Response.Redirect(Request.Path.ToString());
             }
 
             catch (ValidationException e)

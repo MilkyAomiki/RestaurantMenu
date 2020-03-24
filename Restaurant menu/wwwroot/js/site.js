@@ -4,6 +4,7 @@
 // Write your Javascript code.
 
 
+
 document.getElementById('search').addEventListener('click', ShowElement, false);
 function ShowElement() {
     const curDisplayState = document.getElementById('SearchFields').style.display;
@@ -13,6 +14,8 @@ function ShowElement() {
         document.getElementById('SearchFields').style.display = 'none';
     }
 }
+
+
 
 
 function Filter(fieldsList, visibleitemsId) {

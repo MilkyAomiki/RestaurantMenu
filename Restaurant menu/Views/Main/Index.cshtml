@@ -42,22 +42,21 @@
             $(".dvProgress").hide();
         })
     </script>
-    <!------------------->
 
+    <!------------------->
     <div class="mainData">
-        @using (Html.BeginForm("Filtration", "Filter"))
-        {
+
             <table id="dishes">
                 <thead>
-                    <tr>
-                        <th id="@FieldTypes.Name" class="tableHeader" style="width: 23px">Название</th>
-                        <th id="@FieldTypes.CreateDate" class="tableHeader">Дата создания</th>
-                        <th id="@FieldTypes.Consistence" class="tableHeader">Состав</th>
-                        <th id="@FieldTypes.Description" class="tableHeader">Описание</th>
-                        <th id="@FieldTypes.Price" class="tableHeader">Цена</th>
-                        <th id="@FieldTypes.Gram" class="tableHeader">Граммовка</th>
-                        <th id="@FieldTypes.Calorific" class="tableHeader">Калорийность</th>
-                        <th id="@FieldTypes.CookTime" class="tableHeader">Время Приготовления</th>
+                    <tr id="SortFields">
+                        <th id='{"@FieldTypes.Name": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Name).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton" style="width: 23px">Название</th>
+                        <th id='{"@FieldTypes.CreateDate": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CreateDate).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Дата создания</th>
+                        <th id='{"@FieldTypes.Consistence": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Consistence).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Состав</th>
+                        <th id='{"@FieldTypes.Description": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Description).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Описание</th>
+                        <th id='{"@FieldTypes.Price": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Price).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Цена</th>
+                        <th id='{"@FieldTypes.Gram": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Gram).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Граммовка</th>
+                        <th id='{"@FieldTypes.Calorific": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Calorific).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Калорийность</th>
+                        <th id='{"@FieldTypes.CookTime": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CookTime).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Время Приготовления</th>
 
                         <th colspan="3"><button class="material-icons" id="search">search</button></th>
                     </tr>
@@ -65,28 +64,28 @@
 
                 <tr id="SearchFields">
 
-                    <th><input type="text" class="searchField" name="@FieldTypes.Name" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.CreateDate" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Consistence" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Description" style="width: 56px" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Price" style="width: 56px" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Gram" style="width: 56px" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Calorific" /></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.CookTime" /></th>
-                    <th colspan="3"></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Name" value="@Model.Filters.Where(p => p.Key == FieldTypes.Name).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.CreateDate"  value="@Model.Filters.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Consistence"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Description" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Description).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Price" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Price).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Gram" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Gram).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.Calorific"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th><input type="text" class="searchField" name="@FieldTypes.CookTime"  value="@Model.Filters.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.Value).FirstOrDefault()"/></th>
+                    <th colspan="3"><button type="submit" class="submitButton"><span class="material-icons">done</span></button></th>
                 </tr>
 
                 <tbody id="DishesBody">
 
                     @foreach (var dish in Model.Dishes)
-                    {
+                     {
                         var ts = TimeSpan.FromMinutes(dish.CookTime);
 
                         var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
                         cookTime = cookTime + " мин.";
 
                         var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
-                        <tr id="@dish.Id" style="display: none;">
+                        <tr id="@dish.Id">
 
                             <td class="dishesItem" style="width: 23px">@dish.Name</td>
                             <td class="dishesItem"> @dish.CreateDate</td>
@@ -102,42 +101,13 @@
                             <td class="del" style="padding: 7px;"><a name="@dish.Id" class="material-icons">clear</a></td>
 
                         </tr>
-                    }
+                     }
 
                 </tbody>
             </table>
-        }
+
         <script>
-            /*Bind filtration to every field*/
-            /*Filtration: On (remove) input char to field, look at every field, find filled, and call "Filter()" */
-            $('#SearchFields').children('th').children('input').each(function () {
-                $(this).keyup(function (e) {
 
-                    var fieldsList = new Array();
-
-                    for (var i in $('#SearchFields').children('th').children('input')) {
-
-
-                        if (i == "length") {
-                            Filter(fieldsList, @Html.Raw(Json.Serialize(Model.VisibleItems.ToArray())));
-                            return false;
-                        }
-                        var fieldname = $('#SearchFields').children('th').children('input').eq(i).attr('name');
-                        console.log(fieldname);
-                        var fieldvalue = $('#SearchFields').children('th').children('input').eq(i).val();
-                        console.log(fieldvalue);
-
-                        if (fieldname != null && fieldvalue != "") {
-                            var field = { name: fieldname, value: fieldvalue }
-                            fieldsList.push(field);
-                        }
-
-                    }
-
-                });
-            });
-
-            window.onload = () => LoadVisibleItems(@Html.Raw(Json.Serialize(Model.VisibleItems.ToArray())));
             /*Delete items*/
             $('.del').each(function () {
                 var id = $(this).children('a').attr('name');
@@ -178,17 +148,74 @@
     <ul class="pagination">
 
         @if (Model.PageViewModel.HasPreviousPage)
-        {
+         {
             int value = Model.PageViewModel.PageNumber - 1;
-            <li><a class="material-icons" href="@Url.Action("Index", "Main")?page=@value">arrow_back_ios</a></li>
-        }
+            <li class="submitButton" id="@value"><span class="material-icons">arrow_back_ios</span> </li>
+         }
         @if (Model.PageViewModel.HasNextPage)
-        {
+         {
             int value = Model.PageViewModel.PageNumber + 1;
-            <li><a class="material-icons" href="@Url.Action("Index", "Main")?page=@value">arrow_forward_ios</a></li>
-        }
+            <li class="submitButton" id="@value"><span class="material-icons" >arrow_forward_ios</span> </li>
+         }
     </ul>
+    <script>
 
+        $('.submitButton').each(function () {
+
+
+    $(this).click(function () {
+            var constraint;
+            var constraints = new Array(8);
+            var page;
+            $('.searchField').each(function () {
+                constraint = {
+                    key: $(this).attr('name'),
+                    value: $(this).val()
+                }
+                constraints.push(constraint);
+            });
+            var sortType;
+            if ($(this).is('th')) {
+
+                var fid = $(this).attr('id');
+                var parsedId = JSON.parse(fid);
+                for (var i in parsedId) {
+                        sortType = i;
+                }
+            } else {
+
+                $('#SortFields').children("th").each(function () {
+                    if ($(this).attr('id') == undefined) { return false; }
+
+                    var fid = $(this).attr('id');
+                    var parsedId = JSON.parse(fid);
+                    for (var i in parsedId) {
+                        if (parsedId[i] == 'True') {
+                            sortType = i;
+                        }
+                    }
+
+                });
+            }
+
+            if ($(this).is('li')) {
+                page = $(this).attr('id');
+            } else {
+                page = @Model.PageViewModel.PageNumber;
+            }
+        var uriConstraints = encodeURIComponent(JSON.stringify(constraints));
+        // var urisorttype = encodeURIComponent(sortType);
+        window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&page=' + page;
+
+        //$.get('/?constraints=' + constraints + '&fieldTypeSort=' + sortType + '&page=' + page, null, function (result) {
+        //    console.log(result);
+        //});
+
+    })
+});
+
+
+    </script>
 </body>
 </html>
 

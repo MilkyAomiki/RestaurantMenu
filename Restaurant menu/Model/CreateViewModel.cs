@@ -16,5 +16,10 @@ namespace Restaurant_menu.Model
         /// Item for edit
         /// </summary>
         public DishDTO Dish { get; set; }
+
+        /// <summary>
+        ///  Index page URL 
+        /// </summary>
+        public string URL { get; set; }
     }
 }

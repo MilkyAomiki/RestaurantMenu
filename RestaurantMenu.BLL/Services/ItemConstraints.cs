@@ -10,4 +10,10 @@ namespace RestaurantMenu.BLL.Services
         public FieldTypes Key { get; set; }
         public string Value { get; set; }
     }
+    public class SortedItems
+    {
+        public FieldTypes Key { get; set; }
+        public bool IsSorted { get; set; }
+    }
+
 }

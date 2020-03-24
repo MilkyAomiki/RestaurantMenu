@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Restaurant_menu.Model;
 using Restaurant_menu.Pagination;
 using RestaurantMenu.BLL.DTO;
@@ -18,19 +20,52 @@ namespace Restaurant_menu.Controllers
 			_menu = menu;
 		}
 
-		[HttpGet("/")]
-		public IActionResult Index(List<ItemConstraint> constraints, FieldTypes fieldTypeSort, int page =1)
-		{
-			int pageSize = 20;
 
-			var source = _menu.GetAll(constraints, fieldTypeSort, page);
+		//TODO: Show previous state after create / show (/ delete?)
+		[HttpGet("/")]
+		//                           json Constraints             can be none 
+		public IActionResult Index(string constraints, FieldTypes fieldTypeSort, int page =1)
+		{
+			List<ItemConstraint> parsedconstraints = new List<ItemConstraint>();
+
+			if (constraints != null)
+			{
+				
+				JArray jArray = JArray.Parse(constraints);
+				foreach (var filter in jArray)
+				{
+					if (!filter.HasValues)
+					{
+						continue;
+					}
+					var itemConstraint = filter.ToObject<ItemConstraint>();
+					parsedconstraints.Add(itemConstraint);
+				}
+
+			}
+			List<SortedItems> sortedItems = new List<SortedItems>();
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Name, IsSorted = FieldTypes.Name == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.CreateDate, IsSorted = FieldTypes.CreateDate == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Consistence, IsSorted = FieldTypes.Consistence == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Description, IsSorted = FieldTypes.Description == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Price, IsSorted = FieldTypes.Price == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Gram, IsSorted = FieldTypes.Gram == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.Calorific, IsSorted = FieldTypes.Calorific == fieldTypeSort });
+			sortedItems.Add(new SortedItems { Key = FieldTypes.CookTime, IsSorted = FieldTypes.CookTime == fieldTypeSort });
+
+			//TODO: Paging after filtration
+
+			int pageSize = 20;
+			var source = _menu.GetAll(parsedconstraints, fieldTypeSort, page, pageSize);
 			var count = _menu.GetAll().Count();
 			PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
 			IndexViewModel indexViewModel = new IndexViewModel
 			{
 				ItemsCount = count,
-				PageViewModel =pageViewModel,
-				Dishes = source
+				PageViewModel = pageViewModel,
+				Dishes = source,
+				Filters = parsedconstraints,
+				Sorting = sortedItems
 			};
 			return View(indexViewModel);
 		}

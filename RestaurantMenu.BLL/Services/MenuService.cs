@@ -9,6 +9,7 @@ using System.Linq;
 using System.Globalization;
 using System.Threading;
 using Restaurant_menu.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace RestaurantMenu.BLL.Services
 {
@@ -57,54 +58,63 @@ namespace RestaurantMenu.BLL.Services
         {
             #region Sort
 
+            
             var sorted = fieldForSort switch
             {
-                FieldTypes.Name => _context.Dish.OrderBy(p => p.Name).ToList(),
-                FieldTypes.CreateDate => _context.Dish.OrderBy(p => p.CreateDate).ToList(),
-                FieldTypes.Consistence => _context.Dish.OrderBy(p => p.Consist).ToList(),
-                FieldTypes.Description => _context.Dish.OrderBy(p => p.Description).ToList(),
-                FieldTypes.Price => _context.Dish.OrderBy(p => p.Price).ToList(),
-                FieldTypes.Gram => _context.Dish.OrderBy(p => p.Gram).ToList(),
-                FieldTypes.Calorific => _context.Dish.OrderBy(p => p.Calorific).ToList(),
-                FieldTypes.CookTime => _context.Dish.OrderBy(p => p.CookTime).ToList(),
-                FieldTypes.None => _context.Dish.ToList(),
-                _ => _context.Dish.ToList()
+                FieldTypes.Name => _context.Dish.OrderBy(p => p.Name),
+                FieldTypes.CreateDate => _context.Dish.OrderBy(p => p.CreateDate),
+                FieldTypes.Consistence => _context.Dish.OrderBy(p => p.Consist),
+                FieldTypes.Description => _context.Dish.OrderBy(p => p.Description),
+                FieldTypes.Price => _context.Dish.OrderBy(p => p.Price),
+                FieldTypes.Gram => _context.Dish.OrderBy(p => p.Gram),
+                FieldTypes.Calorific => _context.Dish.OrderBy(p => p.Calorific),
+                FieldTypes.CookTime => _context.Dish.OrderBy(p => p.CookTime),
+                FieldTypes.None => _context.Dish.OrderBy(p=>p),
+                _ => _context.Dish.OrderBy(p => p)
             };
-            _context.SaveChangesAsync();
+           
             #endregion
 
             #region Filter
 
             List<Dish> approved = new List<Dish>();
+            if (constraints.Count == 0)
+            {
+                approved = _context.Dish.ToList();
+            }
             foreach (var filter in constraints)
             {
                 var filtred = filter.Key switch
                 {
-                    FieldTypes.Name => _context.Dish.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.CreateDate => _context.Dish.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.Consistence => _context.Dish.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.Description => _context.Dish.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.Price => _context.Dish.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.Gram => _context.Dish.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.Calorific => _context.Dish.Where(f => f.Calorific.ToString().ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.CookTime => _context.Dish.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())).ToList(),
-                    FieldTypes.None => _context.Dish.ToList(),
-                    _ => _context.Dish.ToList()
+                    FieldTypes.Name => sorted.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.CreateDate => sorted.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Consistence => sorted.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Description => sorted.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Price => sorted.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Gram => sorted.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Calorific => sorted.Where(f => f.Calorific.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.CookTime => sorted.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.None => sorted,
+                    _ => sorted
                 };
 
                 if (approved.Count() == 0)
                 {
-                    approved = filtred;
+                    approved = filtred.ToList();
                 }
                 else
                 {
                     approved = approved.Intersect(filtred).ToList();
+                    if (approved.Count == 0)
+                    {
+                        break;
+                    }
                 }
             }
             #endregion
 
             #region Paging
-            var page  = approved.Skip(pageNum - 1 * pageSize).Take(pageSize);
+            var page  = approved.Skip((pageNum - 1 )* pageSize).Take(pageSize);
             #endregion
 
             return DishMap.GetDishes(page);

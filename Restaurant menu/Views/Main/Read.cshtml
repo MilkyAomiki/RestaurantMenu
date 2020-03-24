@@ -1,5 +1,6 @@
-﻿@using RestaurantMenu.BLL.DTO;
-@model DishDTO
+﻿@using Restaurant_menu.Model
+@model ReadViewModel
+
 @{
     ViewData["Title"] = "Read";
 }
@@ -37,31 +38,31 @@
 
     <div class="information">
         @{
-            var ts = TimeSpan.FromMinutes(Model.CookTime);
+            var ts = TimeSpan.FromMinutes(Model.Dish.CookTime);
 
             var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
             cookTime = cookTime + " мин.";
         }
         <p id="dateh">Дата создания:</p>
-        <p id="date">@Model.CreateDate</p>
+        <p id="date">@Model.Dish.CreateDate</p>
 
-        <h3 id="Name">@Model.Name</h3>
+        <h3 id="Name">@Model.Dish.Name</h3>
 
         <div class="fields">
             <p class="field">Состав:</p>
-            <p class="info"> @Model.Consist</p>
+            <p class="info"> @Model.Dish.Consist</p>
 
             <p class="field">Описание:</p>
-            <p class="info"> @Model.Description</p>
+            <p class="info"> @Model.Dish.Description</p>
 
             <p class="field">Цена:</p>
-            <p class="info"> @Model.Price</p>
+            <p class="info"> @Model.Dish.Price</p>
 
             <p class="field">Граммовка:</p>
-            <p class="info"> @Model.Gram</p>
+            <p class="info"> @Model.Dish.Gram</p>
 
             <p class="field">Калорийность блюда:</p>
-            <p class="info"> @Model.Calorific</p>
+            <p class="info"> @Model.Dish.Calorific</p>
 
             <p class="field">Время Приготовления:</p>
             <p class="info"> @cookTime</p>
