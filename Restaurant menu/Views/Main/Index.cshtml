@@ -148,15 +148,20 @@
     <ul class="pagination">
 
         @if (Model.PageViewModel.HasPreviousPage)
-         {
+        {
             int value = Model.PageViewModel.PageNumber - 1;
             <li class="submitButton" id="@value"><span class="material-icons">arrow_back_ios</span> </li>
-         }
+        }
+        @for (int i = 1; i <= Model.PageViewModel.TotalPages; i++)
+        {
+            <li class="submitButton" id="@i"><span>@i</span> </li>
+        }
+
         @if (Model.PageViewModel.HasNextPage)
-         {
+        {
             int value = Model.PageViewModel.PageNumber + 1;
-            <li class="submitButton" id="@value"><span class="material-icons" >arrow_forward_ios</span> </li>
-         }
+            <li class="submitButton" id="@value"><span class="material-icons">arrow_forward_ios</span> </li>
+        }
     </ul>
     <script>
 
@@ -203,13 +208,13 @@
             } else {
                 page = @Model.PageViewModel.PageNumber;
             }
-        var uriConstraints = encodeURIComponent(JSON.stringify(constraints));
-        // var urisorttype = encodeURIComponent(sortType);
-        window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&page=' + page;
+            var uriConstraints = encodeURIComponent(JSON.stringify(constraints));
+            // var urisorttype = encodeURIComponent(sortType);
+            window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&page=' + page;
 
-        //$.get('/?constraints=' + constraints + '&fieldTypeSort=' + sortType + '&page=' + page, null, function (result) {
-        //    console.log(result);
-        //});
+            //$.get('/?constraints=' + constraints + '&fieldTypeSort=' + sortType + '&page=' + page, null, function (result) {
+            //    console.log(result);
+            //});
 
     })
 });
