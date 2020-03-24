@@ -14,6 +14,7 @@ namespace RestaurantMenu.BLL.Services
     {
         public FieldTypes Key { get; set; }
         public bool IsSorted { get; set; }
+        public bool Desc { get; set; }
     }
 
 }

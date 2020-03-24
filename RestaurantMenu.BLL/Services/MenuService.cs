@@ -58,22 +58,22 @@ namespace RestaurantMenu.BLL.Services
             /// <param name="pageNum">Current Page</param>
             /// <param name="pageSize"></param>
             /// <returns></returns>
-            public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int pageNum, int pageSize)
+            public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int pageNum, int pageSize)
             {
                 #region Sort
 
             
                 var sorted = fieldForSort switch
                 {
-                    FieldTypes.Name => _context.Dish.OrderBy(p => p.Name),
-                    FieldTypes.CreateDate => _context.Dish.OrderBy(p => p.CreateDate),
-                    FieldTypes.Consistence => _context.Dish.OrderBy(p => p.Consist),
-                    FieldTypes.Description => _context.Dish.OrderBy(p => p.Description),
-                    FieldTypes.Price => _context.Dish.OrderBy(p => p.Price),
-                    FieldTypes.Gram => _context.Dish.OrderBy(p => p.Gram),
-                    FieldTypes.Calorific => _context.Dish.OrderBy(p => p.Calorific),
-                    FieldTypes.CookTime => _context.Dish.OrderBy(p => p.CookTime),
-                    FieldTypes.None => _context.Dish.OrderBy(p=>p),
+                    FieldTypes.Name => isDecs? _context.Dish.OrderByDescending(p=>p.Name): _context.Dish.OrderBy(p => p.Name),
+                    FieldTypes.CreateDate => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.CreateDate),
+                    FieldTypes.Consistence => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Consist),
+                    FieldTypes.Description => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Description),
+                    FieldTypes.Price => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Price),
+                    FieldTypes.Gram => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Gram),
+                    FieldTypes.Calorific => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Calorific),
+                    FieldTypes.CookTime => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.CookTime),
+                    FieldTypes.None => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p=>p),
                     _ => _context.Dish.OrderBy(p => p)
                 };
            

@@ -24,7 +24,7 @@ namespace Restaurant_menu.Controllers
 		//TODO: Show previous state after create / show (/ delete?)
 		[HttpGet("/")]
 		//                           json Constraints             can be none 
-		public IActionResult Index(string constraints, FieldTypes fieldTypeSort, int page =1)
+		public IActionResult Index(string constraints, FieldTypes fieldTypeSort, bool decs, int page =1)
 		{
 			List<ItemConstraint> parsedconstraints = new List<ItemConstraint>();
 
@@ -43,6 +43,7 @@ namespace Restaurant_menu.Controllers
 				}
 
 			}
+
 			List<SortedItems> sortedItems = new List<SortedItems>();
 			sortedItems.Add(new SortedItems { Key = FieldTypes.Name, IsSorted = FieldTypes.Name == fieldTypeSort });
 			sortedItems.Add(new SortedItems { Key = FieldTypes.CreateDate, IsSorted = FieldTypes.CreateDate == fieldTypeSort });
@@ -56,7 +57,7 @@ namespace Restaurant_menu.Controllers
 			//TODO: Paging after filtration
 
 			int pageSize = 20;
-			var source = _menu.GetAll(parsedconstraints, fieldTypeSort, page, pageSize);
+			var source = _menu.GetAll(parsedconstraints, fieldTypeSort, decs, page, pageSize);
 			var count = _menu.GetAll().Count();
 			var currentItemsCount = source.Count;
 			PageViewModel pageViewModel = new PageViewModel(currentItemsCount, page, pageSize);

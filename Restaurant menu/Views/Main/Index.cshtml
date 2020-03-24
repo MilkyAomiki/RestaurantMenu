@@ -46,65 +46,65 @@
     <!------------------->
     <div class="mainData">
 
-            <table id="dishes">
-                <thead>
-                    <tr id="SortFields">
-                        <th id='{"@FieldTypes.Name": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Name).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton" style="width: 23px">Название</th>
-                        <th id='{"@FieldTypes.CreateDate": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CreateDate).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Дата создания</th>
-                        <th id='{"@FieldTypes.Consistence": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Consistence).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Состав</th>
-                        <th id='{"@FieldTypes.Description": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Description).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Описание</th>
-                        <th id='{"@FieldTypes.Price": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Price).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Цена</th>
-                        <th id='{"@FieldTypes.Gram": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Gram).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Граммовка</th>
-                        <th id='{"@FieldTypes.Calorific": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Calorific).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Калорийность</th>
-                        <th id='{"@FieldTypes.CookTime": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CookTime).Select(p=>p.IsSorted).FirstOrDefault()"}' class="submitButton">Время Приготовления</th>
+        <table id="dishes">
+            <thead>
+                <tr id="SortFields">
+                    <th id='{"@FieldTypes.Name": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Name).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Name).Select(p=>p.Desc).FirstOrDefault()" }' class="submitButton" style="width: 23px">Название</th>
+                    <th id='{"@FieldTypes.CreateDate": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CreateDate).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.CreateDate).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Дата создания</th>
+                    <th id='{"@FieldTypes.Consistence": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Consistence).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Consistence).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Состав</th>
+                    <th id='{"@FieldTypes.Description": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Description).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Description).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Описание</th>
+                    <th id='{"@FieldTypes.Price": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Price).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Price).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Цена</th>
+                    <th id='{"@FieldTypes.Gram": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Gram).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Gram).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Граммовка</th>
+                    <th id='{"@FieldTypes.Calorific": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Calorific).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Calorific).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Калорийность</th>
+                    <th id='{"@FieldTypes.CookTime": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CookTime).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.CookTime).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Время Приготовления</th>
 
-                        <th colspan="3"><button class="material-icons" id="search">search</button></th>
-                    </tr>
-                </thead>
-
-                <tr id="SearchFields">
-
-                    <th><input type="text" class="searchField" name="@FieldTypes.Name" value="@Model.Filters.Where(p => p.Key == FieldTypes.Name).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.CreateDate"  value="@Model.Filters.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Consistence"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Description" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Description).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Price" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Price).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Gram" style="width: 56px"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Gram).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.Calorific"  value="@Model.Filters.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th><input type="text" class="searchField" name="@FieldTypes.CookTime"  value="@Model.Filters.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.Value).FirstOrDefault()"/></th>
-                    <th colspan="3"><button type="submit" class="submitButton"><span class="material-icons">done</span></button></th>
+                    <th colspan="3"><button class="material-icons" id="search">search</button></th>
                 </tr>
+            </thead>
 
-                <tbody id="DishesBody">
+            <tr id="SearchFields">
 
-                    @foreach (var dish in Model.Dishes)
-                     {
-                        var ts = TimeSpan.FromMinutes(dish.CookTime);
+                <th><input type="text" class="searchField" name="@FieldTypes.Name" value="@Model.Filters.Where(p => p.Key == FieldTypes.Name).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.CreateDate" value="@Model.Filters.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.Consistence" value="@Model.Filters.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.Description" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Description).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.Price" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Price).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.Gram" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Gram).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.Calorific" value="@Model.Filters.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th><input type="text" class="searchField" name="@FieldTypes.CookTime" value="@Model.Filters.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.Value).FirstOrDefault()" /></th>
+                <th colspan="3"><button type="submit" class="submitButton"><span class="material-icons">done</span></button></th>
+            </tr>
 
-                        var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
-                        cookTime = cookTime + " мин.";
+            <tbody id="DishesBody">
 
-                        var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
-                        <tr id="@dish.Id">
+                @foreach (var dish in Model.Dishes)
+                {
+                    var ts = TimeSpan.FromMinutes(dish.CookTime);
 
-                            <td class="dishesItem" style="width: 23px">@dish.Name</td>
-                            <td class="dishesItem"> @dish.CreateDate</td>
-                            <td class="dishesItem"> @dish.Consist</td>
-                            <td class="dishesItem"> @dish.Description</td>
-                            <td class="dishesItem"> @dish.Price</td>
-                            <td class="dishesItem"> @dish.Gram</td>
-                            <td class="dishesItem"> @calorific</td>
-                            <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
+                    var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
+                    cookTime = cookTime + " мин.";
 
-                            <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
-                            <td class="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
-                            <td class="del" style="padding: 7px;"><a name="@dish.Id" class="material-icons">clear</a></td>
+                    var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
+                    <tr id="@dish.Id">
 
-                        </tr>
-                     }
+                        <td class="dishesItem" style="width: 23px">@dish.Name</td>
+                        <td class="dishesItem"> @dish.CreateDate</td>
+                        <td class="dishesItem"> @dish.Consist</td>
+                        <td class="dishesItem"> @dish.Description</td>
+                        <td class="dishesItem"> @dish.Price</td>
+                        <td class="dishesItem"> @dish.Gram</td>
+                        <td class="dishesItem"> @calorific</td>
+                        <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
-                </tbody>
-            </table>
+                        <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
+                        <td class="action" style="padding: 7px;"><a href="@Url.Action("Edit")?id=@dish.Id" class="material-icons">create</a></td>
+                        <td class="del" style="padding: 7px;"><a name="@dish.Id" class="material-icons">clear</a></td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
 
         <script>
 
@@ -118,7 +118,7 @@
                          $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function(result) { $('#Filtred').text(result);  $('#AllItemsCount').text(result);});
                     });
             });
-          
+
 
             /*Sorting*/
             $('.tableHeader').each(function () {
@@ -163,9 +163,9 @@
 
         <li class="submitButton" id="@Model.PageViewModel.PageNumber"><span>@Model.PageViewModel.PageNumber</span> </li>
 
-        @for (int i = Model.PageViewModel.PageNumber +1; i<= Model.PageViewModel.TotalPages; i++)
+        @for (int i = Model.PageViewModel.PageNumber + 1; i <= Model.PageViewModel.TotalPages; i++)
         {
-            if (i == Model.PageViewModel.PageNumber+3)
+            if (i == Model.PageViewModel.PageNumber + 3)
             {
                 break;
             }
@@ -198,12 +198,32 @@
                 constraints.push(constraint);
             });
             var sortType;
+            var descSort;
             if ($(this).is('th')) {
 
                 var fid = $(this).attr('id');
                 var parsedId = JSON.parse(fid);
                 for (var i in parsedId) {
+                    if (i != 'Desc') {
                         sortType = i;
+
+                        //Is Active?
+                        if (parsedId[i] == 'True') {
+                            //Is already descending?
+                            if (parsedId['Desc'] == 'True') {
+                                //It's not a descending
+                                descSort = false;
+                                //No?
+                            } else {
+                                //It's descending
+                                descSort = true;
+                            }
+                        //Isn't active?
+                        } else {
+                            // It's not a descending
+                            descSort = false;
+                        }
+                    }
                 }
             } else {
 
@@ -213,8 +233,12 @@
                     var fid = $(this).attr('id');
                     var parsedId = JSON.parse(fid);
                     for (var i in parsedId) {
-                        if (parsedId[i] == 'True') {
-                            sortType = i;
+
+                        if (i != 'Desc') {
+                            if (parsedId[i] == 'True') {
+                                sortType = i;
+                                descSort = parsedId['Desc'];
+                            }
                         }
                     }
 
@@ -228,7 +252,7 @@
             }
             var uriConstraints = encodeURIComponent(JSON.stringify(constraints));
             // var urisorttype = encodeURIComponent(sortType);
-            window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&page=' + page;
+            window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&desc=' + descSort + '&page=' + page;
 
             //$.get('/?constraints=' + constraints + '&fieldTypeSort=' + sortType + '&page=' + page, null, function (result) {
             //    console.log(result);

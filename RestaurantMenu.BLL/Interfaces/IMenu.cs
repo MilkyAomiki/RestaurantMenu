@@ -11,7 +11,7 @@ namespace RestaurantMenu.BLL.Interfaces
     {
         void Create(T item);
         T Get(int id);
-        MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, int page, int pageSize);
+        MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int page, int pageSize);
         IEnumerable<T> GetAll();
         void Update(T item);
         void Delete(int id);
