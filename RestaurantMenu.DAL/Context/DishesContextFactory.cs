@@ -10,7 +10,7 @@ namespace RestaurantMenu.DAL.Context
         {
             var optionsBuilder = new DbContextOptionsBuilder<DishesContext>();
             optionsBuilder.UseSqlServer(
-                "Data Source=LAPTOP-BBTQSDD5\\SQLEXPRESS;Integrated Security=True; Database=Dishes; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+               "Data Source=ACER-PC58\\SQLEXPRESS;Integrated Security=True; Database=Dishes; Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             return new DishesContext(optionsBuilder.Options);
 
 

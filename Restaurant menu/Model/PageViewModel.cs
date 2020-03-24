@@ -12,8 +12,10 @@ namespace Restaurant_menu.Pagination
 
         public PageViewModel(int itemsCount, int pageNumber, int pageSize)
         {
-            PageNumber = pageNumber;
-            TotalPages = (int)Math.Ceiling((Double) itemsCount / pageSize);
+            TotalPages = (int)Math.Ceiling((Double)itemsCount / pageSize);
+
+            PageNumber = TotalPages >= pageNumber? pageNumber: 1;
+
         }
 
         public bool HasPreviousPage
