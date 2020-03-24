@@ -152,8 +152,23 @@
             int value = Model.PageViewModel.PageNumber - 1;
             <li class="submitButton" id="@value"><span class="material-icons">arrow_back_ios</span> </li>
         }
-        @for (int i = 1; i <= Model.PageViewModel.TotalPages; i++)
+        @for (int i = Model.PageViewModel.PageNumber - 1; i > 0; i--)
         {
+            if (i == Model.PageViewModel.PageNumber - 3)
+            {
+                break;
+            }
+            <li class="submitButton" id="@i"><span>@i</span> </li>
+        }
+
+        <li class="submitButton" id="@Model.PageViewModel.PageNumber"><span>@Model.PageViewModel.PageNumber</span> </li>
+
+        @for (int i = Model.PageViewModel.PageNumber +1; i<= Model.PageViewModel.TotalPages; i++)
+        {
+            if (i == Model.PageViewModel.PageNumber+3)
+            {
+                break;
+            }
             <li class="submitButton" id="@i"><span>@i</span> </li>
         }
 
