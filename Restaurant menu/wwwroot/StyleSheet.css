@@ -16,6 +16,17 @@
 {
 	background-color: #919FFF;
 }
+#copyToClipboard {
+	font-size: 11px;
+	width: 90px;
+	height: 32px;
+	float:right;
+	margin: 21px;
+}
+#copyToClipboard:hover {
+	background-color: #919FFF;
+	color: azure;
+}
 	#SearchFields input {
 		background-color: #FBFBFF;
 		outline: none;
@@ -26,8 +37,6 @@
 		width: 128px;
 	}
 
-table {
-}
 
 #search{
 	border:none;

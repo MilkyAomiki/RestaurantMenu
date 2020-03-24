@@ -142,7 +142,7 @@
         </script>
         <script src="/js/site.js"></script>
     </div>
-
+    <button type="button" id="copyToClipboard">Скопировать URl</button>
     <p id="itemsCount"><label id="Filtred">@Model.Dishes.Count()</label> из <label id="AllItemsCount">@Model.ItemsCount</label></p>
 
     <ul class="pagination">
@@ -179,9 +179,12 @@
         }
     </ul>
     <script>
+        $('#copyToClipboard').click(function () {
+            navigator.clipboard.writeText(window.location.href);
+        });
+
 
         $('.submitButton').each(function () {
-
 
     $(this).click(function () {
             var constraint;
