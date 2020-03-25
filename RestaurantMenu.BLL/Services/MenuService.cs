@@ -31,105 +31,124 @@ namespace RestaurantMenu.BLL.Services
         }
 
         #region Create
-            public void Create(DishDTO item)
-            {
-                Validator validator = new Validator();
-                validator.ValidateName(item, _context);
+        public void Create(DishDTO item)
+        {
+            Validator validator = new Validator();
+            validator.ValidateName(item, _context);
 
-                var entity = DishMap.GetDish(item);
-                _context.Dish.Add(entity);
-                _context.SaveChanges();
+            var entity = DishMap.GetDish(item);
+            _context.Dish.Add(entity);
+            _context.SaveChanges();
+        }
+        #endregion
+
+        #region Read  
+        public DishDTO Get(int id)
+        {
+            var entity = _context.Dish.Find((short)id);
+            var entityDTO = DishMap.GetDto(entity);
+            return entityDTO;
+        }
+
+        /// <summary>
+        /// Filtred all dishes and return them
+        /// </summary>
+        /// <param name="constraints">Filters</param>
+        /// <param name="fieldForSort">Type of field to sort</param>
+        /// <param name="pageNum">Current Page</param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int pageNum, int pageSize)
+        {
+
+            var customList = _context.Dish.ToList();
+
+            for (int i = 0; i < customList.Count(); i++)
+            {
+                var sourceItem = customList.ElementAt(i).Calorific;
+                var customItem = Decimal.Multiply(sourceItem, Decimal.Divide(Convert.ToDecimal(customList.ElementAt(i).Gram), Convert.ToDecimal(100)));
+                customList.ElementAt(i).Calorific = Convert.ToDecimal(decimal.Parse(customItem.ToString()).ToString("G29"));
+            }
+
+
+
+
+            #region Sort
+
+
+            var sorted = fieldForSort switch
+            {
+                FieldTypes.Name => isDecs ? customList.OrderByDescending(p => p.Name) : customList.OrderBy(p => p.Name),
+                FieldTypes.CreateDate => isDecs ? customList.OrderByDescending(p => p.CreateDate) : customList.OrderBy(p => p.CreateDate),
+                FieldTypes.Consistence => isDecs ? customList.OrderByDescending(p => p.Consist) : customList.OrderBy(p => p.Consist),
+                FieldTypes.Description => isDecs ? customList.OrderByDescending(p => p.Description) : customList.OrderBy(p => p.Description),
+                FieldTypes.Price => isDecs ? customList.OrderByDescending(p => p.Price) : customList.OrderBy(p => p.Price),
+                FieldTypes.Gram => isDecs ? customList.OrderByDescending(p => p.Gram) : customList.OrderBy(p => p.Gram),
+                FieldTypes.Calorific => isDecs ? customList.OrderByDescending(p => p.Calorific) : customList.OrderBy(p => p.Calorific),
+                FieldTypes.CookTime => isDecs ? customList.OrderByDescending(p => p.CookTime) : customList.OrderBy(p => p.CookTime),
+                FieldTypes.None => customList.OrderBy(p => p.Id),
+                _ => customList.OrderBy(p => p.Id)
+            };
+
+            #endregion
+
+            #region Filter
+
+            List<Dish> approved = new List<Dish>();
+            if (constraints.Count == 0)
+            {
+                approved = _context.Dish.ToList();
+            }
+
+
+
+            foreach (var filter in constraints)
+            {
+
+
+                var filtred = filter.Key switch
+                {
+                    FieldTypes.Name => sorted.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.CreateDate => sorted.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Consistence => sorted.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Description => sorted.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Price => sorted.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Gram => sorted.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Calorific => sorted.Where(f => f.Calorific.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.CookTime => sorted.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.None => sorted,
+                    _ => sorted
+                };
+
+
+                if (approved.Count() == 0)
+                {
+                    approved = filtred.ToList();
+                }
+                else
+                {
+                    approved = approved.Intersect(filtred).ToList();
+                    if (approved.Count == 0)
+                    {
+                        break;
+                    }
+                }
             }
             #endregion
 
-        #region Read  
-            public DishDTO Get(int id)
+            #region Paging
+
+            var newPagesCount = (int)Math.Ceiling((Double)approved.Count() / pageSize);
+            var page = pageNum <= newPagesCount ? approved.Skip((pageNum - 1) * pageSize).Take(pageSize) : approved.Take(pageSize);
+            #endregion
+
+            var model = new MenuModel
             {
-                var entity = _context.Dish.Find((short)id);
-                var entityDTO = DishMap.GetDto(entity);
-                return entityDTO;
-            }
-
-            /// <summary>
-            /// Filtred all dishes and return them
-            /// </summary>
-            /// <param name="constraints">Filters</param>
-            /// <param name="fieldForSort">Type of field to sort</param>
-            /// <param name="pageNum">Current Page</param>
-            /// <param name="pageSize"></param>
-            /// <returns></returns>
-            public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int pageNum, int pageSize)
-            {
-                #region Sort
-
-            
-                var sorted = fieldForSort switch
-                {
-                    FieldTypes.Name => isDecs? _context.Dish.OrderByDescending(p=>p.Name): _context.Dish.OrderBy(p => p.Name),
-                    FieldTypes.CreateDate => isDecs ? _context.Dish.OrderByDescending(p => p.CreateDate) : _context.Dish.OrderBy(p => p.CreateDate),
-                    FieldTypes.Consistence => isDecs ? _context.Dish.OrderByDescending(p => p.Consist) : _context.Dish.OrderBy(p => p.Consist),
-                    FieldTypes.Description => isDecs ? _context.Dish.OrderByDescending(p => p.Description) : _context.Dish.OrderBy(p => p.Description),
-                    FieldTypes.Price => isDecs ? _context.Dish.OrderByDescending(p => p.Price) : _context.Dish.OrderBy(p => p.Price),
-                    FieldTypes.Gram => isDecs ? _context.Dish.OrderByDescending(p => p.Gram) : _context.Dish.OrderBy(p => p.Gram),
-                    FieldTypes.Calorific => isDecs ? _context.Dish.OrderByDescending(p => p.Calorific) : _context.Dish.OrderBy(p => p.Calorific),
-                    FieldTypes.CookTime => isDecs ? _context.Dish.OrderByDescending(p => p.CookTime) : _context.Dish.OrderBy(p => p.CookTime),
-                    FieldTypes.None => _context.Dish.OrderBy(p=>p.Id),
-                    _ => _context.Dish.OrderBy(p => p.Id)
-                };
-           
-                #endregion
-
-                #region Filter
-
-                List<Dish> approved = new List<Dish>();
-                if (constraints.Count == 0)
-                {
-                    approved = _context.Dish.ToList();
-                }
-                foreach (var filter in constraints)
-                {
-                    var filtred = filter.Key switch
-                    {
-                        FieldTypes.Name => sorted.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.CreateDate => sorted.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.Consistence => sorted.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.Description => sorted.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.Price => sorted.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.Gram => sorted.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.Calorific => sorted.Where(f => f.Calorific.ToString().ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.CookTime => sorted.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
-                        FieldTypes.None => sorted,
-                        _ => sorted
-                    };
-
-                    if (approved.Count() == 0)
-                    {
-                        approved = filtred.ToList();
-                    }
-                    else
-                    {
-                        approved = approved.Intersect(filtred).ToList();
-                        if (approved.Count == 0)
-                        {
-                            break;
-                        }
-                    }
-                }
-                #endregion
-
-                #region Paging
-
-                var newPagesCount = (int)Math.Ceiling((Double)approved.Count() / pageSize);
-                var page = pageNum <= newPagesCount ? approved.Skip((pageNum - 1) * pageSize).Take(pageSize) : approved.Take(pageSize);
-                #endregion
-
-                var model = new MenuModel
-                {
-                    Dishes = DishMap.GetDishes(page),
-                    Count = approved.Count()
-                };
-                return model;
-            }
+                Dishes = DishMap.GetDishes(page),
+                Count = approved.Count()
+            };
+            return model;
+        }
 
         public IEnumerable<DishDTO> GetAll()
         {
@@ -171,7 +190,7 @@ namespace RestaurantMenu.BLL.Services
         }
 
         #endregion
-}
+    }
 
     /// <summary>
     /// Provides sorting and filtration functions

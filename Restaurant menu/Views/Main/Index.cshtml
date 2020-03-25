@@ -86,7 +86,7 @@
 
                     var cookTime = ts.Hours == 0 ? ts.Minutes +" мин" : Math.Floor(ts.TotalHours) + " ч "+ ts.Minutes + " мин";
 
-                    var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
+                   // var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
                     <tr id="@dish.Id">
 
                         <td class="dishesItem" style="width: 23px">@dish.Name</td>
@@ -95,7 +95,7 @@
                         <td class="dishesItem"> @dish.Description</td>
                         <td class="dishesItem"> @dish.Price</td>
                         <td class="dishesItem"> @dish.Gram</td>
-                        <td class="dishesItem"> @calorific</td>
+                        <td class="dishesItem"> @dish.Calorific</td>
                         <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
                         <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>
