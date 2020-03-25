@@ -38,5 +38,10 @@ namespace Restaurant_menu.Context
 		{
 			optionsBuilder.UseSqlServer(connection);
 		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Dish>().Property(p => p.TotalCalorific).HasComputedColumnSql("CAST( ([Calorific] * Convert(decimal(18,2), [Gram]) / Convert(decimal(18,2), 100)) as DECIMAL(18, 2) )");
+		}
 	}
 }

@@ -61,33 +61,62 @@ namespace RestaurantMenu.BLL.Services
         public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int pageNum, int pageSize)
         {
 
-            var customList = _context.Dish.ToList();
 
-            for (int i = 0; i < customList.Count(); i++)
-            {
-                var sourceItem = customList.ElementAt(i).Calorific;
-                var customItem = Decimal.Multiply(sourceItem, Decimal.Divide(Convert.ToDecimal(customList.ElementAt(i).Gram), Convert.ToDecimal(100)));
-                customList.ElementAt(i).Calorific = Convert.ToDecimal(decimal.Parse(customItem.ToString()).ToString("G29"));
-            }
+            //for (int i = 0; i < customList.Count(); i++)
+            //{
+                
+            //    var sourceItem = customList.ElementAt(i).Calorific;
+            //    var customItem = Decimal.Multiply(sourceItem, Decimal.Divide(Convert.ToDecimal(customList.ElementAt(i).Gram), Convert.ToDecimal(100)));
+            //    customList.ElementAt(i).Calorific = Convert.ToDecimal(decimal.Parse(customItem.ToString()).ToString("G29"));
+            //}
 
 
+            //void m()
+            //{
+            //    IQueryable<Dish> query;
 
+            //    switch (order.Field)
+            //    {
+            //        case "Name":
+            //            query = cntx.Dish.OrderBy(x => x.Name);
+            //            break;
+            //        default:
+            //            query = cntx.Dish.OrderBy(x => x.Id);
+            //            break;
+            //    }
+
+            //    if (filters.Count > 0)
+            //    {
+            //        foreach (var filter in filters)
+            //        {
+            //            switch (filter.Name)
+            //            {
+            //                case "Name":
+            //                    query = query.Where(x => x.Name = filter.Value);
+            //                    break;
+            //            }
+            //        }
+
+            //    }
+
+            //    query = query.Skip(20).Take(20).ToList();
+            //}
 
             #region Sort
 
 
             var sorted = fieldForSort switch
             {
-                FieldTypes.Name => isDecs ? customList.OrderByDescending(p => p.Name) : customList.OrderBy(p => p.Name),
-                FieldTypes.CreateDate => isDecs ? customList.OrderByDescending(p => p.CreateDate) : customList.OrderBy(p => p.CreateDate),
-                FieldTypes.Consistence => isDecs ? customList.OrderByDescending(p => p.Consist) : customList.OrderBy(p => p.Consist),
-                FieldTypes.Description => isDecs ? customList.OrderByDescending(p => p.Description) : customList.OrderBy(p => p.Description),
-                FieldTypes.Price => isDecs ? customList.OrderByDescending(p => p.Price) : customList.OrderBy(p => p.Price),
-                FieldTypes.Gram => isDecs ? customList.OrderByDescending(p => p.Gram) : customList.OrderBy(p => p.Gram),
-                FieldTypes.Calorific => isDecs ? customList.OrderByDescending(p => p.Calorific) : customList.OrderBy(p => p.Calorific),
-                FieldTypes.CookTime => isDecs ? customList.OrderByDescending(p => p.CookTime) : customList.OrderBy(p => p.CookTime),
-                FieldTypes.None => customList.OrderBy(p => p.Id),
-                _ => customList.OrderBy(p => p.Id)
+                FieldTypes.Name => isDecs ? _context.Dish.OrderByDescending(p => p.Name) : _context.Dish.OrderBy(p => p.Name),
+                FieldTypes.CreateDate => isDecs ? _context.Dish.OrderByDescending(p => p.CreateDate) : _context.Dish.OrderBy(p => p.CreateDate),
+                FieldTypes.Consistence => isDecs ? _context.Dish.OrderByDescending(p => p.Consist) : _context.Dish.OrderBy(p => p.Consist),
+                FieldTypes.Description => isDecs ? _context.Dish.OrderByDescending(p => p.Description) : _context.Dish.OrderBy(p => p.Description),
+                FieldTypes.Price => isDecs ? _context.Dish.OrderByDescending(p => p.Price) : _context.Dish.OrderBy(p => p.Price),
+                FieldTypes.Gram => isDecs ? _context.Dish.OrderByDescending(p => p.Gram) : _context.Dish.OrderBy(p => p.Gram),
+                FieldTypes.Calorific => isDecs ? _context.Dish.OrderByDescending(p => p.TotalCalorific) : _context.Dish.OrderBy(p => p.TotalCalorific),
+                FieldTypes.CookTime => isDecs ? _context.Dish.OrderByDescending(p => p.CookTime) : _context.Dish.OrderBy(p => p.CookTime),
+                FieldTypes.None => _context.Dish.OrderBy(p => p.Id),
+                _ => _context.Dish.OrderBy(p => p.Id)
             };
 
             #endregion
@@ -114,7 +143,7 @@ namespace RestaurantMenu.BLL.Services
                     FieldTypes.Description => sorted.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
                     FieldTypes.Price => sorted.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
                     FieldTypes.Gram => sorted.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Calorific => sorted.Where(f => f.Calorific.ToString().ToLower().Contains(filter.Value.ToLower())),
+                    FieldTypes.Calorific => sorted.Where(f => f.TotalCalorific.ToString().ToLower().Contains(filter.Value.ToLower())),
                     FieldTypes.CookTime => sorted.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
                     FieldTypes.None => sorted,
                     _ => sorted

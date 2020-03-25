@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Restaurant_menu.Models
 {
@@ -12,6 +13,7 @@ namespace Restaurant_menu.Models
         [Key]
         [Column("ID")]
         public short Id { get; set; }
+
         [Column(TypeName = "smalldatetime")]
         public DateTime CreateDate { get; set; }
 
@@ -20,17 +22,25 @@ namespace Restaurant_menu.Models
         public string Name { get; set; }
 
         public string Consist { get; set; }
+
         [Required]
         [StringLength(500)]
         public string Description { get; set; }
 
         [Range(0, float.MaxValue)]
         public decimal Price { get; set; }
+
         [Range(0, int.MaxValue)]
         public int Gram { get; set; }
+
         [Range(0, float.MaxValue)]
         public decimal Calorific { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public decimal TotalCalorific { get; private set; }
+
         [Range(0, int.MaxValue)]
         public int CookTime { get; set; }
+
     }
 }

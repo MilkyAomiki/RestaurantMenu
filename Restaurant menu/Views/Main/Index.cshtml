@@ -52,6 +52,7 @@
                 <!--Creates json inside id and  choose appropriate icon-->
                 <!--{FieldName: IsSorted(bool), Decs: (bool)}-->
                 <tr id="SortFields">
+
                     <th id='{"@FieldTypes.Name": "@Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.Desc).FirstOrDefault()" }' class="submitButton" style="width: 23px">Название <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
                     <th id='{"@FieldTypes.CreateDate": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CreateDate).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.CreateDate).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Дата создания <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
                     <th id='{"@FieldTypes.Consistence": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Consistence).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Consistence).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Состав <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
@@ -95,7 +96,7 @@
                         <td class="dishesItem"> @dish.Description</td>
                         <td class="dishesItem"> @dish.Price</td>
                         <td class="dishesItem"> @dish.Gram</td>
-                        <td class="dishesItem"> @dish.Calorific</td>
+                        <td class="dishesItem"> @dish.TotalCalorific</td>
                         <td style="white-space:nowrap;" class="dishesItem"> @cookTime</td>
 
                         <td class="action" style="padding: 7px;"><a href="@Url.Action("Read")?id=@dish.Id" class="material-icons">remove_red_eye</a></td>

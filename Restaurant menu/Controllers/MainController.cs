@@ -6,6 +6,7 @@ using Restaurant_menu.Pagination;
 using RestaurantMenu.BLL.DTO;
 using RestaurantMenu.BLL.Interfaces;
 using RestaurantMenu.BLL.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -45,6 +46,8 @@ namespace Restaurant_menu.Controllers
 			}
 
 			List<SortedItems> sortedItems = new List<SortedItems>();
+			//Enum.GetValues(typeof(FieldTypes)).Length
+
 			sortedItems.Add(new SortedItems { Key = FieldTypes.Name, IsSorted = FieldTypes.Name == fieldTypeSort, Desc = fieldTypeSort == FieldTypes.Name? desc : false });
 			sortedItems.Add(new SortedItems { Key = FieldTypes.CreateDate, IsSorted = FieldTypes.CreateDate == fieldTypeSort, Desc = fieldTypeSort == FieldTypes.CreateDate ? desc : false });
 			sortedItems.Add(new SortedItems { Key = FieldTypes.Consistence, IsSorted = FieldTypes.Consistence == fieldTypeSort, Desc = fieldTypeSort == FieldTypes.Consistence ? desc : false });
@@ -54,7 +57,6 @@ namespace Restaurant_menu.Controllers
 			sortedItems.Add(new SortedItems { Key = FieldTypes.Calorific, IsSorted = FieldTypes.Calorific == fieldTypeSort, Desc = fieldTypeSort == FieldTypes.Calorific ? desc : false });
 			sortedItems.Add(new SortedItems { Key = FieldTypes.CookTime, IsSorted = FieldTypes.CookTime == fieldTypeSort, Desc = fieldTypeSort == FieldTypes.CookTime ? desc : false });
 
-			//TODO: Paging after filtration
 
 			int pageSize = 20;
 			var source = _menu.GetAll(parsedconstraints, fieldTypeSort, desc, page, pageSize);

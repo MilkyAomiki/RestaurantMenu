@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant_menu.Context;
 
 namespace RestaurantMenu.DAL.Migrations
 {
     [DbContext(typeof(DishesContext))]
-    partial class DishesContextModelSnapshot : ModelSnapshot
+    [Migration("20200325145401_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,7 @@ namespace RestaurantMenu.DAL.Migrations
                     b.Property<decimal>("TotalCalorific")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("decimal(18,2)")
-                        .HasComputedColumnSql("CAST( ([Calorific] * Convert(decimal(18,2), [Gram]) / Convert(decimal(18,2), 100)) as DECIMAL(18, 2) )");
+                        .HasComputedColumnSql("2+2");
 
                     b.HasKey("Id");
 

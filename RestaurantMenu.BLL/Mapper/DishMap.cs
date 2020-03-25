@@ -59,7 +59,8 @@ namespace RestaurantMenu.BLL.Mapper
                     Price = item.Price,
                     Gram = item.Gram,
                     Calorific = item.Calorific,
-                    CookTime = item.CookTime
+                    CookTime = item.CookTime,
+                    TotalCalorific = item.TotalCalorific
                 };
 
                 dishes.Add(entity);
