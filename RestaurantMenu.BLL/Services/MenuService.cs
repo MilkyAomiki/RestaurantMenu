@@ -174,7 +174,8 @@ namespace RestaurantMenu.BLL.Services
             var model = new MenuModel
             {
                 Dishes = DishMap.GetDishes(page),
-                Count = approved.Count()
+                Count = approved.Count(),
+                TotalCount = sorted.Count()
             };
             return model;
         }

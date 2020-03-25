@@ -9,5 +9,6 @@ namespace RestaurantMenu.BLL.Models
     {
         public IEnumerable<DishDTO> Dishes { get; set; }
         public int Count { get; set; }
+        public int TotalCount { get; set; }
     }
 }

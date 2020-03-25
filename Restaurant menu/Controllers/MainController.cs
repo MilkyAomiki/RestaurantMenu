@@ -60,7 +60,7 @@ namespace Restaurant_menu.Controllers
 
 			int pageSize = 20;
 			var source = _menu.GetAll(parsedconstraints, fieldTypeSort, desc, page, pageSize);
-			var count = _menu.GetAll().Count();
+			var count = source.TotalCount;
 			var currentItemsCount = source.Count;
 			PageViewModel pageViewModel = new PageViewModel(currentItemsCount, page, pageSize);
 			IndexViewModel indexViewModel = new IndexViewModel
