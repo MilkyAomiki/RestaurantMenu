@@ -84,8 +84,7 @@
                 {
                     var ts = TimeSpan.FromMinutes(dish.CookTime);
 
-                    var cookTime = ts.Hours == 0 ? ts.ToString("%m") : ts.ToString("h' ч. 'mm");
-                    cookTime = cookTime + " мин.";
+                    var cookTime = ts.Hours == 0 ? ts.Minutes +" мин" : Math.Floor(ts.TotalHours) + " ч "+ ts.Minutes + " мин";
 
                     var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
                     <tr id="@dish.Id">
