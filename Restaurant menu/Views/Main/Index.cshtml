@@ -116,8 +116,13 @@
 
                  $(this).children('a').click(
                      function () {
-                         $(this).parent('.del').parent('tr').remove();
-                         $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function(result) { $('#Filtred').text(result);  $('#AllItemsCount').text(result);});
+                         var dishName = $('#' + id).children('.dishesItem').eq(0).text();
+                         var userConfirm = confirm('Удалить блюдо ' + dishName + '?')
+                         if (userConfirm) {
+                            $(this).parent('.del').parent('tr').remove();
+                            $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function(result) { $('#Filtred').text(result);  $('#AllItemsCount').text(result);});
+                         }
+
                     });
             });
 
