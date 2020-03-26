@@ -27,11 +27,11 @@ namespace RestaurantMenu.BLL.DTO
         [StringLength(500)]
         public string Description { get; set; }
         
-        [Range(0, double.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public decimal Price { get; set; }
         [Range(0, int.MaxValue)]
         public int Gram { get; set; }
-        [Range(0, double.MaxValue)]
+        [Range(0, Int32.MaxValue)]
         public decimal Calorific { get; set; }
         public decimal TotalCalorific { get;  set; }
 

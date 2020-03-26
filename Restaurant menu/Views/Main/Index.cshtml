@@ -132,7 +132,7 @@
                          if (userConfirm) {
                              $(this).parent('.del').parent('tr').remove();
                              let count = parseInt($('#Filtred').text());
-                             $.post("@Url.Action("Delete", "Logic")?id=" + id, null, function (result) { $('#Filtred').text(--count);  $('#AllItemsCount').text(result);});
+                             $.post("@Url.Action("DeleteItem")?id=" + id, null, function (result) { $('#Filtred').text(--count);  $('#AllItemsCount').text(result);});
                          }
 
                     });
