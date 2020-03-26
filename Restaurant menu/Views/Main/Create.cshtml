@@ -63,7 +63,7 @@
     <form id="mainform" method="post" class="input-group" action="@uri">
 
 
-        <input type="hidden" class="form-control" name="Id" @if (isEdit) { @: value="@Model.Dish.Id"
+        <input type="hidden" class="form-control" name="Dish.Id" @if (isEdit) { @: value="@Model.Dish.Id"
                }>
         @if (isEdit)
         {
@@ -73,37 +73,44 @@
         }
         else
         {
-            <input type="hidden" name="CreateDate" value=""/>
+            <input type="hidden" name="CreateDate" value="" />
         }
 
-        @Html.ValidationSummary(true)
+        @Html.ValidationSummary(true, "Please, try again")
         <p>Название:</p>
         @Html.TextBoxFor(x => x.Dish.Name) <br />
+        @Html.ValidationMessage("Name")
         @Html.ValidationMessageFor(x => x.Dish.Name)
 
         <p>Состав:</p>
         @Html.TextBoxFor(x => x.Dish.Consist) <br />
+        @Html.ValidationMessage("Consist")
         @Html.ValidationMessageFor(x => x.Dish.Consist)
 
         <p>Описание:</p>
         @Html.TextBoxFor(x => x.Dish.Description) <br />
+        @Html.ValidationMessage("Description")
         @Html.ValidationMessageFor(x => x.Dish.Description)
 
         <p>Цена:</p>
         @Html.TextBoxFor(x => x.Dish.Price) <br />
+        @Html.ValidationMessage("Price")
         @Html.ValidationMessageFor(x => x.Dish.Price)
 
         <p>Граммовка:</p>
         @Html.TextBoxFor(x => x.Dish.Gram) <br />
+        @Html.ValidationMessage("Gram")
         @Html.ValidationMessageFor(x => x.Dish.Gram)
 
         <p>Калорийность блюда:</p>
         @Html.TextBoxFor(x => x.Dish.Calorific) <br />
+        @Html.ValidationMessage("Calorific")
         @Html.ValidationMessageFor(x => x.Dish.Calorific)
 
         <p>Время Приготовления:</p>
         @Html.TextBoxFor(x => x.Dish.CookTime) <br />
-        @Html.ValidationMessageFor(x => x.Dish.CookTime)
+        @Html.ValidationMessage("CookTime")
+        @Html.ValidationMessageFor(p => p.Dish.CookTime)
 
         <br />
 

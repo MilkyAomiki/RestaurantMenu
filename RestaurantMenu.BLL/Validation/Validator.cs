@@ -15,7 +15,7 @@ namespace RestaurantMenu.BLL.Validation
             {
                 if (i.Name.ToLower().Trim() == item.Name.ToLower().Trim() && i.Id != item.Id)
                 {
-                    throw new ValidationException(new ValidationResult("Name is already exist", new List<string>() { "name" }), null, null);
+                    throw new ValidationException(new ValidationResult("Field with given name is already exist", new List<string>() { "name" }), null, null);
                 }
             }
 

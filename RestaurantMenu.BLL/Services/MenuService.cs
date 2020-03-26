@@ -43,6 +43,16 @@ namespace RestaurantMenu.BLL.Services
         #endregion
 
         #region Read  
+
+        public int GetTotalAmount()
+        {
+            return _context.Dish.Count();
+        }
+        public int GetPageAmount(int currentPage, int pageSize)
+        {
+            return _context.Dish.Skip((currentPage - 1) * pageSize).Take(pageSize).Count();
+        }
+
         public DishDTO Get(int id)
         {
             var entity = _context.Dish.Find((short)id);
@@ -151,6 +161,8 @@ namespace RestaurantMenu.BLL.Services
                     }
                 }
             }
+
+
             #endregion
 
 

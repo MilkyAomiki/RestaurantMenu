@@ -35,6 +35,7 @@ namespace RestaurantMenu.BLL.DTO
         public decimal Calorific { get; set; }
         public decimal TotalCalorific { get;  set; }
 
+        
         [Range(0, int.MaxValue)]
         public int CookTime { get; set; }
     }

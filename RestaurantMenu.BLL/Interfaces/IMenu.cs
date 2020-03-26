@@ -9,7 +9,10 @@ namespace RestaurantMenu.BLL.Interfaces
     /// </summary>
     public interface IMenu<T>
     {
+     
         void Create(T item);
+        int GetTotalAmount();
+        int GetPageAmount(int currentPage, int pageSize);
         T Get(int id);
         MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int page, int pageSize);
         IEnumerable<T> GetAll();

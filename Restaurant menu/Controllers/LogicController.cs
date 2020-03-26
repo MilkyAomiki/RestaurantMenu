@@ -21,8 +21,13 @@ namespace Restaurant_menu.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(DishDTO entity)
+        public IActionResult Edit([Bind(Prefix = "Dish")] DishDTO entity)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = false, Dish = entity });
+            }
+
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0)
             {
                 var form = Request.Form;
@@ -63,8 +68,12 @@ namespace Restaurant_menu.Controllers
            
 
         [HttpPost]
-        public IActionResult Create(DishDTO entity)
+        public IActionResult Create([Bind(Prefix ="Dish")] DishDTO entity)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = false, Dish = entity });
+            }
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0 && entity.Id == 0)
             {
                 var form = Request.Form;
@@ -76,11 +85,11 @@ namespace Restaurant_menu.Controllers
                 entity.Gram = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.Gram").Value);
                 entity.Calorific = Convert.ToDecimal(form.FirstOrDefault(p => p.Key == "Dish.Calorific").Value);
                 entity.CookTime = int.Parse(form.FirstOrDefault(p => p.Key == "Dish.CookTime").Value);
-                entity.CreateDate = DateTime.Now;
             }
             try
             {
 
+                 entity.CreateDate = DateTime.Now;
                 _menu.Create(entity);
                 Response.Redirect("/");
             }
@@ -105,10 +114,10 @@ namespace Restaurant_menu.Controllers
         [HttpPost]
         public int Delete(int id)
         {
+            
             _menu.Delete(id);
-            return _menu.GetAll().Count();
+            return  _menu.GetTotalAmount();
         }
-
 
 
 
