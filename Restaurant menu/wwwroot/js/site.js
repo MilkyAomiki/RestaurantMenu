@@ -18,92 +18,92 @@ function ShowElement() {
 
 
 
-function Filter(fieldsList, visibleitemsId) {
+//function Filter(fieldsList, visibleitemsId) {
 
-    /* If list of fields is empty, show all dishes */
-    if (fieldsList.length == 0) {
-        var ItemsCount = 0;
+//    /* If list of fields is empty, show all dishes */
+//    if (fieldsList.length == 0) {
+//        var ItemsCount = 0;
 
-        $('#DishesBody').children('tr').each(function () {
-            var matched = false;
+//        $('#DishesBody').children('tr').each(function () {
+//            var matched = false;
 
-            for (var i = 0; i < visibleitemsId.length; i++) {
-                if ($(this).attr('id') == visibleitemsId[i]) {
-                    matched = true;
-                    ItemsCount++;
-                    break;
+//            for (var i = 0; i < visibleitemsId.length; i++) {
+//                if ($(this).attr('id') == visibleitemsId[i]) {
+//                    matched = true;
+//                    ItemsCount++;
+//                    break;
 
-                }
-            }
-            if (matched == true) {
-                if ($(this).is(":hidden")) {
-                    $(this).show();
+//                }
+//            }
+//            if (matched == true) {
+//                if ($(this).is(":hidden")) {
+//                    $(this).show();
 
-                    $('#SearchFields').css('display', 'table-row');
-                }
-            }
-            if (matched == false) {
-                $(this).hide();
-                $('#SearchFields').css('display', 'table-row');
+//                    $('#SearchFields').css('display', 'table-row');
+//                }
+//            }
+//            if (matched == false) {
+//                $(this).hide();
+//                $('#SearchFields').css('display', 'table-row');
 
-            }
-        })
-        $('#Filtred').text(ItemsCount);
+//            }
+//        })
+//        $('#Filtred').text(ItemsCount);
 
-    } else {
+//    } else {
 
-        /* Get the id of elements and show/hide him */
+//        /* Get the id of elements and show/hide him */
 
-        $.post("/Filter/Filtration", JSON.stringify(fieldsList), function (result) {
-            console.log(result);
-            $('#Filtred').text(result.length);
-            var ItemsCount = 0;
-            $('tbody').children('tr').each(function () {
-                var matched = false;
+//        $.post("/Filter/Filtration", JSON.stringify(fieldsList), function (result) {
+//            console.log(result);
+//            $('#Filtred').text(result.length);
+//            var ItemsCount = 0;
+//            $('tbody').children('tr').each(function () {
+//                var matched = false;
 
 
-                for (var i = 0; i < result.length; i++) {
-                    if ($(this).attr('id') == result[i]) {
-                        matched = true;
-                        ItemsCount++;
-                        break;
+//                for (var i = 0; i < result.length; i++) {
+//                    if ($(this).attr('id') == result[i]) {
+//                        matched = true;
+//                        ItemsCount++;
+//                        break;
 
-                    }
-                }
-                if (matched == true) {
-                    if ($(this).is(":hidden")) {
-                        $(this).show();
+//                    }
+//                }
+//                if (matched == true) {
+//                    if ($(this).is(":hidden")) {
+//                        $(this).show();
 
-                        $('#SearchFields').css('display', 'table-row');
-                    }
-                }
-                if (matched == false) {
-                    $(this).hide();
-                    $('#SearchFields').css('display', 'table-row');
+//                        $('#SearchFields').css('display', 'table-row');
+//                    }
+//                }
+//                if (matched == false) {
+//                    $(this).hide();
+//                    $('#SearchFields').css('display', 'table-row');
 
-                }
-            })
-            $('#Filtred').text(ItemsCount);
-        }, "json")
+//                }
+//            })
+//            $('#Filtred').text(ItemsCount);
+//        }, "json")
 
-    }
-}
+//    }
+//}
 
-function LoadVisibleItems(visibleitemsId) {
-    var t = 0;
-    $('#DishesBody').children('tr').each(function () {
-        for (var i in visibleitemsId) {
+//function LoadVisibleItems(visibleitemsId) {
+//    var t = 0;
+//    $('#DishesBody').children('tr').each(function () {
+//        for (var i in visibleitemsId) {
          
-            if ($(this).attr('id') == visibleitemsId[i]) {
-                /*Why this isn't working?*/
-                $(this).show();
-                /**/
-              //  $(this).css('visibility', 'visible');
-                t++;
-            }
+//            if ($(this).attr('id') == visibleitemsId[i]) {
+//                /*Why this isn't working?*/
+//                $(this).show();
+//                /**/
+//              //  $(this).css('visibility', 'visible');
+//                t++;
+//            }
           
-        }
-    })
-    $('#Filtred').text(t);
+//        }
+//    })
+//    $('#Filtred').text(t);
 
-}
+//}

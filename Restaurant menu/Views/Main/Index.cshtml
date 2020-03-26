@@ -33,11 +33,12 @@
         <form id="btnCreate" action="/Create"><button class="button create" type="submit">Создать</button></form>
     </header>
 
-    <!--Load Animation
+    <!--Load Animation-->
     <div class="dvProgress" style="display:flex; justify-content:center; align-items:center">
         <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" />
-    </div>-->
+    </div>
     <!------------------->
+    
     <div class="mainData">
 
         <table id="dishes">
@@ -73,9 +74,9 @@
                 <th colspan="3"><button type="submit" class="submitButton"><span class="material-icons">done</span></button></th>
             </tr>
             <!--Load Animation-->
-            <tr>
-                <td class="dvProgress" style=" text-align:center;" colspan="8"><img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" /></td>
-            </tr>
+            @*<tr>
+            <td class="dvProgress" style=" text-align:center;" colspan="8"><img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" /></td>
+        </tr>*@
             <tbody id="DishesBody">
 
                 @foreach (var dish in Model.Dishes)
@@ -111,6 +112,10 @@
             })
         </script>
         <script>
+            $('.button create').click(function () {
+                $(".mainData").hide();
+                $(".dvProgress").show();
+            })
 
             /*Delete items*/
             $('.del').each(function () {
@@ -130,25 +135,7 @@
             });
 
 
-            /*Sorting*/
-            $('.tableHeader').each(function () {
-                $(this).css('cursor', 'pointer');
-                $(this).click(function () {
-                    var name = $(this).attr('id');
-                    console.log("SORT\n " + name);
-                        $.post("@Url.Action("Sorting", "Filter")?name=" + name, null, Sort)
-                })
-            })
-            function Sort(result) {
-                var list = $('tbody > tr').get();
-                for (var i = 0; i < result.length; i++) {
-                    var item = list.find(x => x.getAttribute('id') == result[i]);
-                    if (item != undefined) {
-                        list.find(x => x.getAttribute('id') == result[i]).parentNode.appendChild(list.find(x => x.getAttribute('id') == result[i]));
-                        console.log(item);
-                    }
-                }
-            }
+     
         </script>
         <script src="/js/site.js"></script>
     </div>
@@ -197,8 +184,9 @@
         $('.submitButton').each(function () {
 
             $(this).click(function () {
+                $(".mainData").hide();
                 $(".dvProgress").show();
-                $(".DishesBody").hide();
+
             var constraint;
             var constraints = new Array();
             var page;

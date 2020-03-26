@@ -35,99 +35,106 @@
     <div class="dvProgress" style="display:flex; justify-content:center; align-items:center">
         <img src="https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif" />
     </div>
-    <script>
-        $(document).ready(function () {
-            $(".dvProgress").hide();
-        })
-    </script>
+
     <!------------------->
-
-    <a href="/" class="material-icons">
-        keyboard_arrow_left
-    </a>
-    <h2 id="mainh">
-        @if (isEdit)
-        {
-
-            @:Редактирование блюда
-
-        }
-        else
-        {
-
-            @:Создание блюда
-
-        }
-    </h2>
-
-    <form id="mainform" method="post" class="input-group" action="@uri">
-
-
-        <input type="hidden" class="form-control" name="Dish.Id" @if (isEdit) { @: value="@Model.Dish.Id"
-               }>
-        @if (isEdit)
-        {
-            <p>Дата создания:</p>
-            @Html.DisplayFor(x => x.Dish.CreateDate) <br />
-            @Html.ValidationMessageFor(x => x.Dish.CreateDate)
-        }
-        else
-        {
-            <input type="hidden" name="CreateDate" value="" />
-        }
-
-        @Html.ValidationSummary(true, "Please, try again")
-        <p>Название:</p>
-        @Html.TextBoxFor(x => x.Dish.Name) <br />
-        @Html.ValidationMessage("Name")
-        @Html.ValidationMessageFor(x => x.Dish.Name)
-
-        <p>Состав:</p>
-        @Html.TextBoxFor(x => x.Dish.Consist) <br />
-        @Html.ValidationMessage("Consist")
-        @Html.ValidationMessageFor(x => x.Dish.Consist)
-
-        <p>Описание:</p>
-        @Html.TextBoxFor(x => x.Dish.Description) <br />
-        @Html.ValidationMessage("Description")
-        @Html.ValidationMessageFor(x => x.Dish.Description)
-
-        <p>Цена:</p>
-        @Html.TextBoxFor(x => x.Dish.Price) <br />
-        @Html.ValidationMessage("Price")
-        @Html.ValidationMessageFor(x => x.Dish.Price)
-
-        <p>Граммовка:</p>
-        @Html.TextBoxFor(x => x.Dish.Gram) <br />
-        @Html.ValidationMessage("Gram")
-        @Html.ValidationMessageFor(x => x.Dish.Gram)
-
-        <p>Калорийность блюда:</p>
-        @Html.TextBoxFor(x => x.Dish.Calorific) <br />
-        @Html.ValidationMessage("Calorific")
-        @Html.ValidationMessageFor(x => x.Dish.Calorific)
-
-        <p>Время Приготовления:</p>
-        @Html.TextBoxFor(x => x.Dish.CookTime) <br />
-        @Html.ValidationMessage("CookTime")
-        @Html.ValidationMessageFor(p => p.Dish.CookTime)
-
-        <br />
-
-        <button type="submit" id="Create">
+    <div id="mainData">
+        <a href="/" class="material-icons">
+            keyboard_arrow_left
+        </a>
+        <h2 id="mainh">
             @if (isEdit)
             {
 
-                @:Изменить
+                @:Редактирование блюда
 
             }
             else
             {
 
-                @:Создать
+                @:Создание блюда
+
             }
-        </button>
-    </form>
+        </h2>
+
+        <form id="mainform" method="post" class="input-group" action="@uri">
+
+
+            <input type="hidden" class="form-control" name="Dish.Id" @if (isEdit) { @: value="@Model.Dish.Id"
+                   }>
+            @if (isEdit)
+            {
+                <p>Дата создания:</p>
+                @Html.DisplayFor(x => x.Dish.CreateDate) <br />
+                @Html.ValidationMessageFor(x => x.Dish.CreateDate)
+            }
+            else
+            {
+                <input type="hidden" name="CreateDate" value="" />
+            }
+
+            @Html.ValidationSummary(true, "Please, try again")
+            <p>Название:</p>
+            @Html.TextBoxFor(x => x.Dish.Name) <br />
+            @Html.ValidationMessage("Name")
+            @Html.ValidationMessageFor(x => x.Dish.Name)
+
+            <p>Состав:</p>
+            @Html.TextBoxFor(x => x.Dish.Consist) <br />
+            @Html.ValidationMessage("Consist")
+            @Html.ValidationMessageFor(x => x.Dish.Consist)
+
+            <p>Описание:</p>
+            @Html.TextBoxFor(x => x.Dish.Description) <br />
+            @Html.ValidationMessage("Description")
+            @Html.ValidationMessageFor(x => x.Dish.Description)
+
+            <p>Цена:</p>
+            @Html.TextBoxFor(x => x.Dish.Price) <br />
+            @Html.ValidationMessage("Price")
+            @Html.ValidationMessageFor(x => x.Dish.Price)
+
+            <p>Граммовка:</p>
+            @Html.TextBoxFor(x => x.Dish.Gram) <br />
+            @Html.ValidationMessage("Gram")
+            @Html.ValidationMessageFor(x => x.Dish.Gram)
+
+            <p>Калорийность блюда:</p>
+            @Html.TextBoxFor(x => x.Dish.Calorific) <br />
+            @Html.ValidationMessage("Calorific")
+            @Html.ValidationMessageFor(x => x.Dish.Calorific)
+
+            <p>Время Приготовления:</p>
+            @Html.TextBoxFor(x => x.Dish.CookTime) <br />
+            @Html.ValidationMessage("CookTime")
+            @Html.ValidationMessageFor(p => p.Dish.CookTime)
+
+            <br />
+
+            <button type="submit" id="Create">
+                @if (isEdit)
+                {
+
+                    @:Изменить
+
+                }
+                else
+                {
+
+                    @:Создать
+                }
+            </button>
+        </form>
+    </div>
+    <script>
+        $('button').click(function () {
+            $('#mainData').hide();
+            $('.dvProgress').show();
+        })
+        $(document).ready(function () {
+            $(".dvProgress").hide();
+        })
+    </script>
+
 </body>
 </html>
 
