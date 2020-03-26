@@ -25,7 +25,7 @@ namespace Restaurant_menu.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = false, Dish = entity });
+                return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = true, Dish = entity });
             }
 
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0)

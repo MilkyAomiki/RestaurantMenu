@@ -30,9 +30,6 @@ namespace Restaurant_menu
 			services.AddScoped<IMenu<DishDTO>>(options => { return diModule.ConfigureMenuService(); });
 			services.AddMvc(options => { options.EnableEndpointRouting = false;});
 			services.AddTransient<ITools, ToolsService>();
-			services.AddTransient<IFiltration, FiltrationService>();
-
-
 
 		}
 

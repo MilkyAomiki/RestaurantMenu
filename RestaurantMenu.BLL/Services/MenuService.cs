@@ -114,7 +114,6 @@ namespace RestaurantMenu.BLL.Services
                     }
                     else
                     {
-                        //Why
                         approved = approved.Intersect(filtred);
                         if (!approved.Any())
                         {
@@ -127,10 +126,8 @@ namespace RestaurantMenu.BLL.Services
 
             #endregion
 
-
             #region Sort
 
-            //438 ms
             var sorted = fieldForSort switch
             {
                 FieldTypes.Name => isDecs ? approved.OrderByDescending(p => p.Name) : approved.OrderBy(p => p.Name),
