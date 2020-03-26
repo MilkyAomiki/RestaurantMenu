@@ -149,6 +149,10 @@ namespace RestaurantMenu.BLL.Services
                     if (!approved.Any())
                     {
                         approved = filtred;
+                        if (!filtred.Any())
+                        {
+                            break;
+                        }
                     }
                     else
                     {
