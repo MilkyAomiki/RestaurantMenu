@@ -3,76 +3,7 @@
 
 // Write your Javascript code.
 
-$('.submitButton').each(function () {
 
-    $(this).click(function () {
-        var constraint;
-        var constraints = new Array();
-        var page;
-        $('.searchField').each(function () {
-            constraint = {
-                key: $(this).attr('name'),
-                value: $(this).val()
-            }
-            constraints.push(constraint);
-        });
-        var sortType;
-        var descSort;
-        if ($(this).is('th')) {
-
-            var fid = $(this).attr('id');
-            var parsedId = JSON.parse(fid);
-            for (var i in parsedId) {
-                if (i != 'Desc') {
-                    sortType = i;
-
-                    //Is Active?
-                    if (parsedId[i] == 'True') {
-                        //Is already descending?
-                        if (parsedId['Desc'] == 'True') {
-                            //It's not a descending
-                            descSort = false;
-                            //No?
-                        } else {
-                            //It's descending
-                            descSort = true;
-                        }
-                        //Isn't active?
-                    } else {
-                        // It's not a descending
-                        descSort = false;
-                    }
-                }
-            }
-        } else {
-
-            $('#SortFields').children("th").each(function () {
-                if ($(this).attr('id') == undefined) { return false; }
-
-                var fid = $(this).attr('id');
-                var parsedId = JSON.parse(fid);
-                for (var i in parsedId) {
-
-                    if (i != 'Desc') {
-                        if (parsedId[i] == 'True') {
-                            sortType = i;
-                            descSort = parsedId['Desc'];
-                        }
-                    }
-                }
-
-            });
-        }
-
-        if ($(this).is('li')) {
-            page = $(this).attr('id');
-        } else {
-            page = 1;
-        }
-        var uriConstraints = encodeURIComponent(JSON.stringify(constraints));
-        window.location.href = '/?constraints=' + uriConstraints + '&fieldTypeSort=' + sortType + '&desc=' + descSort + '&page=' + page;
-    })
-});
 
 document.getElementById('search').addEventListener('click', ShowElement, false);
 function ShowElement() {

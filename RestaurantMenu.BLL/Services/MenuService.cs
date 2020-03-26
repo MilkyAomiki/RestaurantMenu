@@ -71,48 +71,6 @@ namespace RestaurantMenu.BLL.Services
         public MenuModel GetAll(List<ItemConstraint> constraints, FieldTypes fieldForSort, bool isDecs, int pageNum, int pageSize)
         {
 
-
-            //for (int i = 0; i < customList.Count(); i++)
-            //{
-                
-            //    var sourceItem = customList.ElementAt(i).Calorific;
-            //    var customItem = Decimal.Multiply(sourceItem, Decimal.Divide(Convert.ToDecimal(customList.ElementAt(i).Gram), Convert.ToDecimal(100)));
-            //    customList.ElementAt(i).Calorific = Convert.ToDecimal(decimal.Parse(customItem.ToString()).ToString("G29"));
-            //}
-
-
-            //void m()
-            //{
-            //    IQueryable<Dish> query;
-
-            //    switch (order.Field)
-            //    {
-            //        case "Name":
-            //            query = cntx.Dish.OrderBy(x => x.Name);
-            //            break;
-            //        default:
-            //            query = cntx.Dish.OrderBy(x => x.Id);
-            //            break;
-            //    }
-
-            //    if (filters.Count > 0)
-            //    {
-            //        foreach (var filter in filters)
-            //        {
-            //            switch (filter.Name)
-            //            {
-            //                case "Name":
-            //                    query = query.Where(x => x.Name = filter.Value);
-            //                    break;
-            //            }
-            //        }
-
-            //    }
-
-            //    query = query.Skip(20).Take(20).ToList();
-            //}
-
-
             #region Filter
 
             IQueryable<Dish> approved;

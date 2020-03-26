@@ -70,8 +70,14 @@ namespace Restaurant_menu.Controllers
         [HttpPost]
         public IActionResult Create([Bind(Prefix ="Dish")] DishDTO entity)
         {
+            if (ModelState.Where(p => p.Key == "Dish.Id").FirstOrDefault().Value.Errors.Count != 0)
+            {
+                ModelState.Where(p => p.Key == "Dish.Id").FirstOrDefault().Value.ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+            }
             if (!ModelState.IsValid)
             {
+              
+
                 return View("/Views/Main/Create.cshtml", new CreateViewModel { IsEdit = false, Dish = entity });
             }
             if (entity.Name == null && entity.Consist == null && entity.Description == null && entity.Calorific == 0 && entity.Id == 0)
