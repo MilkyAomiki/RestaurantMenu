@@ -1,6 +1,7 @@
 ﻿@using Restaurant_menu.Controllers;
 @using Restaurant_menu.Pagination;
 @using RestaurantMenu.BLL.Interfaces;
+@using RestaurantMenu.BLL.Mapper;
 @inject ITools tools
 @model IndexViewModel
 @{
@@ -47,30 +48,32 @@
                 <!--Creates json inside id and  choose appropriate icon-->
                 <!--{FieldName: IsSorted(bool), Decs: (bool)}-->
                 <tr id="SortFields">
+                    @foreach (var item in Enum.GetNames(typeof(FieldTypes)))
+                    {
+                        if (item == "None")
+                        {
+                            continue;
+                        }
+                        var FieldType = (FieldTypes)Enum.Parse(typeof(FieldTypes), item);
 
-                    <th id='{"@FieldTypes.Name": "@Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.Desc).FirstOrDefault()" }' class="submitButton" style="width: 23px">Название <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Name).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.CreateDate": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CreateDate).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.CreateDate).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Дата создания <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.Consistence": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Consistence).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Consistence).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Состав <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.Description": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Description).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Description).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Описание <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Description).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Description).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.Price": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Price).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Price).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Цена <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Price).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Price).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.Gram": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Gram).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Gram).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Граммовка <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Gram).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Gram).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.Calorific": "@Model.Sorting.Where(p=>p.Key==FieldTypes.Calorific).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.Calorific).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Калорийность <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
-                    <th id='{"@FieldTypes.CookTime": "@Model.Sorting.Where(p=>p.Key==FieldTypes.CookTime).Select(p=>p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p=>p.Key == FieldTypes.CookTime).Select(p=>p.Desc).FirstOrDefault()"}' class="submitButton">Время Приготовления <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
+                       <th id='{"@item": "@Model.Sorting.Where(p => p.Key == FieldType).Select(p => p.IsSorted).FirstOrDefault()", "Desc": "@Model.Sorting.Where(p => p.Key == FieldType).Select(p => p.Desc).FirstOrDefault()" }' class="submitButton" style="width: 23px">@FieldType.GetName() <span class="material-icons">@(Model.Sorting.Where(p => p.Key == FieldType).Select(p => p.IsSorted).FirstOrDefault() ? Model.Sorting.Where(p => p.Key == FieldType).Select(p => p.Desc).FirstOrDefault() ? "keyboard_arrow_down" : "keyboard_arrow_up" : "")</span></th>
+                    }
 
                     <th colspan="3"><button class="material-icons" id="search">search</button></th>
                 </tr>
             </thead>
 
             <tr id="SearchFields">
+                @foreach (var item in Enum.GetNames(typeof(FieldTypes)))
+                {
+                    if (item == "None")
+                    {
+                        continue;
+                    }
+                    var FieldType = (FieldTypes)Enum.Parse(typeof(FieldTypes), item);
+                    <th><input type="text" class="searchField" name="@FieldType" value="@Model.Filters.Where(p => p.Key == FieldType).Select(p => p.Value).FirstOrDefault()" /></th>
+                }
 
-                <th><input type="text" class="searchField" name="@FieldTypes.Name" value="@Model.Filters.Where(p => p.Key == FieldTypes.Name).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.CreateDate" value="@Model.Filters.Where(p => p.Key == FieldTypes.CreateDate).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.Consistence" value="@Model.Filters.Where(p => p.Key == FieldTypes.Consistence).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.Description" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Description).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.Price" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Price).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.Gram" style="width: 56px" value="@Model.Filters.Where(p => p.Key == FieldTypes.Gram).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.Calorific" value="@Model.Filters.Where(p => p.Key == FieldTypes.Calorific).Select(p => p.Value).FirstOrDefault()" /></th>
-                <th><input type="text" class="searchField" name="@FieldTypes.CookTime" value="@Model.Filters.Where(p => p.Key == FieldTypes.CookTime).Select(p => p.Value).FirstOrDefault()" /></th>
                 <th colspan="3"><button type="submit" class="submitButton"><span class="material-icons">done</span></button></th>
             </tr>
             <!--Load Animation-->
@@ -81,11 +84,12 @@
 
                 @foreach (var dish in Model.Dishes)
                 {
+
                     var ts = TimeSpan.FromMinutes(dish.CookTime);
 
                     var cookTime = ts.Hours == 0 ? ts.Minutes + " мин" : Math.Floor(ts.TotalHours) + " ч " + ts.Minutes + " мин";
 
-                    // var calorific = tools.CalculateCalorific(dish.Calorific, dish.Gram);
+
                     <tr id="@dish.Id">
 
                         <td class="dishesItem" style="width: 23px">@dish.Name</td>
