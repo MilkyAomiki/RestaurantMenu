@@ -5,10 +5,10 @@ using System.Text;
 
 namespace RestaurantMenu.BLL.Mapper
 {
-    public class DisplayName : Attribute
+    public class DisplayNameAttribute : Attribute
     {
         private readonly string _name;
-        public DisplayName(string name)
+        public DisplayNameAttribute(string name)
         {
             _name = name;
         }

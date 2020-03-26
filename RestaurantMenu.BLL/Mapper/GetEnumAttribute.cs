@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RestaurantMenu.BLL.Mapper
 {
-    public static class GetEnumAttribute
+    public static class GetEnumAttributeExtension
     {
         
         public static string GetName(this Enum enumItem)
