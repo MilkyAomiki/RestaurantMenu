@@ -105,52 +105,58 @@ namespace RestaurantMenu.BLL.Services
 
             #region Filter
 
-            IQueryable<Dish> approved = Enumerable.Empty<Dish>().AsQueryable();
-            if (constraints.Count == 0)
+            IQueryable<Dish> approved;
+            if (!constraints.Any())
             {
                 approved = _context.Dish;
             }
-
-
-
-            foreach (var filter in constraints)
+            else if (!constraints.Where(p=>p.Value.Any()).Any())
             {
-
-
-                var filtred = filter.Key switch
+                approved = _context.Dish;
+            }
+            else
+            {
+                approved = Enumerable.Empty<Dish>().AsQueryable();
+                foreach (var filter in constraints)
                 {
-                    FieldTypes.Name => _context.Dish.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.CreateDate => _context.Dish.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Consistence => _context.Dish.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Description => _context.Dish.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Price => _context.Dish.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Gram => _context.Dish.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.Calorific => _context.Dish.Where(f => f.TotalCalorific.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.CookTime => _context.Dish.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
-                    FieldTypes.None => _context.Dish,
-                    _ => _context.Dish
-                };
 
 
-                if (approved.Count() == 0)
-                {
-                    approved = filtred;
-                }
-                else
-                { 
-                    //Why
-                    approved = approved.Intersect(filtred);
-                    if (approved.Count() == 0)
+                    var filtred = filter.Key switch
                     {
-                        break;
+                        FieldTypes.Name => _context.Dish.Where(f => f.Name.ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.CreateDate => _context.Dish.Where(f => f.CreateDate.ToString().ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.Consistence => _context.Dish.Where(f => f.Consist.ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.Description => _context.Dish.Where(f => f.Description.ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.Price => _context.Dish.Where(f => f.Price.ToString().ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.Gram => _context.Dish.Where(f => f.Gram.ToString().ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.Calorific => _context.Dish.Where(f => f.TotalCalorific.ToString().ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.CookTime => _context.Dish.Where(f => f.CookTime.ToString().ToLower().Contains(filter.Value.ToLower())),
+                        FieldTypes.None => _context.Dish,
+                        _ => _context.Dish
+                    };
+
+
+                    if (!approved.Any())
+                    {
+                        approved = filtred;
+                    }
+                    else
+                    {
+                        //Why
+                        approved = approved.Intersect(filtred);
+                        if (!approved.Any())
+                        {
+                            break;
+                        }
                     }
                 }
             }
             #endregion
 
+
             #region Sort
 
-
+            //438 ms
             var sorted = fieldForSort switch
             {
                 FieldTypes.Name => isDecs ? approved.OrderByDescending(p => p.Name) : approved.OrderBy(p => p.Name),
@@ -164,13 +170,14 @@ namespace RestaurantMenu.BLL.Services
                 FieldTypes.None => approved.OrderBy(p => p.Id),
                 _ => approved.OrderBy(p => p.Id)
             };
-
+            
             #endregion
 
             #region Paging
-
+            
             var newPagesCount = (int)Math.Ceiling((Double)sorted.Count() / pageSize);
             var page = pageNum <= newPagesCount ? sorted.Skip((pageNum - 1) * pageSize).Take(pageSize) : sorted.Take(pageSize);
+
             #endregion
 
             var model = new MenuModel
@@ -184,8 +191,7 @@ namespace RestaurantMenu.BLL.Services
 
         public IEnumerable<DishDTO> GetAll()
         {
-            var items = _context.Dish;
-            return DishMap.GetDishes(items);
+            return DishMap.GetDishes(_context.Dish);
         }
 
         public IEnumerable<Restaurant_menu.Models.Dish> Find(Func<Restaurant_menu.Models.Dish, Boolean> predicate)
@@ -224,8 +230,5 @@ namespace RestaurantMenu.BLL.Services
         #endregion
     }
 
-    /// <summary>
-    /// Provides sorting and filtration functions
-    /// </summary>
 
 }
